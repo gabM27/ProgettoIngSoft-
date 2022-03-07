@@ -1,4 +1,4 @@
-package it.unibo.ingsoft.gwt.shared;
+package it.unibo.ingsoft.gwt.shared.domain;
 
 import java.util.Date;
 

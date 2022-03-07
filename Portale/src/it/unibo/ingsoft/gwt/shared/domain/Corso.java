@@ -1,8 +1,11 @@
-package it.unibo.ingsoft.gwt.shared;
+package it.unibo.ingsoft.gwt.shared.domain;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+
+import it.unibo.ingsoft.gwt.shared.Docente;
+import it.unibo.ingsoft.gwt.shared.Studente;
 
 public class Corso {
 	// Variabili istanza
@@ -29,7 +32,7 @@ public class Corso {
 	
 	public String printInfoEsame() { // stampa le info dell'esame
 		return this.esame.toString() + "\n"
-		+ "Numero studenti iscritti: " + this.iscritti.size();
+				+ "Numero studenti iscritti: " + this.iscritti.size();
 	}
 	
 	public List<Voto> getListaVoti() { return this.voti; } // ritorna la lista intera di voti
