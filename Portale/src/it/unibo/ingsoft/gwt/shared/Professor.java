@@ -1,11 +1,11 @@
 package it.unibo.ingsoft.gwt.shared;
 
-public class Docente {
-	private String nome;
-	private String cognome;
+public class Professor {
+	private String name;
+	private String surname;
 	private String email;
 	
-	public Docente(String email) {
+	public Professor(String email) {
 		this.email = email;
 	}
 	
