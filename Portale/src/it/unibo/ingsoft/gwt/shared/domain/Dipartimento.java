@@ -15,7 +15,7 @@ public class Dipartimento {
 		this.nome = nome;
 		this.indirizzoSede = indirizzoSede;
 		this.numeroTelefono = numeroTelefono;
-		this.corsi = new Vector<Corso>(5,3); // Primo parametro = capacità iniziale; secondo paramtetro = capacità incremento
+		this.corsi = new Vector<Corso>(15,5); // Primo parametro = capacità iniziale; secondo paramtetro = capacità incremento
 	}
 	
 	// Getters

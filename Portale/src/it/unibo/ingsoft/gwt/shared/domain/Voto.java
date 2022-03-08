@@ -10,7 +10,6 @@ public class Voto {
 		this.matricolaStudente = matricolaStudente;
 	}
 	
-	
 	// Getters
 	public String getMatricolaStudente() { return this.matricolaStudente; } // ritorna la matricola dello studente associato al voto
 	

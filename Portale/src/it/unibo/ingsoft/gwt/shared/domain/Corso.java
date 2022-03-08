@@ -11,7 +11,7 @@ public class Corso {
 	// Variabili istanza
 	private String nome;
 	private List<Docente> docenti;
-	private List<Studente> iscritti; // iscritti al corso --> sostengono esame; se non lo sostengono voto esame = NC
+	private List<Studente> iscritti; // iscritti al corso --> sostengono esame; se non lo sostengono voto esame = NC (-1)
 	private Esame esame; // VINCOLO: è possibile avere un UNICO esame per corso
 	private List<Voto> voti; // iscritti e voti hanno lo stesso indice per collegare uno studente al relativo voto
 	
