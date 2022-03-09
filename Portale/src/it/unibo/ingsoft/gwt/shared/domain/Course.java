@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import it.unibo.ingsoft.gwt.shared.Professor;
-import it.unibo.ingsoft.gwt.shared.Student;
+import it.unibo.ingsoft.gwt.shared.users.Professor;
+import it.unibo.ingsoft.gwt.shared.users.Student;
 
 public class Course {
 	// Variabili istanza
