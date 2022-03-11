@@ -1,6 +1,8 @@
 package it.unibo.ingsoft.gwt.client;
 
 import it.unibo.ingsoft.gwt.shared.FieldVerifier;
+import it.unibo.ingsoft.gwt.shared.domain.University;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -21,6 +23,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Portale implements EntryPoint {
+	
+	public static final University uni = new University("Alma Mater Studiorum", "Bologna");
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
