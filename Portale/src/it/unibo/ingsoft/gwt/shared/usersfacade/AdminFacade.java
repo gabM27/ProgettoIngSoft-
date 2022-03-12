@@ -47,22 +47,72 @@ public class AdminFacade {
 		
 	}
 	
-	// Aggiunta informazioni personali di uno Studente o di un Docente
-	protected void addPersonalInfo(String email, String username, String password, String name, String surname, Date birthday, String typeAccount) {
-		int index;
+	/* 
+	 * Aggiunta o modifica delle informazioni personali di specifico studente o di uno specifico docente.
+	 * Bisogna specificare email e username dello studente o docente 
+	 * per il quale si vogliono inserire le informazioni personali.
+	 * Bisogna specificare in quale lista cercare tramite il parametro in input typeAccount.
+	 */
+	protected void addPersonalInfo(String email, String username, 
+			String name, String surname, Date birthday, String typeAccount) {
 		switch (typeAccount.toLowerCase()) {
 		case "professor":
-			index = Portale.uni.getProfessorList().indexOf(new Professor(email,username,password));
-			Portale.uni.getProfessorList().get(index).setName(name);
-			Portale.uni.getProfessorList().get(index).setName(surname);
-			Portale.uni.getProfessorList().get(index).setBirthday(birthday);
+			for (Professor p : Portale.uni.getProfessorList()) {
+				if (p.getEmail().equalsIgnoreCase(email) && p.getUsername().equals(username)){
+					p.setName(name);
+					p.setSurname(surname);
+					p.setBirthday(birthday);
+					break;
+				}
+			}
 			break;
 		case "student":
-			index = Portale.uni.getStudentList().indexOf(new Student(email,username,password));
-			Portale.uni.getStudentList().get(index).setName(name);
-			Portale.uni.getStudentList().get(index).setName(surname);
-			Portale.uni.getStudentList().get(index).setBirthday(birthday);
+			for (Student s : Portale.uni.getStudentList()) {
+				if (s.getEmail().equalsIgnoreCase(email) && s.getUsername().equals(username)) {
+					s.setName(name);
+					s.setSurname(surname);
+					s.setBirthday(birthday);
+					break;
+				}
+			}
 			break;
 		}
 	}
+	
+	/*
+	 * Visualizzazione delle informazioni personali di uno specifico studente o di uno specifico docente.
+	 * Bisogna specificare email e username dello studente o docente
+	 * per il quale si vogliono visualizzare le informazioni personali.
+	 * Bisogna specificare in quale lista cercare tramite il parametro in input typeAccount [professor / student].
+	 * */
+	protected String printPersonalInfo(String email, String username, String typeAccount) {
+		String s = "";
+		switch (typeAccount.toLowerCase()) {
+		case "professor":
+			for (Professor prof : Portale.uni.getProfessorList()) {
+				if (prof.getEmail().equalsIgnoreCase(email) && prof.getUsername().equals(username)) {
+					s = prof.toString();
+				}
+			}
+			break;
+		case "studente":
+			for (Student stud : Portale.uni.getStudentList()) {
+				if (stud.getEmail().equalsIgnoreCase(email) && stud.getUsername().equals(username)) {
+					s = stud.toString();
+				}
+			}
+			break;
+		default:
+			s = "Informazioni non trovate, riprova.";
+			break;
+		}
+		
+		return s;
+	}
+	
+	/*
+	 * TODO: Visualizzazione delle informazioni personali di tutti gli studenti o docenti.
+	 * Bisogna specificare in input il typeAccount [professor / student]. 
+	 * */
+	
 }

@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class Portale implements EntryPoint {
 	
 	public static final University uni = new University("Alma Mater Studiorum", "Bologna");
+	
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.

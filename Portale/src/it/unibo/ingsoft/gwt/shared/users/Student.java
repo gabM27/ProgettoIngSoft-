@@ -3,11 +3,13 @@ package it.unibo.ingsoft.gwt.shared.users;
 import java.util.Date;
 
 public class Student extends User{
+	// Variabili istanza
 	private String iD; // Numero di matricola
 	private String name; // Nome dello studente
 	private String surname; // Cognome dello studente
 	private Date birthday; // Data di nascita
 
+	// Costruttore
 	public Student(String email, String username, String password) {
 		super(email, username, password);
 		this.iD = "prova"; // TODO: creare numero matricola
@@ -39,6 +41,12 @@ public class Student extends User{
 		this.birthday = newBirthday;
 	}
 	
-	
-	// Altre operazioni 
+	@Override
+	public String toString() { // Stampa le informazioni personali dello studente
+		return "Nome: " + this.name + ".\n"
+				+ "Cognome: " + this.surname + ".\n"
+				+ "Data di nascita: " + this.birthday + ".\n"
+				+ "Matricola: " + this.iD + ".\n"
+				+ "Email: " + this.getEmail() + ".";
+	}
 }

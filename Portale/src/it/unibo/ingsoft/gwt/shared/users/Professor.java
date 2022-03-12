@@ -3,36 +3,43 @@ package it.unibo.ingsoft.gwt.shared.users;
 import java.util.Date;
 
 public class Professor extends User{
+	// Variabili istanza
 	private String name;
 	private String surname;
 	private Date birthday;
 	
+	// Costruttore
 	public Professor(String email, String username, String password) {
 		super(email, username, password);
 	}
 
 	// Getters
-	public String getName() { return this.name; } // ritorna il nome del docente
+	public String getName() { return this.name; } // Ritorna il nome del docente
 	
-	public String getSurname() { return this.surname; } // ritorna il cognome del docente
+	public String getSurname() { return this.surname; } // Ritorna il cognome del docente
 	
-	public Daate getBirthday() { return this.birthday; } // ritorna la data di nascita del docente
+	public Date getBirthday() { return this.birthday; } // Ritorna la data di nascita del docente
 	
 	// Setters
-	public void setName(String newName) { // modifica il nome del docente
+	public void setName(String newName) { // Modifica il nome del docente
 		this.name = newName;
 	}
 
-	public void setSurname(String newSurname) { // modifica il cognome del docente
+	public void setSurname(String newSurname) { // Modifica il cognome del docente
 		this.surname = newSurname;
 	}
 	
-	public void setBirthday(Date newBirthday) { // modifica la data di nascita del docente
+	public void setBirthday(Date newBirthday) { // Modifica la data di nascita del docente
 		this.birthday = newBirthday;
 	}
 	
-	
-	// Altre operazioni
+	@Override
+	public String toString() { // Stampa le informazioni personali del docente
+		return "Nome: " + this.name + ".\n"
+				+ "Cognome: " + this.surname + ".\n"
+				+ "Data di nascita: " + this.birthday + ".\n"
+				+ "Email: " + this.getEmail() + ".";
+	}
 	
 	
 }
