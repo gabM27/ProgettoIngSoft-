@@ -26,7 +26,8 @@ import it.unibo.ingsoft.gwt.shared.users.Student;
 public class AdminFacade {
 	
 	// Costruttore
-	public AdminFacade() {}
+	public AdminFacade() {
+	}
 	
 	// Creazione account Studente / Docente / Segreteria
 	protected void addNewAccount(String email, String username, String password, String typeAccount){

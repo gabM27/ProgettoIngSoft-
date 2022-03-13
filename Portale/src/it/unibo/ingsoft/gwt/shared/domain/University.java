@@ -76,6 +76,10 @@ public class University {
 		}
 	}
 
+	
+	/*
+	 * Controllo che un utente esiste nella lista degli studenti o dei professori
+	 * */
 	public boolean isAlreadyThere(String email, String username, String typeAccount) {
 		boolean isThere = false;
 		switch (typeAccount.toLowerCase()) {
