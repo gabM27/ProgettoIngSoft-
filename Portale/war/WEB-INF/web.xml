@@ -7,12 +7,12 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>greetingServiceImpl</servlet-name>
     <servlet-class>it.unibo.ingsoft.gwt.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>greetingServiceImpl</servlet-name>
     <url-pattern>/portale/greet</url-pattern>
   </servlet-mapping>
   

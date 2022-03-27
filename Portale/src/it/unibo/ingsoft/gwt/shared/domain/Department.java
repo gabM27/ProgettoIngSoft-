@@ -1,10 +1,13 @@
 package it.unibo.ingsoft.gwt.shared.domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
-public class Department {
+public class Department implements Serializable {
+	
 	// Variabili istanza
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String address;
 	private String telephoneNumber;

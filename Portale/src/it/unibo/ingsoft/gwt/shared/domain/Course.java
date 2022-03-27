@@ -61,4 +61,8 @@ public class Course {
 				new Mark(s.getID())); // nuovo voto, relativo al nuovo studente
 	}
 	
+	@Override
+	public String toString() {
+		return "Nome del corso: " + this.name + ".\n"; 
+	}
 }

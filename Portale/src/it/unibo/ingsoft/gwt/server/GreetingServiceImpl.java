@@ -1,45 +1,48 @@
 package it.unibo.ingsoft.gwt.server;
 
-import it.unibo.ingsoft.gwt.client.GreetingService;
-import it.unibo.ingsoft.gwt.shared.FieldVerifier;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-/**
- * The server-side implementation of the RPC service.
- */
-@SuppressWarnings("serial")
+import it.unibo.ingsoft.gwt.client.settings.GreetingService;
+import it.unibo.ingsoft.gwt.shared.Status;
+
+
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
+	private static final long serialVersionUID = 1L;
 
-	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException("Name must be at least 4 characters long");
+	@Override
+	public String clearDB() {
+		if (UniDB.clearUniDB()) {
+			return "DB cleaned";
+		} else {
+			return "An error occurred cleaning DB";
 		}
-
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-
-		// Escape data from the client to avoid cross-site script vulnerabilities.
-		input = escapeHtml(input);
-		userAgent = escapeHtml(userAgent);
-
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo + ".<br><br>It looks like you are using:<br>"
-				+ userAgent;
 	}
 
-	/**
-	 * Escape an html string. Escaping data received from the client helps to
-	 * prevent cross-site script vulnerabilities.
-	 * 
-	 * @param html the html string to escape
-	 * @return the escaped string
-	 */
-	private String escapeHtml(String html) {
-		if (html == null) {
-			return null;
-		}
-		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	@Override
+	public String adminInitialize() {
+		UniDB.adminUserInitialize();
+		return "ADMIN inizializzato";
 	}
+
+	@Override
+	public Status doLogin(String email, String password) {
+		return UniDB.loginRequest(email, password);
+	}	
+	
+// TODO:
+	@Override
+	public String addDepartmentToDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String addUserToDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
