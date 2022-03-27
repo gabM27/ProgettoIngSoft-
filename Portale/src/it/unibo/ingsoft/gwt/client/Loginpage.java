@@ -45,13 +45,11 @@ public class Loginpage extends Composite {
 		emailBox.setFocus(true);
 		emailBox.selectAll();
 
-		// Gestione dell'inserimento di email e password nelle textBox
+		// Gestione dell'inserimento di email nella textBox
 		emailBox.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				inputEmail = emailBox.getText();
-				Window.alert("DEBUG EMAIL BOX: " + emailBox.getText() + "; INPUT: " + inputEmail);
-				
 			}
 		});
 		
@@ -66,13 +64,11 @@ public class Loginpage extends Composite {
 		passBox.setFocus(true);
 		passBox.selectAll();
 		
-
+		// Gestione dell'inserimento della password nella textBox
 		passBox.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				inputPass = passBox.getValue();
-				Window.alert("DEBUG PASSWORD BOX: " + passBox.getValue() + "; INPUT: " + inputPass);
-				
 			}
 		});
 		
@@ -120,7 +116,7 @@ public class Loginpage extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert("Hai inserito: " + "TEXTBOX EMAIL: " + inputEmail + "; TEXTBOX PASSWORD: " + inputPass);
+			Window.alert("Hai inserito: " + inputEmail + " --- " + inputPass);
 			
 			Singleton.getGreetingService().doLogin(inputEmail,inputPass,new AsyncCallback<Status>() {
 

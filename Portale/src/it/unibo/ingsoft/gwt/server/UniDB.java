@@ -72,6 +72,7 @@ public class UniDB {
 		db.commit();
 		usersMap.close();
 		db.close();
+	
 		return returnStatus;
 	}
 	
@@ -82,9 +83,7 @@ public class UniDB {
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 		
 		for (Entry<String,User> newUser : usersMap.entrySet()) {
-			System.out.println("CHECKEMAIL: " + newUser.getValue().getEmail());
 			if (newUser.getValue().getEmail().equalsIgnoreCase(email)) {
-				System.out.println("Utente avente email " + newUser.getValue().getEmail() + " e' gia' presente nel DB!!");
 				check = true;
 				break;
 			}

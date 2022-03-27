@@ -15,8 +15,7 @@ public class AdminDashboard extends Composite {
 		this.mainpage = main;
 		initWidget(this.mainPanel);
 		Label descriptionLabel = new Label("Scegli un'operazione dal menu a tendina.");
-//		descriptionLabel.setWidth("");
-		
+
 		this.mainPanel.add(descriptionLabel);
 		
 		ListBox actionList = new ListBox();

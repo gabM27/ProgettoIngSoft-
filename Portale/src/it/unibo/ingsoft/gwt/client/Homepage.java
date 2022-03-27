@@ -30,7 +30,7 @@ public class Homepage extends Composite {
 		panel.add(descriptionLabel);
 		
 		// Creo il bottone per il login
-		Button btnLogin = new Button("LOG IN");
+		Button btnLogin = new Button("LOGIN");
 		btnLogin.setWidth("150px");
 		// Gestion evento click su bottone Log In
 		btnLogin.addClickHandler(new btnLoginHandler());

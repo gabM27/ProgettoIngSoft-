@@ -65,7 +65,7 @@ public class Mainpage extends Composite{
 
 			@Override
 			public void onSuccess(String result) {
-				Window.alert("Admin initializing success: " + result);
+				System.out.println("Admin initializing success: " + result);
 			}
 			
 		});
