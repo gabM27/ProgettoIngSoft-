@@ -8,10 +8,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -23,13 +19,13 @@ import it.unibo.ingsoft.gwt.shared.Status;
 
 public class Loginpage extends Composite {
 	private Mainpage mainpage;
-	private FormPanel loginPanel = new FormPanel();
+	private VerticalPanel mainPanel = new VerticalPanel();
 	private String inputEmail;
 	private String inputPass;
 	
 	public Loginpage(Mainpage main) {
 		this.mainpage = main;
-		initWidget(this.loginPanel);
+		initWidget(this.mainPanel);
 		
 		// Creo un verticalPanel che comprende tutti gli elementi che servono
 		VerticalPanel panel = new VerticalPanel();
@@ -106,7 +102,7 @@ public class Loginpage extends Composite {
 		/*
 		 * ADDING TO MAIN PANEL 
 		 */
-		loginPanel.add(panel);
+		this.mainPanel.add(panel);
 	}
 	
 	/*
@@ -116,7 +112,7 @@ public class Loginpage extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert("Hai inserito: " + inputEmail + " --- " + inputPass);
+			Window.alert("Hai inserito:\n- " + inputEmail + " \n- " + inputPass);
 			
 			Singleton.getGreetingService().doLogin(inputEmail,inputPass,new AsyncCallback<Status>() {
 

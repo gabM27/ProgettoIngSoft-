@@ -9,8 +9,9 @@ public class User implements Serializable{
 	private String password; // Password di un generico utente
 	
 	// Costruttore
-	public User(String email) {
+	public User(String email, String password) {
 		this.email = email;
+		this.password = password;
 	}
 	
 	// Getters

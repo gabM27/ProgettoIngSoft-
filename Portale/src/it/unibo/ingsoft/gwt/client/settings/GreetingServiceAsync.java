@@ -1,8 +1,11 @@
 package it.unibo.ingsoft.gwt.client.settings;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import it.unibo.ingsoft.gwt.shared.Status;
+import it.unibo.ingsoft.gwt.shared.users.User;
 
 public interface GreetingServiceAsync {
 	
@@ -14,5 +17,11 @@ public interface GreetingServiceAsync {
 
 	void addDepartmentToDB(AsyncCallback<String> callback);
 
-	void addUserToDB(AsyncCallback<String> callback);
+	void addUserToDB(User u, AsyncCallback<String> callback);
+
+	void addInfoToStudentAccount(String email, String iD, String username, String name,
+				String surname, Date birthday, AsyncCallback<String> asyncCallback);
+
+	void addInfoToProfessorAccount(String email, String username, String name, 
+				String surname, Date birthday, AsyncCallback<String> asyncCallback);
 }

@@ -4,11 +4,12 @@ public class Admin extends User {
 	// Variabili istanza e costanti
 	private static final String ADMIN_USERNAME = "admin"; 
 	
-	
 	// Costruttore
-	public Admin(String email) {
-		super(email);
-		setPassword("admin");
+	public Admin() {
+		super("admin", "admin");
 	}
+	
+	// Ritorna l'username
+	public static String getAdminUsername() { return ADMIN_USERNAME; }
 
 }

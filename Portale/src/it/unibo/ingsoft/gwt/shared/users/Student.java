@@ -10,8 +10,8 @@ public class Student extends User{
 	private Date birthday; // Data di nascita
 
 	// Costruttore
-	public Student(String email) {
-		super(email);
+	public Student(String email, String password) {
+		super(email,password);
 //		this.iD = "prova"; // TODO: creare numero matricola
 	}
 

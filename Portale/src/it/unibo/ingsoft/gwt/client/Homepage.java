@@ -38,6 +38,7 @@ public class Homepage extends Composite {
 		// Aggiungo il bottone al pannello verticale
 		panel.add(btnLogin);
 		
+		
 		// Aggiungo il pannello verticale al mainPanel
 		this.mainPanel.add(panel);
 	}

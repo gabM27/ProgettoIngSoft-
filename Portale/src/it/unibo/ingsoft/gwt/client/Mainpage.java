@@ -9,8 +9,10 @@ import it.unibo.ingsoft.gwt.client.dashboards.AdminDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.ProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.SecretaryDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.StudentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.AddAccountFormPage;
+import it.unibo.ingsoft.gwt.client.settings.AddPersonalInfoFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
-import it.unibo.ingsoft.gwt.server.UniDB;
 
 public class Mainpage extends Composite{
 	// Variabili istanza
@@ -55,6 +57,16 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(new SecretaryDashboard(this));
 	}
 	
+	public void openAddAccountFormDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new AddAccountFormPage(this));
+	}
+	
+	public void openAddPersonalInfoFormStudentDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new AddPersonalInfoFormStudentDashboard(this));
+	}
+	
 	private static void doAdminInitialize() {
 		Singleton.getGreetingService().adminInitialize(new AsyncCallback<String> () {
 
@@ -69,5 +81,10 @@ public class Mainpage extends Composite{
 			}
 			
 		});
+	}
+
+	public void openAddPersonalInfoFormProfessorDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new AddPersonalInfoFormProfessorDashboard(this));
 	}
 }

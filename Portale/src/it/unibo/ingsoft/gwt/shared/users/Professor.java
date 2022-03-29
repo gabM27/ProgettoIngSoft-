@@ -9,8 +9,8 @@ public class Professor extends User{
 	private Date birthday;
 	
 	// Costruttore
-	public Professor(String email) {
-		super(email);
+	public Professor(String email, String password) {
+		super(email,password);
 	}
 
 	// Getters
