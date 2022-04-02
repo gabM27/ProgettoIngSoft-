@@ -132,13 +132,17 @@ public class UniDB {
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 		User user;
 		user = createUser(emailInput, passwordInput, accountType);
-		
+		boolean wasThere = checkEmail(emailInput);
 		usersMap.putIfAbsent(user.getEmail(), user);
 	
 		db.commit();
 		usersMap.close();
 		db.close();
-		return "Added new account (if absent) with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+		if (wasThere) {
+			return "Email already in the DB. Try again with a different email";
+		} else {
+			return "Added new" + accountType + "with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+		}
 	}
 
 	private static User createUser(String emailInput, String passwordInput, String accountType) {
@@ -155,7 +159,6 @@ public class UniDB {
 			break;
 		}
 		return user;
-
 	}
 
 	// Aggiunge le informazioni personali agli utenti di tipo STUDENTE

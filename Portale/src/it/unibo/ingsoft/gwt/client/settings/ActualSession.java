@@ -6,7 +6,7 @@ public class ActualSession {
 	// Variabili istanza
 	private String email;
 	private Status actualStatus;
-	private static ActualSession actualSession = null;
+	private static ActualSession actualSession;
 	
 	private ActualSession(String email, Status newStatus) {
 		this.setEmail(email);

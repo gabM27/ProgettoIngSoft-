@@ -42,22 +42,6 @@ public class AdminFacade {
 	
 	// Creazione nuovo account (Studente / Docente / Segreteria)
 	public void addNewAccount(String email, String pass, String typeAccount){
-//		User user; 
-
-//		switch (typeAccount.toLowerCase()) {
-//		case "student":
-//			user = new Student(email,pass);
-//			break;
-//		case "professor":
-//			user = new Professor(email,pass);
-//			break;
-//		case "secretary":
-//			user = new Secretary(email,pass);
-//			break;
-//		default:
-//			user = new User(email,pass);
-//			break;
-//		}
 		// Chiamo il server per aggiungere il nuovo account al database
 		Singleton.getGreetingService().addUserToDB(email,pass,typeAccount, new AsyncCallback<String>() {
 			@Override

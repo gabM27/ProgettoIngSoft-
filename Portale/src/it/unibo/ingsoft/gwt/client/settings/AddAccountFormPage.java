@@ -115,7 +115,7 @@ public class AddAccountFormPage extends Composite{
 		formPanel.add(typeAccountList);
 		formPanel.setSpacing(5);
 		/*
-		 * ADDING ELEMETS TO BUTTON PANEL
+		 * ADDING ELEMENTS TO BUTTON PANEL
 		 */
 		buttonPanel.add(btnAdd);
 		buttonPanel.add(btnBack);
@@ -135,19 +135,6 @@ public class AddAccountFormPage extends Composite{
 			Window.alert("Hai inserito in input:\n- " + emailInput + "\n- " + passwordInput);
 	
 			AdminFacade.getAdminFacade().addNewAccount(emailInput, passwordInput, accountType.toLowerCase());
-//			Singleton.getGreetingService().addUserToDB(emailInput, passwordInput, accountType, new AsyncCallback<String>() {
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					Window.alert("ERRORE NELL'AGGIUNTA DI UN NUOVO ACCOUNT mANNAIA A CHI SO io: " + caught.getMessage());
-//				}
-//
-//				@Override
-//				public void onSuccess(String result) {
-//					Window.alert("NUOVO MANNAIA A CHI SO IO AGGIUNTO: " + result);
-//				}
-//				
-//			});
 			
 		}
 	}
