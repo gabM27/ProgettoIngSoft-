@@ -21,6 +21,7 @@ import it.unibo.ingsoft.gwt.shared.users.Professor;
 import it.unibo.ingsoft.gwt.shared.users.Secretary;
 import it.unibo.ingsoft.gwt.shared.users.Student;
 import it.unibo.ingsoft.gwt.shared.users.User;
+import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AddAccountFormPage extends Composite{
 	// Variabili istanza
@@ -132,27 +133,22 @@ public class AddAccountFormPage extends Composite{
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.alert("Hai inserito in input:\n- " + emailInput + "\n- " + passwordInput);
-			Window.alert("HAIN INSERITO ORNEIIOCSN DNOS ALERTTTTTTTTTTTTTTTTTTTt");
-			System.out.println("HAI INSERITO IN INPUT NUOVO UTENTE");
-
-			Singleton.getGreetingService().addUserToDB(emailInput, passwordInput, accountType, new AsyncCallback<String>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert("ERRORE NELL'AGGIUNTA DI UN NUOVO ACCOUNT mANNAIA A CHI SO io: " + caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(String result) {
-					Window.alert("NUOVO MANNAIA A CHI SO IO AGGIUNTO: " + result);
-				}
-				
-			});
+	
+			AdminFacade.getAdminFacade().addNewAccount(emailInput, passwordInput, accountType.toLowerCase());
+//			Singleton.getGreetingService().addUserToDB(emailInput, passwordInput, accountType, new AsyncCallback<String>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					Window.alert("ERRORE NELL'AGGIUNTA DI UN NUOVO ACCOUNT mANNAIA A CHI SO io: " + caught.getMessage());
+//				}
+//
+//				@Override
+//				public void onSuccess(String result) {
+//					Window.alert("NUOVO MANNAIA A CHI SO IO AGGIUNTO: " + result);
+//				}
+//				
+//			});
 			
-//			AdminFacade.getAdminFacade().addNewAccount(emailInput,passwordInput,accountType.toLowerCase());
-		
-			Window.alert("HAIN INSERITO DOPO INPUT ORNEIIOCSN DNOS");
-			System.out.println("INSERITO DOPOO INPUTO BSADSMK");
 		}
 	}
 		

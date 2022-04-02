@@ -130,7 +130,6 @@ public class UniDB {
 
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
-		
 		User user;
 		user = createUser(emailInput, passwordInput, accountType);
 		
@@ -139,7 +138,7 @@ public class UniDB {
 		db.commit();
 		usersMap.close();
 		db.close();
-		return "Added new account with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+		return "Added new account (if absent) with email: " + user.getEmail() + "\nClasse: " + user.getClass();
 	}
 
 	private static User createUser(String emailInput, String passwordInput, String accountType) {
