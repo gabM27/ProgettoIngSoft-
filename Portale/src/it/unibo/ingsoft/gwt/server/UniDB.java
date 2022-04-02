@@ -126,26 +126,37 @@ public class UniDB {
 	}
 	
 	// Aggiunge un oggetto User alla usersMap nel db uniDB
-	public static String addUsers(User u) {
-//		String returnString = "";
+	public static String addUsers(String emailInput, String passwordInput, String accountType) {
+
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
-		System.out.println("NON ANCORA");
-		usersMap.putIfAbsent(u.getEmail(), u);
-		System.out.println("AGGIUNTO UTENTE " + u.getEmail());
-//		if (!checkEmail(u.getEmail())) {
-//			usersMap.put(u.getEmail(), u);
-//			
-//			returnString =  "Added new account with email: " + u.getEmail();
-//		} else {
-//			System.out.println("EMAIL GIA' PRESENTE");
-//			returnString = "Email gia' presente, impossibile aggiungere il nuovo account.";
-//		}
-
+		
+		User user;
+		user = createUser(emailInput, passwordInput, accountType);
+		
+		usersMap.putIfAbsent(user.getEmail(), user);
+	
 		db.commit();
 		usersMap.close();
 		db.close();
-		return "Added new account with email: " + u.getEmail() + "\nClasse: " + u.getClass();
+		return "Added new account with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+	}
+
+	private static User createUser(String emailInput, String passwordInput, String accountType) {
+		User user = new User(emailInput, passwordInput);
+		switch (accountType.toLowerCase()) {
+		case "student":
+			user = new Student(emailInput,passwordInput);
+			break;
+		case "professor":
+			user = new Professor(emailInput,passwordInput);
+			break;
+		case "secretary":
+			user = new Secretary(emailInput,passwordInput);
+			break;
+		}
+		return user;
+
 	}
 
 	// Aggiunge le informazioni personali agli utenti di tipo STUDENTE

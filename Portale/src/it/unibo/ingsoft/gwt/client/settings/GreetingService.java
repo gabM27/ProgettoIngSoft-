@@ -17,7 +17,7 @@ public interface GreetingService extends RemoteService {
 	
 	Status doLogin(String email, String password);
 	
-	String addUserToDB(User u);
+	String addUserToDB(String emailInput, String passwordInput, String accountType);
 	
 	
 	String addInfoToStudentAccount(String email, String iD, String username, 

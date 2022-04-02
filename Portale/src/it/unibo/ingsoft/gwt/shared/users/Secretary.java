@@ -1,6 +1,8 @@
 package it.unibo.ingsoft.gwt.shared.users;
 
-public class Secretary extends User {
+import java.io.Serializable;
+
+public class Secretary extends User implements Serializable{
 	
 	// Costruttore
 	public Secretary(String email, String password) {

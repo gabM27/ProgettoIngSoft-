@@ -41,8 +41,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 
 	@Override
-	public String addUserToDB(User u) {
-		return UniDB.addUsers(u);
+	public String addUserToDB(String email,String pass, String typeAccount) {
+		return UniDB.addUsers(email, pass, typeAccount);
 	}
 	
 	@Override

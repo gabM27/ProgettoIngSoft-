@@ -17,7 +17,7 @@ public interface GreetingServiceAsync {
 
 	void addDepartmentToDB(AsyncCallback<String> callback);
 
-	void addUserToDB(User u, AsyncCallback<String> callback);
+	void addUserToDB(String emailInput, String passwordInput, String accountType, AsyncCallback<String> callback);
 
 	void addInfoToStudentAccount(String email, String iD, String username, String name,
 				String surname, Date birthday, AsyncCallback<String> asyncCallback);

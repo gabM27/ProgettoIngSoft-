@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,7 +17,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
+import it.unibo.ingsoft.gwt.shared.users.Professor;
+import it.unibo.ingsoft.gwt.shared.users.Secretary;
+import it.unibo.ingsoft.gwt.shared.users.Student;
+import it.unibo.ingsoft.gwt.shared.users.User;
 
 public class AddAccountFormPage extends Composite{
 	// Variabili istanza
@@ -24,7 +28,7 @@ public class AddAccountFormPage extends Composite{
 	private VerticalPanel mainPanel = new VerticalPanel(); // MainPanel della pagina, contiene tutti gli elementi
 	private String emailInput; // Email che deve essere aggiunta per il nuovo account
 	private String passwordInput; // Password che deve essere aggiunta al nuovo account
-	private String accountType; // Tipo di account da aggiungere
+	private String accountType = "student"; // Tipo di account da aggiungere, default : student
 	
 	
 	public AddAccountFormPage(Mainpage main) {
@@ -76,7 +80,8 @@ public class AddAccountFormPage extends Composite{
 		typeAccountList.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-				accountType = typeAccountList.getSelectedItemText();
+				accountType = typeAccountList.getSelectedItemText().toLowerCase();
+				Window.alert("Nuovo account type aggiornato: " + accountType);
 			}
 		});
 		/*
@@ -129,7 +134,23 @@ public class AddAccountFormPage extends Composite{
 			Window.alert("Hai inserito in input:\n- " + emailInput + "\n- " + passwordInput);
 			Window.alert("HAIN INSERITO ORNEIIOCSN DNOS ALERTTTTTTTTTTTTTTTTTTTt");
 			System.out.println("HAI INSERITO IN INPUT NUOVO UTENTE");
-			AdminFacade.adminFacade.addNewAccount(emailInput,passwordInput,accountType.toLowerCase());
+
+			Singleton.getGreetingService().addUserToDB(emailInput, passwordInput, accountType, new AsyncCallback<String>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("ERRORE NELL'AGGIUNTA DI UN NUOVO ACCOUNT mANNAIA A CHI SO io: " + caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(String result) {
+					Window.alert("NUOVO MANNAIA A CHI SO IO AGGIUNTO: " + result);
+				}
+				
+			});
+			
+//			AdminFacade.getAdminFacade().addNewAccount(emailInput,passwordInput,accountType.toLowerCase());
+		
 			Window.alert("HAIN INSERITO DOPO INPUT ORNEIIOCSN DNOS");
 			System.out.println("INSERITO DOPOO INPUTO BSADSMK");
 		}

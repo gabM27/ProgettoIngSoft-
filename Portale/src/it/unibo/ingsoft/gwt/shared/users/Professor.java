@@ -1,8 +1,9 @@
 package it.unibo.ingsoft.gwt.shared.users;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Professor extends User{
+public class Professor extends User implements Serializable{
 	// Variabili istanza
 	private String name;
 	private String surname;

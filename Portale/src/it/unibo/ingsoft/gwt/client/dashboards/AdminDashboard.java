@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
-import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AdminDashboard extends Composite {
 	// Variabili istanza
@@ -84,7 +83,7 @@ public class AdminDashboard extends Composite {
 				mainpage.openAddPersonalInfoFormProfessorDashboard();
 				break;
 			case 3: // Pulizia DB
-				AdminFacade.adminFacade.cleaningDB();
+//				AdminFacade.getAdminFacade().cleaningDB();
 				break;
 			default: // Default operation: error
 				Window.alert("ERROR: DEFAULT OPERATION");

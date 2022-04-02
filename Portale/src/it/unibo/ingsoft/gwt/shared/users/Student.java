@@ -1,8 +1,9 @@
 package it.unibo.ingsoft.gwt.shared.users;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Student extends User{
+public class Student extends User implements Serializable{
 	// Variabili istanza
 	private String iD; // Numero di matricola
 	private String name; // Nome dello studente
