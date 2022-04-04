@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
+import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AdminDashboard extends Composite {
 	// Variabili istanza
@@ -82,11 +83,14 @@ public class AdminDashboard extends Composite {
 			case 2: // Inserisci informazioni personali utente - DOCENTE
 				mainpage.openAddPersonalInfoFormProfessorDashboard();
 				break;
-			case 3: // Pulizia DB
-//				AdminFacade.getAdminFacade().cleaningDB();
+			case 3:
+				mainpage.openViewPersonalInfo();
+				break;
+			case 4: // Pulizia DB
+				AdminFacade.getAdminFacade().cleaningDB();
 				break;
 			default: // Default operation: error
-				Window.alert("ERROR: DEFAULT OPERATION");
+				Window.alert("ERROR: DEFAULT OPERATION NOT ALLOWED");
 				break;
 			}
 		}
