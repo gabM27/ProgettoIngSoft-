@@ -22,7 +22,6 @@ import it.unibo.ingsoft.gwt.shared.users.User;
 
 public class UniDB {
 
-
 	private static DB getUniDB() {
 		DB uniDB = DBMaker.newFileDB(new File("uniDB")).make();
 		return uniDB;
