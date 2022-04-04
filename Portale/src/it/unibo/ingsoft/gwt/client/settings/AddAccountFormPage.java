@@ -120,7 +120,7 @@ public class AddAccountFormPage extends Composite{
 		buttonPanel.add(btnAdd);
 		buttonPanel.add(btnBack);
 		buttonPanel.add(btnLogout);
-		buttonPanel.setSpacing(1);
+		buttonPanel.setSpacing(5);
 		/*
 		 * ADDING PANELS TO MAIN PANEL
 		 */
