@@ -57,7 +57,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 		/*
 		 * Username
 		 */
-		Label usernameLbl = new Label("Username dello studente:");
+		Label usernameLbl = new Label("Username del docente:");
 		TextBox usernameTB = new TextBox();
 		usernameTB.setText("USERNAME");
 		usernameTB.addChangeHandler(new ChangeHandler() {
@@ -70,7 +70,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 		/*
 		 * Name
 		 */
-		Label nameLbl = new Label("Nome dello studente:");
+		Label nameLbl = new Label("Nome del docente:");
 		TextBox nameTB = new TextBox();
 		nameTB.setText("NAME");
 		nameTB.addChangeHandler(new ChangeHandler() {
@@ -83,7 +83,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 		/*
 		 * Surname
 		 */
-		Label surnameLbl = new Label("Cognome dello studente:");
+		Label surnameLbl = new Label("Cognome del docente:");
 		TextBox surnameTB = new TextBox();
 		surnameTB.setText("SURNAME");
 		surnameTB.addChangeHandler(new ChangeHandler() {
@@ -96,7 +96,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 		/*
 		 * Birthday
 		 */
-		Label birthdayLbl = new Label("Data di nascita dello studente:");
+		Label birthdayLbl = new Label("Data di nascita del docente:");
 		DatePicker birthdayPick = new DatePicker();
 		birthdayPick.addValueChangeHandler(new ValueChangeHandler<Date>() {
 

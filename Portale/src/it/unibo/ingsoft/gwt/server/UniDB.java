@@ -127,50 +127,55 @@ public class UniDB {
 	// Aggiunge un oggetto User alla usersMap nel db uniDB
 	public static String addUsers(String emailInput, String passwordInput, String accountType) {
 
-		DB db = getUniDB();
-		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
-		User user;
-		user = createUser(emailInput, passwordInput, accountType);
-		boolean wasThere = checkEmail(emailInput);
-		usersMap.putIfAbsent(user.getEmail(), user);
-	
-		db.commit();
-		usersMap.close();
-		db.close();
-		if (wasThere) {
-			return "Email already in the DB. Try again with a different email";
+		if (!checkEmail(emailInput)) {
+		
+			DB db = getUniDB();
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			User user = null;
+			switch (accountType.toLowerCase()) {
+			case "student":
+				user = new Student(emailInput,passwordInput);
+				usersMap.put(user.getEmail(), user);
+				break;
+			case "professor":
+				user = new Professor(emailInput,passwordInput);
+				usersMap.put(user.getEmail(), user);
+				break;
+			case "secretary":
+				user = new Secretary(emailInput,passwordInput);
+				usersMap.put(user.getEmail(), user);
+				break;
+			}
+			
+			System.out.println("DEBUG ADD USER: " + usersMap.get(user.getEmail()).toString());
+			for (String key : usersMap.keySet()) {
+				System.out.println("ADDING USER DEBUG key-Iesima: " + key);
+			}
+			db.commit();
+			usersMap.close();
+			db.close();
+			
+			return "Added new " + accountType + " with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+			
 		} else {
-			return "Added new" + accountType + "with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+			return "Error: entered email already exist";
 		}
 	}
 
-	private static User createUser(String emailInput, String passwordInput, String accountType) {
-		User user = new User(emailInput, passwordInput);
-		switch (accountType.toLowerCase()) {
-		case "student":
-			user = new Student(emailInput,passwordInput);
-			break;
-		case "professor":
-			user = new Professor(emailInput,passwordInput);
-			break;
-		case "secretary":
-			user = new Secretary(emailInput,passwordInput);
-			break;
-		}
-		return user;
-	}
 
 	// Aggiunge le informazioni personali agli utenti di tipo STUDENTE
 	public static String addPersonalInfoToStudent(String email,String iD, String username, String name,
 							String surname, Date birthday) {
+		boolean changed = false;
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 		
 			for (String key : usersMap.keySet()) {
-				if (email.equalsIgnoreCase(key) && usersMap.getPeek(email) instanceof Student) {
-					Student s = (Student) usersMap.getPeek(email);
+				System.out.println("key i-esima: " + key);
+				if (key.equalsIgnoreCase(email) && usersMap.get(email) instanceof Student) {
+					Student s = (Student) usersMap.get(email);
 					// DEBUG
-					Window.alert("PRIMA INSERIMENTO:\n" + s.toString());
+					System.out.println("PRIMA INSERIMENTO:\n" + usersMap.get(email).toString());
 					s.setID(iD);
 					s.setUsername(username);
 					s.setName(name);
@@ -179,27 +184,36 @@ public class UniDB {
 					// Aggiorno il valore all'interno della mappa
 					usersMap.replace(email, s);
 					// DEBUG
-					Window.alert("DOPO INSERIMENTO:\n"+ s.toString());
-				}
+					System.out.println("DOPO AGGIORNAMENTO:\n" + usersMap.get(email).toString());
+					changed = true;
+					break;
+				} 
 			}
 			
 		db.commit();
 		usersMap.close();
 		db.close();
-		return "Added personal info to STUDENT account with email: " + email + ".";
+		if (changed) {
+			return "Added or changed personal info to STUDENT account with email: " + email + ".";
+		} else {
+			return "Error: entered email does not exist";
+		}
+		
 	}
 	
 	// Aggiunge le informazioni personali agli utenti di tipo DOCENTE
 	public static String addPersonalInfoToProfessor(String email, String username, String name, 
 							String surname, Date birthday) {
+		boolean changed = false;
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 		
 		for (String key : usersMap.keySet()) {
+			System.out.println(key);
 			if (email.equalsIgnoreCase(key) && usersMap.getPeek(email) instanceof Professor) {
 				Professor p = (Professor) usersMap.getPeek(email);
 				// DEBUG
-				Window.alert("PRIMA INSERIMENTO:\n" + p.toString());
+				System.out.println("PRIMA INSERIMENTO:\n" + usersMap.getPeek(email).toString());
 				p.setUsername(username);
 				p.setName(name);
 				p.setSurname(surname);
@@ -207,13 +221,19 @@ public class UniDB {
 				// Aggiorno il valore all'interno della mappa
 				usersMap.replace(email, p);
 				// DEBUG
-				Window.alert("DOPO INSERIMENTO:\n"+ p.toString());
+				System.out.println("DOPO AGGIORNAMENTO:\n " + usersMap.getPeek(email).toString());
+				changed = true;
+				break;
 			}
 		}
 		
 		db.commit();
 		usersMap.close();
 		db.close();
-		return "Added personal info to PROFESSOR account with email: " + email+ ".";
+		if (changed) {
+			return "Added or changed personal info to PROFESSOR account with email: " + email + ".";
+		} else {
+			return "Error: entered email does not exist";
+		}
 	}
 }
