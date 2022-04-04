@@ -13,6 +13,7 @@ import it.unibo.ingsoft.gwt.client.settings.AddAccountFormPage;
 import it.unibo.ingsoft.gwt.client.settings.AddPersonalInfoFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
+import it.unibo.ingsoft.gwt.client.settings.ViewPersonalInfo;
 
 public class Mainpage extends Composite{
 	// Variabili istanza
@@ -86,5 +87,10 @@ public class Mainpage extends Composite{
 	public void openAddPersonalInfoFormProfessorDashboard() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new AddPersonalInfoFormProfessorDashboard(this));
+	}
+
+	public void openViewPersonalInfo() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new ViewPersonalInfo(this));
 	}
 }
