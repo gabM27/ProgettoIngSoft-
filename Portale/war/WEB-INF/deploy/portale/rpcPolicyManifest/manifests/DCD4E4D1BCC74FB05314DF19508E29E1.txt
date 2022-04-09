@@ -1,0 +1,2 @@
+serviceClass: it.unibo.ingsoft.gwt.client.settings.GreetingService
+path: 26F3EF3CBD7CF1EB8BD5999B9060CD7C.gwt.rpc
