@@ -20,6 +20,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Gabriele/Downloads/mapdb-0.9.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/junio/git/ProgettoIngSoft-/Portale/war/WEB-INF/lib/mapdb-0.9.7.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

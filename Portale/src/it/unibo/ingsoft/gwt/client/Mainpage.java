@@ -3,12 +3,14 @@ package it.unibo.ingsoft.gwt.client;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.dashboards.AdminDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.ProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.SecretaryDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.StudentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddAccountFormPage;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddDepartmentFormDashboard;
@@ -16,9 +18,9 @@ import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormPro
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeCourseFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeTestFormProfessorDashboard;
-import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
 import it.unibo.ingsoft.gwt.shared.Status;
 
 public class Mainpage extends Composite{
