@@ -1,4 +1,4 @@
-package it.unibo.ingsoft.gwt.client.settings;
+package it.unibo.ingsoft.gwt.client.settings.adminSettings;
 
 import java.util.Date;
 
@@ -20,7 +20,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
+import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AddPersonalInfoFormStudentDashboard extends Composite {
 	private Mainpage mainpage; // Riferimento alla mainpage
@@ -108,12 +110,13 @@ public class AddPersonalInfoFormStudentDashboard extends Composite {
 		 */
 		Label birthdayLbl = new Label("Data di nascita dello studente:");
 		DatePicker birthdayPick = new DatePicker();
+		birthdayPick.setYearAndMonthDropdownVisible(true);
 		birthdayPick.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				// DEBUG
-				Window.alert("Hai selezionato " + birthdayPick.getHighlightedDate());
+				Window.alert("Hai selezionato " + birthdayPick.getHighlightedDate());	
 				birthdayInput = birthdayPick.getHighlightedDate();
 			}
 		});
@@ -128,7 +131,7 @@ public class AddPersonalInfoFormStudentDashboard extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				mainPanel.clear();
-				mainpage.openAdminDashboard();
+				mainpage.openAccountDashboard(ActualSession.getActualSession().getActualStatus());
 			}
 		});
 		Button btnLogout = new Button("LOGOUT"); // BACK TO HOMEPAGE
@@ -178,17 +181,18 @@ public class AddPersonalInfoFormStudentDashboard extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Singleton.getGreetingService().addInfoToStudentAccount(emailInput, iDInput, usernameInput, 
-						nameInput, surnameInput, birthdayInput, new AsyncCallback<String>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("ERROR ADDING INFO TO STUDENT ACCOUNT: " + caught.getMessage());
-							}
-							@Override
-							public void onSuccess(String result) {
-								Window.alert(result);
-							}
-			});	
+			AdminFacade.getAdminFacade().addInfoToStudent(emailInput, iDInput, usernameInput, nameInput, surnameInput, birthdayInput);
+//			Singleton.getGreetingService().addInfoToStudentAccount(emailInput, iDInput, usernameInput, 
+//						nameInput, surnameInput, birthdayInput, new AsyncCallback<String>() {
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								Window.alert("ERROR ADDING INFO TO STUDENT ACCOUNT: " + caught.getMessage());
+//							}
+//							@Override
+//							public void onSuccess(String result) {
+//								Window.alert(result);
+//							}
+//			});	
 		}
 	}
 	

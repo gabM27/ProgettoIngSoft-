@@ -1,4 +1,4 @@
-package it.unibo.ingsoft.gwt.client.settings;
+package it.unibo.ingsoft.gwt.client.settings.adminSettings;
 
 import java.util.Date;
 
@@ -19,7 +19,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
+import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AddPersonalInfoFormProfessorDashboard extends Composite {
 	private Mainpage mainpage;
@@ -98,6 +100,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 		 */
 		Label birthdayLbl = new Label("Data di nascita del docente:");
 		DatePicker birthdayPick = new DatePicker();
+		birthdayPick.setYearAndMonthDropdownVisible(true);
 		birthdayPick.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override
@@ -118,7 +121,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				mainPanel.clear();
-				mainpage.openAdminDashboard();
+				mainpage.openAccountDashboard(ActualSession.getActualSession().getActualStatus());
 
 			}
 		});
@@ -166,17 +169,7 @@ public class AddPersonalInfoFormProfessorDashboard extends Composite {
 	private class SendInfoHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			Singleton.getGreetingService().addInfoToProfessorAccount(emailInput, usernameInput, 
-						nameInput, surnameInput, birthdayInput, new AsyncCallback<String>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("ERROR ADDING INFO TO STUDENT ACCOUNT: " + caught.getMessage());
-							}
-							@Override
-							public void onSuccess(String result) {
-								Window.alert(result);
-							}
-			});	
+			AdminFacade.getAdminFacade().addInfoToProfessor(emailInput, usernameInput, nameInput, surnameInput, birthdayInput);
 		}
 	}
 	
