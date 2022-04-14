@@ -15,14 +15,21 @@ import it.unibo.ingsoft.gwt.shared.users.User;
 public class University {
 	// Variabili istanza
 	private String athenaeumName; // Nome dell'ateneo
-	private String city; // Nome della citta' in cui si trova l'ateneo
+	private String city;// Nome della citta' in cui si trova l'ateneo
+	private String number; // Numero di telefono 
+	private String address; // Indirizzo 
 	private Secretary secretary; // Segreteria dell'universita'
 	
-
+//	private List<Department> departments; // Lista dei dipartimenti dell'ateneo
+//	private List<Professor> professors; // Lista dei professori dell'ateneo
+//	private List<Student> students;	// Lista degli studenti dell'ateneo
+	
 	// Costruttore
-	public University(String athenaeumName, String city) {
+	public University(String athenaeumName, String city,String number,String address) {
 		this.athenaeumName = athenaeumName;
 		this.city = city;
+		this.number=number;
+		this.address=address;
 		// TODO: createDB();
 //		this.departments = new Vector<Department>(8,4); // Primo parametro = capacita' iniziale; secondo parametro = capacita' incremento
 //		this.professors = new Vector<Professor>(120,15); // Primo parametro = capacita' iniziale; secondo parametro = capacita' incremento
@@ -34,7 +41,16 @@ public class University {
 	
 	public String getCity() { return this.city; } // ritorna il nome della citta' relativa all'università
 	
+	public String getNumber() {return this.number;}
+	
+	public String getAddress() {return this.address;}
+	
+	 public List<Department> getDepartmentsList() { return this.departments; } // ritorna la lista dei dipartimenti
 
+//	public List<Professor> getProfessorList() { return this.professors; } // ritorna la lista dei professori
+
+//	public List<Student> getStudentList() { return this.students; } // ritorna la lista degli studenti
+	
 	// Setters
 	public void setAthenaeumName(String newName) { // modifica il nome dell'ateneo
 		this.athenaeumName = newName;
