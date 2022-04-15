@@ -12,7 +12,6 @@ public class Homepage extends Composite {
 	// Variabili istanza
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Mainpage mainpage;
-	private HorizontalPanel information = new HorizontalPanel();
 	
 	// Costruttore
 	public Homepage(Mainpage main) {
@@ -37,21 +36,20 @@ public class Homepage extends Composite {
 		// Aggiungo il bottone al pannello verticale
 		panel.add(btnLogin);
 		
+		HorizontalPanel informationPanel = new HorizontalPanel();
+		
+		Label informationLabel = new Label();
+		informationLabel.setText("Informazioni generali: "
+				                  + "Numero telefono: " + Portale.uni.getNumber()
+				                  + "Indrizzo: " +  Portale.uni.getAddress());
+		
+		// Aggiungo label al pannello verticale
+		informationPanel.add(informationLabel);
+
+		panel.add(informationPanel);
 		
 		// Aggiungo il pannello verticale al mainPanel
 		this.mainPanel.add(panel);
-		
-		initWidget(this.information);
-		HorizontalPanel panel2 = new HorizontalPanel();
-		
-		Label informationLabel = new Label();
-		informationLabel.setText("Informazioni generali:"
-				                  + "Numero telefono" + Portale.uni.getNumber()
-				                  + "Indrizzo " +  Portale.uni.getAddress());
-		
-		// Aggiungo label al pannello verticale
-		panel2.add(informationLabel);
-		
 	}
 	
 	private class btnLoginHandler implements ClickHandler {
