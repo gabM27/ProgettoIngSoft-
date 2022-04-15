@@ -2,7 +2,6 @@ package it.unibo.ingsoft.gwt.client.settings.professorSettings;
 
 import java.util.Date;
 
-import org.apache.james.mime4j.field.DateTimeField;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -11,12 +10,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -77,7 +74,7 @@ public class CreateChangeTestFormProfessorDashboard extends Composite{
 		/*
 		 * DUREZZA
 		 */
-		 Label durezzaLbl = new Label("Inserimento difficoltà esame:");
+		 Label durezzaLbl = new Label("Inserimento difficoltï¿½ esame:");
 		 TextBox durezzaTB = new TextBox();
 		 durezzaTB.setText("");
 		 durezzaTB.addChangeHandler(new ChangeHandler() {
@@ -90,7 +87,7 @@ public class CreateChangeTestFormProfessorDashboard extends Composite{
 		 /*
 		  * AULA SVOLGIMENTO
 		  */
-		 Label aulaSvolgimentoLbl = new Label("Inserimento difficoltà esame:");
+		 Label aulaSvolgimentoLbl = new Label("Inserimento difficoltï¿½ esame:");
 		 TextBox aulaSvolgimentoTB = new TextBox();
 		 aulaSvolgimentoTB.setText("");
 		 aulaSvolgimentoTB.addChangeHandler(new ChangeHandler() {

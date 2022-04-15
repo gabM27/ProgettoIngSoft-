@@ -44,8 +44,11 @@ public class ViewPersonalInfo extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				mainPanel.clear();
-				mainpage.openSearchPersonalInfo();
-
+				if (ActualSession.getActualSession().getActualStatus() == Status.ADMIN) {
+					mainpage.openSearchPersonalInfo();
+				} else {
+					mainpage.openAccountDashboard(ActualSession.getActualSession().getActualStatus());
+				}
 			}
 		});
 		

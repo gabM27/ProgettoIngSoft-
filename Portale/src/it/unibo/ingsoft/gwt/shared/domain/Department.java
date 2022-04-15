@@ -1,26 +1,24 @@
 package it.unibo.ingsoft.gwt.shared.domain;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
+
 
 public class Department implements Serializable {
 	
 	// Variabili istanza
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private List<Course> courses;
+	private ArrayList<String> courses = new ArrayList<String>(15);
 	
 	// Costruttore
 	public Department(String name){
 		this.name = name;
-		this.courses = new Vector<Course>(15,5); // Primo parametro = capacita' iniziale; secondo paramtetro = capacita' incremento
 	}
-	
 	// Getters
 	public String getName() { return this.name; } // ritorna il nome del dipartimento
 	
-	public List<Course> getCoursesList() { return this.courses; } // ritorna la lista dei corsi disponibili 
+	public ArrayList<String> getCoursesList() { return this.courses; } // ritorna la lista dei corsi disponibili 
 
 	// Setters
 	public void setName(String newName) { // modifica il nome del dipartimento
@@ -28,16 +26,29 @@ public class Department implements Serializable {
 	}
 	
 	// Aggiunge un corso al dipartimento
-	public void addCourse(Course c) {
-		this.courses.add(c);
+	public void addCourse(String c) {
+		if (!isCourseThere(c)) {
+			this.courses.add(c);
+		}
 	}
 	
-	// stampa tutti i corsi
-	public String printCourses() {
-		String x = "";
-		for (Course c : this.courses) {
-			x += c.toString()+"\n";
+	// Metodo che controlla se c'� gi� un corso all'interno della lista
+	public boolean isCourseThere(String c) {
+		boolean isThere = false;
+		for (int i = 0; i < this.courses.size(); i++) {
+			if (c.equalsIgnoreCase(this.courses.get(i))) {
+				isThere = true;
+				break;
+			} // else --> isThere = false
 		}
-		return x;
+		return isThere;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "NOME DIPARTIMENTO: " + this.name + ".\n"
+				+ "lista corsi: " + this.courses ;
+		
 	}
 }

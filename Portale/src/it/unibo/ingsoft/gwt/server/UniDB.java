@@ -8,6 +8,7 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
 import it.unibo.ingsoft.gwt.shared.domain.Course;
 import it.unibo.ingsoft.gwt.shared.domain.Department;
@@ -16,7 +17,6 @@ import it.unibo.ingsoft.gwt.shared.users.Professor;
 import it.unibo.ingsoft.gwt.shared.users.Secretary;
 import it.unibo.ingsoft.gwt.shared.users.Student;
 import it.unibo.ingsoft.gwt.shared.users.User;
-
 
 
 public class UniDB {
@@ -46,12 +46,15 @@ public class UniDB {
 		usersMap.clear();
 		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
 		departmentsMap.clear();
-		adminUserInitialize();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		coursesMap.clear();
 		
 		db.commit();
 		usersMap.close();
 		departmentsMap.close();
+		coursesMap.close();
 		db.close();
+		adminUserInitialize();
 		return true;
 	}
 	
@@ -163,7 +166,7 @@ public class UniDB {
 			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 			
 			User u = usersMap.get(email);
-			String ret = "L'account associato all'email non è di un docente o di uno studente.\nRiprovare.";
+			String ret = "L'account associato all'email non ï¿½ di un docente o di uno studente.\nRiprovare.";
 			if (u instanceof Student || u instanceof Professor) {
 				ret = u.toString(); // Informazioni personali dello studente o del docente
 			} 
@@ -234,47 +237,102 @@ public class UniDB {
 		}
 	}
 	
+	// Ritorna la lista dei dipartimenti presenti nel DB in una stringa con delimitatore '_'
 	public static String viewDepartmentsList() {
 		String ret = "";
 		DB db = getUniDB();
 		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
 		
 		if (!departmentsMap.isEmpty()) {
-			for (Entry<String, Department> newDep : departmentsMap.entrySet()) {
-				ret += newDep.getValue().getName() + "_";
+			for (Entry<String, Department> newEntry : departmentsMap.entrySet()) {
+				Department newDep = newEntry.getValue();
+				ret += newDep.getName() + "_";
 			}
 		} else {
 			ret += "Nessun dipartimento inserito nel Database.";
 		}
 		
+		db.commit();
+		departmentsMap.close();
+		db.close();
 		return ret;
 	}
 	
-	// Aggiunge un oggetto Course al dipartimento passato in input nella departmentsMap (se presente) nel db uniDB
+	// Aggiunge un oggetto Course alla coursesMap
+	// e aggiunge il nome del corso all'oggetto dipartimento passato in input.
+	// Se il corso e' gia' presente nella lista corsi di quel dipartimento, non verra' aggiunto.
 	public static String addCourse(String departmentName, String courseName, 
-			Date startCourse, Date endCourse, String description, String secondProf) {
+			Date startCourse, Date endCourse, String description, String secondProfEmail) {
 		
 		DB db = getUniDB();
+			
+		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
+		HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
+		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+		
+		// Creazione del nuovo corso
 		Course c = new Course(courseName);
+		// il prof che crea il corso diviene il docente principale del corso stesso
+		c.setProf(ActualSession.getActualSession().getEmail());
 		c.setStartDate(startCourse);
 		c.setEndDate(endCourse);
 		c.setDescription(description);
-			
-		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
-		departmentsMap.get(departmentName).addCourse(c);
-			
-		// DEBUG
-		System.out.println("INIZIO DEBUG");
-		for (int i = 0; i < departmentsMap.get(departmentName).getCoursesList().size(); i++) {
-			System.out.println("- " + departmentsMap.get(departmentName).printCourses());
+//		c.setDepartment(departmentName);
+		
+		// Controllo che il co-docente esista nella usersMap.
+		// Se esiste viene settato il valore secondProf del corso
+		String valSecondProf = "Co-docente inserito correttamente."; 
+		if ((!secondProfEmail.equals("")) && (checkEmail(secondProfEmail))) {
+			if (usersMap.get(secondProfEmail) instanceof Professor) {
+				c.setSecondProf(secondProfEmail);
+			} else {
+				valSecondProf = "Co-docente inserito presente nel db, ma con un ruolo diverso da \"docente\".";
+			}
+		} else {
+			valSecondProf = "Co-docente non inserito o e-mail non presente nella lista degli users.";
 		}
-		System.out.println("FINE DEBUG");
+		
+		// Aggiunta del corso alla coursesMap
+		coursesMap.put(c.getName(), c);
+		
+		// Setting nome corso nella lista dei corsi del dipartimento
+		Department newDep = departmentsMap.get(departmentName);
+		newDep.addCourse(c.getName());
+		departmentsMap.replace(departmentName,newDep);
 		
 		db.commit();
 		departmentsMap.close();
 		db.close();
-		return "ADDED NEW COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".";
+
+		return "ADDED OR CHANGED COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".\n" + valSecondProf;
 		
+	}
+	
+	public static String viewCoursesList(String departmentName) {
+		String ret = "";
+		DB db = getUniDB();
+		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		
+		if ((!departmentsMap.isEmpty()) && (checkDepartmentName(departmentName))) {
+			Department d = departmentsMap.get(departmentName);
+			if (!d.getCoursesList().isEmpty()) {
+				for (String course : d.getCoursesList()) {
+					ret += course + "_";
+				}
+			} else {
+				ret += "Nessun corso inserito nel dipartimento selezionato.";
+			}
+		} else {
+			ret += "Dipartimento selezionato inesistente.";
+		}
+	
+		
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return ret;
+	
 	}
 	
 	/*
@@ -337,6 +395,7 @@ public class UniDB {
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 		User u = usersMap.get(email);
+		
 		if(u instanceof Student) {
 			Student s = (Student) u;
 			if ((s.getEmail().equalsIgnoreCase(email)) && (s.getUsername() != null)
@@ -353,6 +412,9 @@ public class UniDB {
 			}
 		} // else --> check = false
 		
+		db.commit();
+		usersMap.close();
+		db.close();
 		return check;
 	}
 	

@@ -7,7 +7,7 @@ import it.unibo.ingsoft.gwt.shared.domain.University;
 
 public class Portale implements EntryPoint {
 
-public static final University uni = new University("Alma Mater Studiorum", "Bologna");
+public static final University uni = new University("Alma Mater Studiorum", "Bologna","051 209 9111","Via Zamboni, 33 - 40126 Bologna");
 
   /**
    * Entry point method.

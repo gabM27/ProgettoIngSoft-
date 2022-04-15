@@ -121,7 +121,6 @@ public class Loginpage extends Composite {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert("Hai inserito:\n- " + inputEmail + " \n- " + inputPass);
 			
 			Singleton.getGreetingService().doLogin(inputEmail,inputPass,new AsyncCallback<Status>() {
 

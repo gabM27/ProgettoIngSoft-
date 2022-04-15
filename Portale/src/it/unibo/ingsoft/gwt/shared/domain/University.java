@@ -45,7 +45,7 @@ public class University {
 	
 	public String getAddress() {return this.address;}
 	
-	 public List<Department> getDepartmentsList() { return this.departments; } // ritorna la lista dei dipartimenti
+//	 public List<Department> getDepartmentsList() { return this.departments; } // ritorna la lista dei dipartimenti
 
 //	public List<Professor> getProfessorList() { return this.professors; } // ritorna la lista dei professori
 

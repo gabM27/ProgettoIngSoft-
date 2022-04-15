@@ -11,12 +11,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
+import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class AdminDashboard extends Composite {
 	// Variabili istanza
@@ -41,8 +41,9 @@ public class AdminDashboard extends Composite {
 		actionList.addItem("Visualizzazione informazioni personali");
 		actionList.addItem("Inserimento nuovo dipartimento");
 		actionList.addItem("Visualizzazione lista dipartimenti");
+		actionList.addItem("Visualizzazione corsi disponibili");
 		actionList.addItem("Pulizia database");
-		actionList.setVisibleItemCount(7);
+		actionList.setVisibleItemCount(8);
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
@@ -95,9 +96,12 @@ public class AdminDashboard extends Composite {
 				mainpage.openAddDepartmentFormDashboard();
 				break;
 			case 5:
-				AdminFacade.getAdminFacade().printDepartmentsList(mainpage);
+				GeneralUserFacade.getGeneralUserFacade().printDepartmentsList(mainpage);
 				break;
-			case 6: // Pulizia DB
+			case 6:
+				mainpage.openSearchCourse();
+				break;
+			case 7: // Pulizia DB
 				AdminFacade.getAdminFacade().cleaningDB();
 				break;
 			default: // Default operation: error

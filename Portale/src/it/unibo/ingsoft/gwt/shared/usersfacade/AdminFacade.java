@@ -140,24 +140,5 @@ public class AdminFacade {
 		});
 	}
 	
-	/*
-	 * Visualizzazione della lista dei dipartimenti
-	 */
-	public void printDepartmentsList(Mainpage main) {
-		Singleton.getGreetingService().viewDepartments(new AsyncCallback<String>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR printing departments list: " + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				String[] dipList = result.split("_");
-				main.openViewDepartmentsList(dipList);
-			}
-		});
-	}
-	
 	
 }

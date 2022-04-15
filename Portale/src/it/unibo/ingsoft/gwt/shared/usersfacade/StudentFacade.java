@@ -1,9 +1,5 @@
 package it.unibo.ingsoft.gwt.shared.usersfacade;
 
-import it.unibo.ingsoft.gwt.client.Portale;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
-import it.unibo.ingsoft.gwt.shared.domain.Department;
-
 /*
  * Classe facciata utilizzata da uno studente 
  * per interagire con le operazioni
@@ -31,7 +27,7 @@ public class StudentFacade {
 	}
 	
 	/*
-	 * Stampa le informazioni di tutti i corsi (per ogni dipartimento dell'università).
+	 * Stampa le informazioni di tutti i corsi (per ogni dipartimento dell'universitï¿½).
 	 * */
 //	protected String printAllCourses() {
 //		String s = "";

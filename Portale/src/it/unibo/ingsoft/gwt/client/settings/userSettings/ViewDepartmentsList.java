@@ -36,7 +36,7 @@ public class ViewDepartmentsList extends Composite {
 			stringDepList += "- " + list[i].toUpperCase() + ".\n";
 		}
 		departmentsList.setText(stringDepList);
-		departmentsList.setPixelSize(200,500);
+		departmentsList.setPixelSize(200,400);
 		departmentsList.setReadOnly(true);
 		
 		/*

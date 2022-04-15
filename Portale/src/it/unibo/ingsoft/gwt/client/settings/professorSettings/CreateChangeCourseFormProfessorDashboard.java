@@ -24,18 +24,17 @@ import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
 import it.unibo.ingsoft.gwt.shared.usersfacade.ProfessorFacade;
 
 public class CreateChangeCourseFormProfessorDashboard extends Composite{
 	private Mainpage mainpage; // Riferimento alla mainpage
 	private VerticalPanel mainPanel = new VerticalPanel(); // mainPanel che comprende tutti gli elementi della dashboard
-	private String nomeDipartimento;
-	private String nomeCorso;
+	private String nomeDipartimento = "";
+	private String nomeCorso = "";
 	private Date dataInizio;
 	private Date dataFine;
-	private String descrizioneCorso;
-	private String codocente;
+	private String descrizioneCorso = "";
+	private String codocente = "";
 
 	public CreateChangeCourseFormProfessorDashboard(Mainpage main) {
 		this.mainpage = main;
@@ -70,6 +69,7 @@ public class CreateChangeCourseFormProfessorDashboard extends Composite{
 				}
 				// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
 				nomeDipartimento = nomeDipBox.getItemText(0);  
+				
 			}
 		});
 		
@@ -217,10 +217,6 @@ public class CreateChangeCourseFormProfessorDashboard extends Composite{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			c = new Course(nomeCorso);
-//			c.setStartDate(dataInizio);
-//			c.setEndDate(dataFine);
-//			c.setDescription(descrizioneCorso);
 			ProfessorFacade.getProfessorFacade().addNewCourse(nomeDipartimento, nomeCorso, dataInizio, dataFine, descrizioneCorso, codocente);
 		}
 

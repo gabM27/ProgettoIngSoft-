@@ -6,7 +6,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
+
 
 public class ProfessorFacade {
 	// Variabili istanza
@@ -35,5 +35,7 @@ public class ProfessorFacade {
 			}
 		});
 	}
+	
+	
 	
 }

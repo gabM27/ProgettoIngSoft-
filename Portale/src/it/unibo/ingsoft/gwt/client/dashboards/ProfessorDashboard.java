@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
-import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class ProfessorDashboard extends Composite {
 	// Variabili istanza
@@ -42,8 +41,9 @@ public class ProfessorDashboard extends Composite {
 		actionList.addItem("Creazione / Modifica di un esame");
 		actionList.addItem("Cancellazione di un esame");
 		actionList.addItem("Visualizzare le proprie informazioni personali");
+		actionList.addItem("Visualizzazione corsi disponibili");
 		actionList.addItem("Invia i voti degli esami alla segreteria");
-		actionList.setVisibleItemCount(6);
+		actionList.setVisibleItemCount(7);
 		
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -112,7 +112,10 @@ public class ProfessorDashboard extends Composite {
 				});
 				
 				break;
-			case 5: // Invia i voti degli esami alla segreteria ccx  
+			case 5:
+				mainpage.openSearchCourse();
+				break;
+			case 6: // Invia i voti degli esami alla segreteria ccx  
 				
 				break;
 			default: // Default operation: error

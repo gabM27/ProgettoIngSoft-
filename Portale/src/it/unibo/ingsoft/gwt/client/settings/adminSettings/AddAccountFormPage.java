@@ -4,8 +4,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -18,10 +16,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.users.Professor;
-import it.unibo.ingsoft.gwt.shared.users.Secretary;
-import it.unibo.ingsoft.gwt.shared.users.Student;
-import it.unibo.ingsoft.gwt.shared.users.User;
 import it.unibo.ingsoft.gwt.shared.usersfacade.AdminFacade;
 
 public class AddAccountFormPage extends Composite{
@@ -83,7 +77,6 @@ public class AddAccountFormPage extends Composite{
 			@Override
 			public void onChange(ChangeEvent event) {
 				accountType = typeAccountList.getSelectedItemText().toLowerCase();
-				Window.alert("Nuovo account type aggiornato: " + accountType);
 			}
 		});
 		/*
@@ -134,8 +127,6 @@ public class AddAccountFormPage extends Composite{
 	private class AddAccountHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert("Hai inserito in input:\n- " + emailInput + "\n- " + passwordInput);
-	
 			AdminFacade.getAdminFacade().addNewAccount(emailInput, passwordInput, accountType.toLowerCase());
 			
 		}

@@ -6,7 +6,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
 
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
@@ -34,8 +33,7 @@ public interface GreetingService extends RemoteService {
 
 	String addCourseToDepartment(String departmentName, String courseName, 
 			Date startCourse, Date endCourse, String description, String secondProf);
-
-		
-
+	
+	String viewCourses(String depName);
 	
 }

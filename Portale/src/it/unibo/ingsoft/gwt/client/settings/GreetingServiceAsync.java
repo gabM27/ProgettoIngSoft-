@@ -5,8 +5,6 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
-import it.unibo.ingsoft.gwt.shared.users.User;
 
 public interface GreetingServiceAsync {
 	
@@ -32,4 +30,6 @@ public interface GreetingServiceAsync {
 	
 	void addCourseToDepartment(String departmentName, String courseName, Date startCourse, Date endCourse, 
 			String description, String secondProf, AsyncCallback<String> callback);
+
+	void viewCourses(String depName, AsyncCallback<String> callback);
 }

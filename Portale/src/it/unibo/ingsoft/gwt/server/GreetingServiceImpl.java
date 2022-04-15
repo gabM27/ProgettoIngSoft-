@@ -7,8 +7,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import it.unibo.ingsoft.gwt.client.settings.GreetingService;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.domain.Course;
-import it.unibo.ingsoft.gwt.shared.users.User;
 
 
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
@@ -71,4 +69,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			Date startCourse, Date endCourse, String description, String secondProf) {
 		return UniDB.addCourse(departmentName, courseName, startCourse, endCourse, description, secondProf);	
 	}
+	
+	@Override
+	public String viewCourses(String depName) {
+		return UniDB.viewCoursesList(depName);
+	}
+	
 }
