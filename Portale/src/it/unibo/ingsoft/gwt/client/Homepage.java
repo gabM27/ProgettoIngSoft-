@@ -39,7 +39,7 @@ public class Homepage extends Composite {
 		btnLogin.addClickHandler(new btnLoginHandler());
 
 		/*
-		 * HorizontalPanel che contiene le informazioni dell'università nella footer della homepage
+		 * HorizontalPanel che contiene le informazioni dell'università nella homepage
 		 */
 		HorizontalPanel informationPanel = new HorizontalPanel();
 		Label informationLabel = new Label();
@@ -63,12 +63,14 @@ public class Homepage extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
+				// Divido la stringa contenente i dipartimenti (presi dal database)
 				String[] returnList = result.split("_");
 				
 				VerticalPanel depPanel = new VerticalPanel();
 				Label description = new Label("LISTA DIPARTIMENTI:");
 				TextArea departmentsListTA = new TextArea();
 				String stringDepList = "";
+				// Aggiunta dei dipartimenti alla textarea
 				for (int i = 0; i < returnList.length; i++) {
 					stringDepList += "- " + returnList[i].toUpperCase() + ".\n";
 				}
@@ -77,9 +79,13 @@ public class Homepage extends Composite {
 				departmentsListTA.setPixelSize(200,275);
 				departmentsListTA.setReadOnly(true);
 				
+				/*
+				 * ADDING ELEMENTS TO DEP PANEL
+				 */
 				depPanel.add(description);
 				depPanel.add(departmentsListTA);
 				
+				// ADDING DEP PANEL TO PANEL
 				panel.add(depPanel);
 			}
 			
