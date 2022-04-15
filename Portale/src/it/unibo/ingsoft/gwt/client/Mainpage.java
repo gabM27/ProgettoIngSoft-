@@ -3,6 +3,9 @@ package it.unibo.ingsoft.gwt.client;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.dashboards.AdminDashboard;
@@ -150,4 +153,5 @@ public class Mainpage extends Composite{
 		this.mainPanel.clear();
 		this.mainPanel.add(new SearchCourse(this));
 	}
+
 }
