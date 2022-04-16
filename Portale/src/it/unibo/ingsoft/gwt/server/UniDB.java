@@ -309,23 +309,22 @@ public class UniDB {
 	}
 	
 	public static String deleteCourse(String depName, String courseName) {
-		DB db = getUniDB();
 		
-		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
-		HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
-		
-		if ((!departmentsMap.isEmpty()) && (!coursesMap.isEmpty()) 
-				&& (checkDepartmentName(depName)) && (checkCourseName(courseName))) {
+		if ((checkDepartmentName(depName)) && (checkCourseName(courseName))) {
+			DB db = getUniDB();
+			
+			HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
+			HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
 			
 			// Rimozione del corso dalla lista di corsi del dipartimento
-			System.out.println(departmentsMap.get(depName).toString()); // DEBUG
-			
 			Department newDep = departmentsMap.get(depName);
 			newDep.removeCourse(courseName);
-			System.out.println(departmentsMap.get(depName).toString() + "\n\n"); // DEBUG
+			
 			// Aggiornamento del valore del dipartimento modificato
-			departmentsMap.replace(depName, newDep);
-			// rimozione del corso dalla map nel db
+			departmentsMap.remove(depName);
+			departmentsMap.put(depName, newDep);
+		
+			// Rimozione del corso dalla map nel db
 			coursesMap.remove(courseName);	
 
 			db.commit();
@@ -334,10 +333,7 @@ public class UniDB {
 			db.close();
 			return "REMOVED COURSE \"" + courseName + "\" from the DB.";
 		} else { 
-			db.commit();
-			departmentsMap.close();
-			coursesMap.close();
-			db.close();
+
 			return "ERROR REMOVING COURSE \"" + courseName + "\".";
 		}
 	}

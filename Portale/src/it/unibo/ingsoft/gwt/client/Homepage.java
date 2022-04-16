@@ -45,7 +45,7 @@ public class Homepage extends Composite {
 		Label informationLabel = new Label();
 		
 		informationLabel.setText("Numero di telefono: " + Portale.uni.getNumber() + ""
-				+ " - Indrizzo: " +  Portale.uni.getAddress() + ""
+				+ " - Indirizzo: " +  Portale.uni.getAddress() + ""
 				+ " - Citta': " + Portale.uni.getCity() + ".");
 		
 		// Aggiungo label al pannello verticale
