@@ -2,6 +2,7 @@ package it.unibo.ingsoft.gwt.server;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.mapdb.DB;
@@ -277,7 +278,6 @@ public class UniDB {
 		c.setStartDate(startCourse);
 		c.setEndDate(endCourse);
 		c.setDescription(description);
-//		c.setDepartment(departmentName);
 		
 		// Controllo che il co-docente esista nella usersMap.
 		// Se esiste viene settato il valore secondProf del corso
@@ -308,11 +308,44 @@ public class UniDB {
 		
 	}
 	
+	public static String deleteCourse(String depName, String courseName) {
+		DB db = getUniDB();
+		
+		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
+		HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
+		
+		if ((!departmentsMap.isEmpty()) && (!coursesMap.isEmpty()) 
+				&& (checkDepartmentName(depName)) && (checkCourseName(courseName))) {
+			
+			// Rimozione del corso dalla lista di corsi del dipartimento
+			System.out.println(departmentsMap.get(depName).toString()); // DEBUG
+			
+			Department newDep = departmentsMap.get(depName);
+			newDep.removeCourse(courseName);
+			System.out.println(departmentsMap.get(depName).toString() + "\n\n"); // DEBUG
+			// Aggiornamento del valore del dipartimento modificato
+			departmentsMap.replace(depName, newDep);
+			// rimozione del corso dalla map nel db
+			coursesMap.remove(courseName);	
+
+			db.commit();
+			departmentsMap.close();
+			coursesMap.close();
+			db.close();
+			return "REMOVED COURSE \"" + courseName + "\" from the DB.";
+		} else { 
+			db.commit();
+			departmentsMap.close();
+			coursesMap.close();
+			db.close();
+			return "ERROR REMOVING COURSE \"" + courseName + "\".";
+		}
+	}
+	
 	public static String viewCoursesList(String departmentName) {
 		String ret = "";
 		DB db = getUniDB();
 		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
-		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 		
 		if ((!departmentsMap.isEmpty()) && (checkDepartmentName(departmentName))) {
 			Department d = departmentsMap.get(departmentName);
@@ -329,7 +362,6 @@ public class UniDB {
 	
 		
 		db.commit();
-		coursesMap.close();
 		db.close();
 		return ret;
 	
@@ -379,6 +411,29 @@ public class UniDB {
 		
 		db.commit();
 		departmentsMap.close();
+		db.close();
+		return check;
+	}
+	
+	/*
+	 * Ritorna true se gia' esiste un corso con il nome passato in input
+	 * Ritorna false se non e' memorizzato nel DB nessun corso con quel nome
+	 */
+	private static boolean checkCourseName(String courseName) {
+		boolean check = false;
+		
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		
+		for (Entry<String, Course> newDepartment: coursesMap.entrySet()) {
+			if (newDepartment.getValue().getName().equalsIgnoreCase(courseName)) {
+				check = true;
+				break;
+			}
+		}
+		
+		db.commit();
+		coursesMap.close();
 		db.close();
 		return check;
 	}

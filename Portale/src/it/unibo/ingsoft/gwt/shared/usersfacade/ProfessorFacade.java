@@ -36,6 +36,22 @@ public class ProfessorFacade {
 		});
 	}
 	
+	public void deleteCourse(String departmentName, String courseName) {
+		Singleton.getGreetingService().deleteCourseFromDB(departmentName,courseName, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR DELETING COURSE: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED DELETING COURSE:\n" + result);
+			}
+			
+		});
+	}
+	
 	
 	
 }

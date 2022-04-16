@@ -15,6 +15,7 @@ public class Department implements Serializable {
 	public Department(String name){
 		this.name = name;
 	}
+	
 	// Getters
 	public String getName() { return this.name; } // ritorna il nome del dipartimento
 	
@@ -29,6 +30,13 @@ public class Department implements Serializable {
 	public void addCourse(String c) {
 		if (!isCourseThere(c)) {
 			this.courses.add(c);
+		}
+	}
+	
+	public void removeCourse(String courseName) {
+		if (isCourseThere(courseName)){
+			int index = this.courses.indexOf(courseName);
+			this.courses.remove(index);
 		}
 	}
 	
@@ -51,4 +59,5 @@ public class Department implements Serializable {
 				+ "lista corsi: " + this.courses ;
 		
 	}
+	
 }

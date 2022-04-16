@@ -3,6 +3,7 @@ package it.unibo.ingsoft.gwt.server;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import it.unibo.ingsoft.gwt.client.settings.GreetingService;
@@ -73,6 +74,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Override
 	public String viewCourses(String depName) {
 		return UniDB.viewCoursesList(depName);
+	}
+	
+	@Override
+	public String deleteCourseFromDB(String departmentName, String courseName) {
+		return UniDB.deleteCourse(departmentName, courseName);
 	}
 	
 }

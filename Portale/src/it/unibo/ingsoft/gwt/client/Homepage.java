@@ -3,7 +3,6 @@ package it.unibo.ingsoft.gwt.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -13,6 +12,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
+import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class Homepage extends Composite {
 	// Variabili istanza
@@ -54,42 +54,24 @@ public class Homepage extends Composite {
 		/*
 		 * ADDING DEPARTMENTS LIST TO HOMEPAGE
 		 */
-		Singleton.getGreetingService().viewDepartments(new AsyncCallback<String>() {
+		VerticalPanel depPanel = new VerticalPanel();
+		Label description = new Label("LISTA DIPARTIMENTI:");
+		TextArea departmentsListTA = new TextArea();
+		departmentsListTA.setText("...");
+		departmentsListTA.setPixelSize(200,275);
+		departmentsListTA.setReadOnly(true);
+		Button btnRefresh = new Button("Refresh");
+		btnRefresh.addClickHandler(new RefreshHandler(departmentsListTA));
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR ADDING DEPARTMENTS LIST IN THE HOMEPAGE: " + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				// Divido la stringa contenente i dipartimenti (presi dal database)
-				String[] returnList = result.split("_");
-				
-				VerticalPanel depPanel = new VerticalPanel();
-				Label description = new Label("LISTA DIPARTIMENTI:");
-				TextArea departmentsListTA = new TextArea();
-				String stringDepList = "";
-				// Aggiunta dei dipartimenti alla textarea
-				for (int i = 0; i < returnList.length; i++) {
-					stringDepList += "- " + returnList[i].toUpperCase() + ".\n";
-				}
-				
-				departmentsListTA.setText(stringDepList);
-				departmentsListTA.setPixelSize(200,275);
-				departmentsListTA.setReadOnly(true);
-				
-				/*
-				 * ADDING ELEMENTS TO DEP PANEL
-				 */
-				depPanel.add(description);
-				depPanel.add(departmentsListTA);
-				
-				// ADDING DEP PANEL TO PANEL
-				panel.add(depPanel);
-			}
-			
-		});
+		/*
+		 * ADDING ELEMENTS TO DEP PANEL
+		 */
+		depPanel.add(description);
+		depPanel.add(departmentsListTA);
+		depPanel.add(btnRefresh);
+		depPanel.setSpacing(5);
+		// ADDING DEP PANEL TO Panel
+		panel.add(depPanel);
 		
 		/*
 		 * ADDING INFORMATION PANEL TO PANEL
@@ -107,9 +89,44 @@ public class Homepage extends Composite {
 		 * ADDING PANEL TO MAINPANEL
 		 */
 		this.mainPanel.add(panel);
+
+	}
+	
+	private class RefreshHandler implements ClickHandler {
+		private TextArea departmentsListTA;
+		
+		public RefreshHandler(TextArea area) {
+			this.departmentsListTA = area;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			Singleton.getGreetingService().viewDepartments(new AsyncCallback<String>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					departmentsListTA.setText("caso base --> solo la prima volta");
+//					Window.alert("ERROR ADDING DEPARTMENTS LIST TO HOMEPAGE: " + caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(String result) {
+					// Divido la stringa contenente i dipartimenti (presi dal database)
+					String[] returnList = result.split("_");
+						
+					String stringDepList = "";
+					// Aggiunta dei dipartimenti alla textarea
+					for (int i = 0; i < returnList.length; i++) {
+						stringDepList += "- " + returnList[i].toUpperCase() + ".\n";
+					}
+						
+					departmentsListTA.setText(stringDepList);
+				}
+				
+			});
+		}
 		
 	}
-
 	
 	private class btnLoginHandler implements ClickHandler {
 

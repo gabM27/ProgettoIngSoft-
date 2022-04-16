@@ -32,4 +32,6 @@ public interface GreetingServiceAsync {
 			String description, String secondProf, AsyncCallback<String> callback);
 
 	void viewCourses(String depName, AsyncCallback<String> callback);
+
+	void deleteCourseFromDB(String departmentName, String courseName, AsyncCallback<String> callabck);
 }

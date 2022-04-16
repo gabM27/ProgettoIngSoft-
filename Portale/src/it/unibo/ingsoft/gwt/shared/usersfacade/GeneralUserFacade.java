@@ -2,6 +2,7 @@ package it.unibo.ingsoft.gwt.shared.usersfacade;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TextArea;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
@@ -54,4 +55,5 @@ public class GeneralUserFacade {
 			}
 		});
 	}
+	
 }

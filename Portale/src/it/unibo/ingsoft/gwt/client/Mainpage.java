@@ -19,8 +19,10 @@ import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormPro
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeCourseFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeTestFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
+import it.unibo.ingsoft.gwt.server.UniDB;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewCoursesList;
@@ -32,9 +34,8 @@ public class Mainpage extends Composite{
 	
 	// Costruttore
 	public Mainpage() {
-		doAdminInitialize();
-		
 		initWidget(mainPanel);
+		
 		openHomepage();
 	}
 	
@@ -93,21 +94,7 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(new AddPersonalInfoFormStudentDashboard(this));
 	}
 	
-	private static void doAdminInitialize() {
-		Singleton.getGreetingService().adminInitialize(new AsyncCallback<String> () {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR in initializing admin account: " + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				System.out.println("Admin initializing success: " + result);
-			}
-			
-		});
-	}
 
 	public void openAddPersonalInfoFormProfessorDashboard() {
 		this.mainPanel.clear();
@@ -152,6 +139,11 @@ public class Mainpage extends Composite{
 	public void openSearchCourse() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new SearchCourse(this));
+	}
+
+	public void openRemoveCourseDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new RemoveCourseDashboard(this));
 	}
 
 }

@@ -87,7 +87,7 @@ public class ProfessorDashboard extends Composite {
 				mainpage.openCreateChangeCourseFormProfessorDashboard();
 				break;
 			case 1: // Cancellazione di un corso
-				// TODO:
+				mainpage.openRemoveCourseDashboard();
 				break;
 			case 2:	// Creazione / Modifica  un esame
 				mainpage.openCreateChangeTestFormProfessorDashboard();

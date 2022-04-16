@@ -91,6 +91,7 @@ public class SearchCourse extends Composite{
 		 */
 		panel.add(depLabel);
 		panel.add(nomeDipBox);
+		panel.setSpacing(5);
 		
 		/*
 		 * ADDING BUTTONS TO buttonsPanel

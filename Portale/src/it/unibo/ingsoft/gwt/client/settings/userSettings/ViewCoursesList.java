@@ -36,7 +36,7 @@ public class ViewCoursesList extends Composite{
 			stringCoursesList += "- " + list[i].toUpperCase() + ".\n";
 		}
 		coursesList.setText(stringCoursesList);
-		coursesList.setPixelSize(200,600);
+		coursesList.setPixelSize(200,400);
 		coursesList.setReadOnly(true);
 		
 		/*
