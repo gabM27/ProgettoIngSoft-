@@ -22,7 +22,7 @@ import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
 
-public class CreateChangeTestFormProfessorDashboard extends Composite{
+public class CreateChangeExamFormProfessorDashboard extends Composite{
 	private Mainpage mainpage; // Riferimento alla mainpage
 	private VerticalPanel mainPanel = new VerticalPanel(); // mainPanel che comprende tutti gli elementi della dashboard
 	private Date data;
@@ -31,7 +31,7 @@ public class CreateChangeTestFormProfessorDashboard extends Composite{
 	private String aulaSvolgimento;
 	//private String esame;
 
-	public CreateChangeTestFormProfessorDashboard(Mainpage main) {
+	public CreateChangeExamFormProfessorDashboard(Mainpage main) {
 		this.mainpage = main;
 		initWidget(this.mainPanel);
 		/*

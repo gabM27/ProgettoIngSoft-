@@ -3,6 +3,7 @@ package it.unibo.ingsoft.gwt.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -57,7 +58,7 @@ public class Homepage extends Composite {
 		VerticalPanel depPanel = new VerticalPanel();
 		Label description = new Label("LISTA DIPARTIMENTI:");
 		TextArea departmentsListTA = new TextArea();
-		departmentsListTA.setText("...");
+		departmentsListTA.setText("Premi refresh per visualizzare la lista.");
 		departmentsListTA.setPixelSize(200,275);
 		departmentsListTA.setReadOnly(true);
 		Button btnRefresh = new Button("Refresh");
@@ -74,14 +75,16 @@ public class Homepage extends Composite {
 		panel.add(depPanel);
 		
 		/*
+		 * ADDING LOGIN BUTTON TO PANEL
+		 */
+		panel.add(btnLogin);
+		
+		/*
 		 * ADDING INFORMATION PANEL TO PANEL
 		 */
 		panel.add(informationPanel);
 		
-		/*
-		 * ADDING LOGIN BUTTON TO PANEL
-		 */
-		panel.add(btnLogin);
+		
 				
 		panel.setSpacing(5);
 		
@@ -105,8 +108,7 @@ public class Homepage extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					departmentsListTA.setText("caso base --> solo la prima volta");
-//					Window.alert("ERROR ADDING DEPARTMENTS LIST TO HOMEPAGE: " + caught.getMessage());
+					Window.alert("ERROR ADDING DEPARTMENTS LIST TO HOMEPAGE: " + caught.getMessage());
 				}
 
 				@Override

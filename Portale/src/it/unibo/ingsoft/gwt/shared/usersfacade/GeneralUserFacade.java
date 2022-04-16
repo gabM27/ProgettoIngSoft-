@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TextArea;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 
 public class GeneralUserFacade {
@@ -55,5 +56,28 @@ public class GeneralUserFacade {
 			}
 		});
 	}
+	
+	/*
+	 * Visualizzazione informazioni personali
+	 */
+	public void printPersonalInfo(Mainpage mainpage) {
+		Singleton.getGreetingService().viewPersonalInfo(ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERRORE NELLA VISUALIZZAZIONE DELLE INFORMAZIONI PERSONALI: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				mainpage.openViewPersonalInfo(result);
+			}
+			
+		});
+	}
+	
+	
+	
 	
 }

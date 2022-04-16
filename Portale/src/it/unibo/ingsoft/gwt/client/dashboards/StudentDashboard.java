@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
+import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class StudentDashboard extends Composite {
 	// Variabili istanza
@@ -77,19 +78,19 @@ public class StudentDashboard extends Composite {
 		public void onDoubleClick(DoubleClickEvent event) {
 			switch(index) {
 			case 0:	// Visualizza i corsi disponibili
-				//mainpage.openAddAccountFormDashboard();
+				mainpage.openSearchCourse();
 				break;
 			case 1:	// Iscriviti a un corso 
-				//mainpage.openAddPersonalInfoFormStudentDashboard();
+				
 				break;
 			case 2: // Registrati all'esame relativo a un corso 
-				//mainpage.openAddPersonalInfoFormProfessorDashboard();
+				
 				break;
-			case 3: // Visualizza info ersonali degli studenti iscritti 
-				//AdminFacade.adminFacade.cleaningDB();
+			case 3: // Visualizza info personali degli studenti iscritti 
+				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
 			case 4:	// Visualizza voti degli esami svolti 
-				//mainpage.openAddAccountFormDashboard();
+			
 				break;
 			default: // Default operation: error
 				//Window.alert("ERROR: DEFAULT OPERATION");

@@ -18,7 +18,7 @@ import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddDepartmentFormDashb
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeCourseFormProfessorDashboard;
-import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeTestFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeExamFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
@@ -118,7 +118,7 @@ public class Mainpage extends Composite{
 
 	public void openCreateChangeTestFormProfessorDashboard() {
 		this.mainPanel.clear();
-		this.mainPanel.add(new CreateChangeTestFormProfessorDashboard(this));
+		this.mainPanel.add(new CreateChangeExamFormProfessorDashboard(this));
 	}
 	
 	public void openAddDepartmentFormDashboard() {

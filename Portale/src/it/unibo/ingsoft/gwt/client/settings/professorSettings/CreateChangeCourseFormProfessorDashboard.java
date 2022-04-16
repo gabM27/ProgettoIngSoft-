@@ -99,6 +99,7 @@ public class CreateChangeCourseFormProfessorDashboard extends Composite{
 		Label dataInizioLbl = new Label("Data inizio:");
 		DatePicker dataInizioPick = new DatePicker();
 		dataInizioPick.setYearAndMonthDropdownVisible(true);
+//		dataInizioPick.
 		dataInizioPick.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override

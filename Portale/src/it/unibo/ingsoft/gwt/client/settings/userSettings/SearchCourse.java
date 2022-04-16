@@ -112,11 +112,8 @@ public class SearchCourse extends Composite{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (ActualSession.getActualSession().getActualStatus() == Status.STUDENT) {
-				// StudentFacade.getStudentFacade().courseRegistration(params);
-			} else {
-				GeneralUserFacade.getGeneralUserFacade().printCoursesList(mainpage, department);
-			}
+			GeneralUserFacade.getGeneralUserFacade().printCoursesList(mainpage, department);
+			
 		}
 	}	
 }

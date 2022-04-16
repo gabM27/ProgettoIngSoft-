@@ -2,7 +2,6 @@ package it.unibo.ingsoft.gwt.server;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.mapdb.DB;
