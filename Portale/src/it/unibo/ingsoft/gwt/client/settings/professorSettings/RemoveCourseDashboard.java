@@ -58,10 +58,33 @@ public class RemoveCourseDashboard extends Composite{
 				// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
 				departmentName = depNameBox.getItemText(0);
 				
+				/*
+				 * Gestione caso base in cui non viene modificato il valore del nomeDipartimento nel menu a tendina
+				 * Si stampano i corsi del valore del dipartimento di default (valore n.0 del menu a tendina) 
+				 */
+				Singleton.getGreetingService().viewCourses(departmentName, new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERRORE: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						courseNameBox.clear();
+						String[] coursesList = result.split("_");
+						for (int i = 0; i < coursesList.length; i++) {
+							courseNameBox.addItem(coursesList[i]);
+						}
+						// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
+						courseName = courseNameBox.getItemText(0);  
+					}
+				});
 			}
 		});
 
 		depNameBox.addChangeHandler(new ViewCourses4Delete());
+		
 		courseNameBox.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {

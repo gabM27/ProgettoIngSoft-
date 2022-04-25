@@ -20,9 +20,9 @@ public class ProfessorFacade {
 		return professorFacade;
 	}
 	
-	public void addNewCourse(String departmentName, String courseName, 
+	public void addNewCourse(String departmentName, String courseName, String profEmail, 
 			Date startCourse, Date endCourse, String description, String secondProf) {
-		Singleton.getGreetingService().addCourseToDepartment(departmentName, courseName, startCourse, endCourse, description, secondProf , new AsyncCallback<String>() {
+		Singleton.getGreetingService().addCourseToDepartment(departmentName, courseName, profEmail, startCourse, endCourse, description, secondProf , new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -49,6 +49,21 @@ public class ProfessorFacade {
 				Window.alert("TRYED DELETING COURSE:\n" + result);
 			}
 			
+		});
+	}
+
+	public void addNewExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula) {
+		Singleton.getGreetingService().addExam(nomeCorso,dataEsame,orarioEsame,durezza,nomeAula, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR ADDING NEW EXAM: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED ADDING NEW EXAM.\nRESULT: " + result);
+			}
 		});
 	}
 	

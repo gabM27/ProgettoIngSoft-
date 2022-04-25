@@ -28,10 +28,14 @@ public interface GreetingServiceAsync {
 	
 	void viewDepartments(AsyncCallback<String> callback);
 	
-	void addCourseToDepartment(String departmentName, String courseName, Date startCourse, Date endCourse, 
+	void addCourseToDepartment(String departmentName, String courseName, String profEmail, Date startCourse, Date endCourse, 
 			String description, String secondProf, AsyncCallback<String> callback);
 
 	void viewCourses(String depName, AsyncCallback<String> callback);
 
 	void deleteCourseFromDB(String departmentName, String courseName, AsyncCallback<String> callabck);
+
+	void addExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula,
+			AsyncCallback<String> asyncCallback);
+
 }

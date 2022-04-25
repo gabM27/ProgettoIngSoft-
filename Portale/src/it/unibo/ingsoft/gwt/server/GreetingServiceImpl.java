@@ -66,9 +66,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 	
 	@Override
-	public String addCourseToDepartment(String departmentName, String courseName, 
+	public String addCourseToDepartment(String departmentName, String courseName, String profEmail,
 			Date startCourse, Date endCourse, String description, String secondProf) {
-		return UniDB.addCourse(departmentName, courseName, startCourse, endCourse, description, secondProf);	
+		return UniDB.addCourse(departmentName, courseName, profEmail, startCourse, endCourse, description, secondProf);	
 	}
 	
 	@Override
@@ -81,4 +81,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		return UniDB.deleteCourse(departmentName, courseName);
 	}
 	
+	@Override
+	public String addExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula) {
+		return UniDB.addExamToCourse(nomeCorso, dataEsame, orarioEsame, durezza, nomeAula);
+	}
 }

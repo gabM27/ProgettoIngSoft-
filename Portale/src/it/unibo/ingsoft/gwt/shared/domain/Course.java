@@ -12,7 +12,7 @@ public class Course implements Serializable{
 	private Date start;
 	private Date end;
 	private String description;
-	private Exam exam; // VINCOLO: � possibile avere un UNICO esame per corso
+	private Exam exam; // VINCOLO: e' possibile avere un UNICO esame per corso
 	private String prof;
 	private String secondProf = "";
 	
@@ -38,6 +38,8 @@ public class Course implements Serializable{
 	public Date getEndDate() { return this.end; } // ritorna la data di fine del corso
 	
 	public String getDescription() { return this.description; } // ritorna la descrizione del corso
+	
+	public Exam getExam() { return this.exam; } // ritorna l'oggetto esame presente nel corso
 	
 	public String getProf() { return this.prof; } // ritorna il docente del corso
 	
@@ -85,7 +87,9 @@ public class Course implements Serializable{
 				+ "Descrizione del corso: " + this.description + ".\n"
 				+ "Data inizio corso: " + this.start + ".\n"
 				+ "Data fine corso: " + this.end + ".\n"
-				+ "Numero studenti iscritti: " + this.students.size() + ".\n"; 	
+				+ "Numero studenti iscritti: " + this.students.size() + ".\n"
+				+ "Docente principale: " + this.prof +".\n"
+				+ "Co-docente: " + this.secondProf + "\n";
 	}
 
 	public String printExamInfo() { // stampa le info dell'esame
@@ -93,7 +97,7 @@ public class Course implements Serializable{
 				+ "Numero studenti iscritti: " + this.students.size();
 	}
 	
-	// Metodo che controlla se c'� gi� uno studente all'interno della lista studenti
+	// Metodo che controlla se c'e' gia' uno studente all'interno della lista studenti
 	public boolean is(String s) {
 		boolean isThere = false;
 		for (int i = 0; i < this.students.size(); i++) {

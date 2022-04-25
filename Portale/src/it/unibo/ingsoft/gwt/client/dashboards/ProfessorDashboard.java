@@ -37,14 +37,15 @@ public class ProfessorDashboard extends Composite {
 		
 		ListBox actionList = new ListBox();
 		
-		actionList.addItem("Creazione / Modifica di un corso");
+		actionList.addItem("Creazione di un corso");
+		actionList.addItem("Modifica informazioni di un corso");
 		actionList.addItem("Cancellazione di un corso");
 		actionList.addItem("Creazione / Modifica di un esame");
 		actionList.addItem("Cancellazione di un esame");
 		actionList.addItem("Visualizzare le proprie informazioni personali");
 		actionList.addItem("Visualizzazione corsi disponibili");
 		actionList.addItem("Invia i voti degli esami alla segreteria");
-		actionList.setVisibleItemCount(7);
+		actionList.setVisibleItemCount(8);
 		
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -85,26 +86,28 @@ public class ProfessorDashboard extends Composite {
 		public void onDoubleClick(DoubleClickEvent event) {
 			switch(index) {
 			case 0:	// Creazione / Modifica un corso
-				mainpage.openCreateChangeCourseFormProfessorDashboard();
+				mainpage.openCreateCourseFormProfessorDashboard();
 				break;
-			case 1: // Cancellazione di un corso
+			case 1:
+				mainpage.openChangeCourseInfoProfessorDashboard();
+				break;
+			case 2: // Cancellazione di un corso
 				mainpage.openRemoveCourseDashboard();
 				break;
-			case 2:	// Creazione / Modifica  un esame
-				mainpage.openCreateChangeTestFormProfessorDashboard();
+			case 3:	// Creazione / Modifica  un esame
+				mainpage.openCreateChangeExamFormProfessorDashboard();
 				break;
-			case 3: // Cancellazione di un esame
-				// TODO:
+			case 4: // Cancellazione di un esame
+				mainpage.openRemoveExamDashboard();
 				break;
-			case 4: // Visualizzazione informazioni personali
+			case 5: // Visualizzazione informazioni personali
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
-				
 				break;
-			case 5:
+			case 6:
 				mainpage.openSearchCourse();
 				break;
-			case 6: // Invia i voti degli esami alla segreteria ccx  
-				
+			case 7: // Invia i voti degli esami alla segreteria ccx  
+				// TODO:
 				break;
 			default: // Default operation: error
 				Window.alert("DEFAULT OPERATION");

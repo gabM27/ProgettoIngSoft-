@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry including="**/*.java" kind="src" path="src">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -20,7 +21,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Gabriele/Downloads/mapdb-0.9.7.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

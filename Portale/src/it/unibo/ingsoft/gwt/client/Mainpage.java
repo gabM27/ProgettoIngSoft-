@@ -17,9 +17,11 @@ import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddAccountFormPage;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddDepartmentFormDashboard;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormStudentDashboard;
-import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeCourseFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateCourseFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeCourseInfoProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeExamFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveExamDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
 import it.unibo.ingsoft.gwt.server.UniDB;
@@ -93,8 +95,6 @@ public class Mainpage extends Composite{
 		this.mainPanel.clear();
 		this.mainPanel.add(new AddPersonalInfoFormStudentDashboard(this));
 	}
-	
-
 
 	public void openAddPersonalInfoFormProfessorDashboard() {
 		this.mainPanel.clear();
@@ -111,12 +111,17 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(new ViewPersonalInfo(this,info));
 	}
 	
-	public void openCreateChangeCourseFormProfessorDashboard() {
+	public void openCreateCourseFormProfessorDashboard() {
 		this.mainPanel.clear();
-		this.mainPanel.add(new CreateChangeCourseFormProfessorDashboard(this));
+		this.mainPanel.add(new CreateCourseFormProfessorDashboard(this));
 	}
 
-	public void openCreateChangeTestFormProfessorDashboard() {
+	public void openChangeCourseInfoProfessorDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new ChangeCourseInfoProfessorDashboard(this));
+	}
+	
+	public void openCreateChangeExamFormProfessorDashboard() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new CreateChangeExamFormProfessorDashboard(this));
 	}
@@ -144,6 +149,11 @@ public class Mainpage extends Composite{
 	public void openRemoveCourseDashboard() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new RemoveCourseDashboard(this));
+	}
+
+	public void openRemoveExamDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new RemoveExamDashboard(this));
 	}
 
 }

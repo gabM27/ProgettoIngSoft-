@@ -261,50 +261,87 @@ public class UniDB {
 	// Aggiunge un oggetto Course alla coursesMap
 	// e aggiunge il nome del corso all'oggetto dipartimento passato in input.
 	// Se il corso e' gia' presente nella lista corsi di quel dipartimento, non verra' aggiunto.
-	public static String addCourse(String departmentName, String courseName, 
+	public static String addCourse(String departmentName, String courseName, String profEmail,
 			Date startCourse, Date endCourse, String description, String secondProfEmail) {
 		
-		DB db = getUniDB();
+			DB db = getUniDB();
 			
-		HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
-		HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
-		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
-		
-		// Creazione del nuovo corso
-		Course c = new Course(courseName);
-		// il prof che crea il corso diviene il docente principale del corso stesso
-		c.setProf(ActualSession.getActualSession().getEmail());
-		c.setStartDate(startCourse);
-		c.setEndDate(endCourse);
-		c.setDescription(description);
-		
-		// Controllo che il co-docente esista nella usersMap.
-		// Se esiste viene settato il valore secondProf del corso
-		String valSecondProf = "Co-docente inserito correttamente."; 
-		if ((!secondProfEmail.equals("")) && (checkEmail(secondProfEmail))) {
-			if (usersMap.get(secondProfEmail) instanceof Professor) {
-				c.setSecondProf(secondProfEmail);
+			HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			
+			// Creazione del nuovo corso
+			Course c = new Course(courseName);
+			// il prof che crea il corso diviene il docente principale del corso stesso
+			c.setProf(profEmail);
+			c.setStartDate(startCourse);
+			c.setEndDate(endCourse);
+			c.setDescription(description);
+			c.setSecondProf(secondProfEmail);
+			
+			// Controllo che il co-docente esista nella usersMap.
+			// Se esiste viene settato il valore secondProf del corso
+			String valSecondProf = ""; 
+			if (!secondProfEmail.equals("")) {
+				valSecondProf = "Co-docente inserito.";
 			} else {
-				valSecondProf = "Co-docente inserito presente nel db, ma con un ruolo diverso da \"docente\".";
+				valSecondProf = "Co-docente non inserito.";
 			}
-		} else {
-			valSecondProf = "Co-docente non inserito o e-mail non presente nella lista degli users.";
+			
+			coursesMap.put(c.getName(), c);
+				
+			// Setting nome corso nella lista dei corsi del dipartimento
+			Department newDep = departmentsMap.get(departmentName);
+			newDep.addCourse(c.getName()); // aggiunta corso alla lista nel dipartimento di pertinenza
+			// Aggiornamento del valore del dipartimento modificato
+			departmentsMap.replace(departmentName, newDep);
+			
+			System.out.println(departmentsMap.get(departmentName).toString()); // DEBUG 
+
+			for (Entry<String,Course> newCourse : coursesMap.entrySet()) {
+				System.out.println(newCourse.getValue().toString() + "\n");
+			}
+			
+			db.commit();
+			departmentsMap.close();
+			coursesMap.close();
+			db.close();
+
+		
+			return "ADDED COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".\n" + valSecondProf;
+	}
+	
+	public static String changeCourseInfo(String courseName, Date startCourse, 
+			Date endCourse, String description, String secondProfEmail) {
+		
+		if (checkCourseName(courseName)) {
+			
+			DB db = getUniDB();
+			
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			
+			// Modifica del corso
+			Course c = new Course(courseName);
+			
+			c.setStartDate(startCourse);
+			c.setEndDate(endCourse);
+			c.setDescription(description);
+			c.setSecondProf(secondProfEmail);
+			
+			// Aggiornamento del corso nel db
+			coursesMap.replace(courseName, c);
+			
+			for (Entry<String,Course> newCourse : coursesMap.entrySet()) {
+				System.out.println(newCourse.getValue().toString() + "\n");
+			}
+			
+			db.commit();
+			coursesMap.close();
+			db.close();
+			
+			return "CHANGED COURSE'S INFO.";
 		}
 		
-		// Aggiunta del corso alla coursesMap
-		coursesMap.put(c.getName(), c);
-		
-		// Setting nome corso nella lista dei corsi del dipartimento
-		Department newDep = departmentsMap.get(departmentName);
-		newDep.addCourse(c.getName());
-		departmentsMap.replace(departmentName,newDep);
-		
-		db.commit();
-		departmentsMap.close();
-		db.close();
-
-		return "ADDED OR CHANGED COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".\n" + valSecondProf;
-		
+		return "COURSE DOES NOT EXISTS IN DB";
 	}
 	
 	public static String deleteCourse(String depName, String courseName) {
@@ -313,7 +350,7 @@ public class UniDB {
 			DB db = getUniDB();
 			
 			HTreeMap<String, Department> departmentsMap = db.getHashMap("departmentsMap");
-			HTreeMap<String,Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 			
 			// Rimozione del corso dalla lista di corsi del dipartimento
 			Department newDep = departmentsMap.get(depName);
@@ -345,8 +382,8 @@ public class UniDB {
 		if ((!departmentsMap.isEmpty()) && (checkDepartmentName(departmentName))) {
 			Department d = departmentsMap.get(departmentName);
 			if (!d.getCoursesList().isEmpty()) {
-				for (String course : d.getCoursesList()) {
-					ret += course + "_";
+				for (String courseName : d.getCoursesList()) {
+					ret += courseName + "_";
 				}
 			} else {
 				ret += "Nessun corso inserito nel dipartimento selezionato.";
@@ -357,9 +394,33 @@ public class UniDB {
 	
 		
 		db.commit();
+		departmentsMap.close();
 		db.close();
 		return ret;
 	
+	}
+	
+	public static String addExamToCourse(String nomeCorso, Date dataEsame, String orarioEsame, 
+			String durezzaEsame, String nomeAula) {
+		if (!checkExam(nomeCorso)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			
+			Course newCourse = coursesMap.get(nomeCorso);
+			newCourse.examSetting(dataEsame);
+			newCourse.getExam().setOrario(orarioEsame);
+			newCourse.getExam().setLivelloDurezza(durezzaEsame);
+			newCourse.getExam().setNomeAula(nomeAula);
+		
+			coursesMap.replace(nomeCorso, newCourse);
+			
+			db.commit();
+			coursesMap.close();
+			db.close();
+			return "ADDED OR CHANGED EXAM IN \"" + nomeCorso + "\" COURSE.";
+		}
+		
+		return "EXAM ALREADY SETTED UP IN \"" + nomeCorso + "\" COURSE.";
 	}
 	
 	/*
@@ -420,13 +481,40 @@ public class UniDB {
 		DB db = getUniDB();
 		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 		
-		for (Entry<String, Course> newDepartment: coursesMap.entrySet()) {
-			if (newDepartment.getValue().getName().equalsIgnoreCase(courseName)) {
+		for (Entry<String, Course> newCourse: coursesMap.entrySet()) {
+			if (newCourse.getValue().getName().equalsIgnoreCase(courseName)) {
 				check = true;
 				break;
 			}
 		}
 		
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return check;
+	}
+	
+	/*
+	 * Ritorna true se gia' esiste un corso con il nome passato in input && tale corso presenta già un esame instanziato.
+	 * Ritorna false se non e' memorizzato nel DB nessun corso con quel nome e con un esame gia' instanziato.
+	 */
+	private static boolean checkExam(String courseName) {
+		boolean check = false;
+		
+		DB db = getUniDB();
+		
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		
+		for (Entry<String, Course> newCourse: coursesMap.entrySet()) {
+			Course c = newCourse.getValue();
+			if (c.getName().equalsIgnoreCase(courseName)) {
+				if ((c.getExam() != null) 
+						&& (c.getExam().getExamName().equalsIgnoreCase("Esame del corso di " + courseName))) {
+					check = true;
+					break;
+				}
+			} 	
+		}
 		db.commit();
 		coursesMap.close();
 		db.close();

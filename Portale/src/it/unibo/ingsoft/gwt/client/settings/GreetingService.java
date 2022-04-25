@@ -32,10 +32,12 @@ public interface GreetingService extends RemoteService {
 
 	String viewDepartments();
 
-	String addCourseToDepartment(String departmentName, String courseName, 
+	String addCourseToDepartment(String departmentName, String courseName, String profEmail,
 			Date startCourse, Date endCourse, String description, String secondProf);
 	
 	String viewCourses(String depName);
 	
 	String deleteCourseFromDB(String departmentName, String courseName);
+
+	String addExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula);
 }
