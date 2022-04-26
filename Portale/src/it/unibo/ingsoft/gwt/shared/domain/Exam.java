@@ -55,7 +55,10 @@ public class Exam implements Serializable{
 	@Override
 	public String toString() {
 		return "Nome esame: " + this.examName + "\n"
-				+ "Data esame: " + this.examDate;
+				+ "Data esame: " + this.examDate + ".\n"
+				+ "Orario esame: " + this.orario + ".\n"
+				+ "Livello difficolta' esame: " + this.livelloDurezza + ".\n"
+				+ "Aula svolgimento esame: " + this.nomeAula;
 	}
 	
 }

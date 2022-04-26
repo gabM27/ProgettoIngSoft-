@@ -36,6 +36,25 @@ public class ProfessorFacade {
 		});
 	}
 	
+	public void changeCourseInfo(String nomeCorso, Date dataInizio, Date dataFine,
+			String descrizioneCorso, String codocente) {
+		Singleton.getGreetingService().changeCourseFromDB(nomeCorso, dataInizio, dataFine, 
+				descrizioneCorso, codocente, new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR UPDATING the course: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED UPDATING the course.\nResult: " + result);
+					}
+			
+		});
+		
+	}
+	
 	public void deleteCourse(String departmentName, String courseName) {
 		Singleton.getGreetingService().deleteCourseFromDB(departmentName,courseName, new AsyncCallback<String>() {
 
@@ -53,7 +72,8 @@ public class ProfessorFacade {
 	}
 
 	public void addNewExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula) {
-		Singleton.getGreetingService().addExam(nomeCorso,dataEsame,orarioEsame,durezza,nomeAula, new AsyncCallback<String>() {
+		Singleton.getGreetingService().addExam(nomeCorso,dataEsame,orarioEsame,durezza,nomeAula, 
+				new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -66,7 +86,5 @@ public class ProfessorFacade {
 			}
 		});
 	}
-	
-	
 	
 }

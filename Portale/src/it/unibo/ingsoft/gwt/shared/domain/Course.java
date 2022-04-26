@@ -83,18 +83,25 @@ public class Course implements Serializable{
 	
 	@Override
 	public String toString() {
+		if (this.exam != null) {
 		return "Nome del corso: " + this.name + ".\n"
 				+ "Descrizione del corso: " + this.description + ".\n"
 				+ "Data inizio corso: " + this.start + ".\n"
 				+ "Data fine corso: " + this.end + ".\n"
-				+ "Numero studenti iscritti: " + this.students.size() + ".\n"
+				+ "Esame: " + this.exam.toString() + ".\n"
+				+ "Numero studenti iscritti al corso: " + this.students.size() + ".\n"
 				+ "Docente principale: " + this.prof +".\n"
 				+ "Co-docente: " + this.secondProf + "\n";
-	}
-
-	public String printExamInfo() { // stampa le info dell'esame
-		return this.exam.toString() + "\n"
-				+ "Numero studenti iscritti: " + this.students.size();
+		} else {
+			return "Nome del corso: " + this.name + ".\n"
+					+ "Descrizione del corso: " + this.description + ".\n"
+					+ "Data inizio corso: " + this.start + ".\n"
+					+ "Data fine corso: " + this.end + ".\n"
+					+ "Esame NON ANCORA INSERITO.\n"
+					+ "Numero studenti iscritti al corso: " + this.students.size() + ".\n"
+					+ "Docente principale: " + this.prof +".\n"
+					+ "Co-docente: " + this.secondProf + "\n";
+		}
 	}
 	
 	// Metodo che controlla se c'e' gia' uno studente all'interno della lista studenti

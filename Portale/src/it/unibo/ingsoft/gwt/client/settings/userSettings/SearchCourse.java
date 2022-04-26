@@ -67,7 +67,7 @@ public class SearchCourse extends Composite{
 		 * Buttons
 		 */
 		Button btnView = new Button("VIEW"); // Search coursesList in DB
-		btnView.addClickHandler(new ViewInfoHandler());
+		btnView.addClickHandler(new ViewListHandler());
 		
 		Button btnBack = new Button("BACK");
 		btnBack.addClickHandler(new ClickHandler() { // BACK TO ADMIN DASHBOARD
@@ -108,7 +108,7 @@ public class SearchCourse extends Composite{
 		this.mainPanel.add(buttonsPanel);
 	}
 	
-	private class ViewInfoHandler implements ClickHandler{
+	private class ViewListHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {

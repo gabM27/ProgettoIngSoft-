@@ -40,4 +40,9 @@ public interface GreetingService extends RemoteService {
 	String deleteCourseFromDB(String departmentName, String courseName);
 
 	String addExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula);
+
+	String changeCourseFromDB(String nomeCorso, Date dataInizio, Date dataFine,
+			String descrizioneCorso, String codocente);
+
+	String printCourseInfo(String nomeCorso);
 }

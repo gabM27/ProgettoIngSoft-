@@ -44,8 +44,9 @@ public class ProfessorDashboard extends Composite {
 		actionList.addItem("Cancellazione di un esame");
 		actionList.addItem("Visualizzare le proprie informazioni personali");
 		actionList.addItem("Visualizzazione corsi disponibili");
+		actionList.addItem("Visualizzazione informazioni di un corso");
 		actionList.addItem("Invia i voti degli esami alla segreteria");
-		actionList.setVisibleItemCount(8);
+		actionList.setVisibleItemCount(9);
 		
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -103,10 +104,13 @@ public class ProfessorDashboard extends Composite {
 			case 5: // Visualizzazione informazioni personali
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
-			case 6:
-				mainpage.openSearchCourse();
+			case 6: // Visualizzazione lista corsi
+				mainpage.openSearchCourse(); 
 				break;
-			case 7: // Invia i voti degli esami alla segreteria ccx  
+			case 7: // Visualizzazione informazioni di un corso
+				mainpage.openSearchCourse4Info();
+				break;
+			case 8: // Invia i voti degli esami alla segreteria ccx  
 				// TODO:
 				break;
 			default: // Default operation: error

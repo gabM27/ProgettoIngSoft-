@@ -77,7 +77,25 @@ public class GeneralUserFacade {
 		});
 	}
 	
-	
+	/*
+	 * Visualizzazione informazioni di un corso
+	 */
+	public void printCourseInfo(Mainpage main, String courseName) {
+		Singleton.getGreetingService().printCourseInfo(courseName, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR SEARCHING THE COURSE: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("Printing course's info...");
+				main.addCourseInfoTA(result);
+			}
+			
+		});
+	}
 	
 	
 }

@@ -26,6 +26,7 @@ import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
 import it.unibo.ingsoft.gwt.server.UniDB;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse4Info;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewCoursesList;
 import it.unibo.ingsoft.gwt.shared.Status;
@@ -33,6 +34,7 @@ import it.unibo.ingsoft.gwt.shared.Status;
 public class Mainpage extends Composite{
 	// Variabili istanza
 	private VerticalPanel mainPanel = new VerticalPanel();
+	private VerticalPanel optionalPanel = new VerticalPanel(); // Attualmente serve solo per stampare le informazioni di un corso
 	
 	// Costruttore
 	public Mainpage() {
@@ -154,6 +156,27 @@ public class Mainpage extends Composite{
 	public void openRemoveExamDashboard() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new RemoveExamDashboard(this));
+	}
+
+	public void openSearchCourse4Info() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new SearchCourse4Info(this));
+	}
+	
+	public void addCourseInfoTA(String courseInfo) {
+		this.optionalPanel.clear(); // Caso in cui ci siano già inserite altre informazioni
+		
+		TextArea courseInfoTA = new TextArea();
+		courseInfoTA.setText(courseInfo);
+		courseInfoTA.setPixelSize(500, 200);
+		courseInfoTA.setReadOnly(true);
+		
+		this.optionalPanel.add(new Label("INFORMAZIONI DELL'ESAME: "));
+		this.optionalPanel.add(courseInfoTA);
+		
+		this.optionalPanel.setSpacing(5);
+		
+		this.mainPanel.add(optionalPanel);
 	}
 
 }

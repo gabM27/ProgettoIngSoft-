@@ -24,6 +24,7 @@ import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.shared.Status;
+import it.unibo.ingsoft.gwt.shared.usersfacade.ProfessorFacade;
 
 public class ChangeCourseInfoProfessorDashboard extends Composite {
 	// Variabili istanza
@@ -119,9 +120,7 @@ public class ChangeCourseInfoProfessorDashboard extends Composite {
 		/*
 		 * NOME CORSO
 		 */
-		Label nomeCorsolLbl = new Label("Nome del corso che si vuole modificare: ");
-		
-		// TODO:
+		Label nomeCorsolLbl = new Label("Scegli il corso di cui si vogliono modificare le informazioni: ");
 		
 		/*
 		 * DATA INIZIO
@@ -192,8 +191,8 @@ public class ChangeCourseInfoProfessorDashboard extends Composite {
 		 /*
 		  * BUTTONS
 		  */
-		Button btnSend = new Button("UPDATE"); // Send updates to DB
-//		btnSend.addClickHandler(new SendInfoHandler());
+		Button btnUpdate = new Button("UPDATE"); // Send updates to DB
+		btnUpdate.addClickHandler(new UpdateInfoHandler());
 		
 		Button btnBack = new Button("BACK");
 			btnBack.addClickHandler(new ClickHandler() { // BACK TO PROFESSOR DASHBOARD
@@ -235,7 +234,7 @@ public class ChangeCourseInfoProfessorDashboard extends Composite {
 			/*
 			 * ADDING ELEMETS TO BUTTON PANEL
 			 */
-			buttonPanel.add(btnSend);
+			buttonPanel.add(btnUpdate);
 			buttonPanel.add(btnBack);
 			buttonPanel.add(btnLogout);
 			buttonPanel.setSpacing(5);
@@ -276,14 +275,15 @@ public class ChangeCourseInfoProfessorDashboard extends Composite {
 		}
 		
 	}
-//	private class SendInfoHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			ProfessorFacade.getProfessorFacade().changeCourseInfo(nomeDipartimento, nomeCorso,
-//					dataInizio, dataFine, descrizioneCorso, codocente);
-//		}
-//
-//	}
+	
+	private class UpdateInfoHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ProfessorFacade.getProfessorFacade().changeCourseInfo(nomeCorso,
+					dataInizio, dataFine, descrizioneCorso, codocente);
+		}
+
+	}
 
 }

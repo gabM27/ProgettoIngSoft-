@@ -294,13 +294,7 @@ public class UniDB {
 			newDep.addCourse(c.getName()); // aggiunta corso alla lista nel dipartimento di pertinenza
 			// Aggiornamento del valore del dipartimento modificato
 			departmentsMap.replace(departmentName, newDep);
-			
-			System.out.println(departmentsMap.get(departmentName).toString()); // DEBUG 
-
-			for (Entry<String,Course> newCourse : coursesMap.entrySet()) {
-				System.out.println(newCourse.getValue().toString() + "\n");
-			}
-			
+						
 			db.commit();
 			departmentsMap.close();
 			coursesMap.close();
@@ -310,6 +304,7 @@ public class UniDB {
 			return "ADDED COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".\n" + valSecondProf;
 	}
 	
+	// Modifica le informazioni di un corso (nome del corso passato come parametro in input)
 	public static String changeCourseInfo(String courseName, Date startCourse, 
 			Date endCourse, String description, String secondProfEmail) {
 		
@@ -329,10 +324,7 @@ public class UniDB {
 			
 			// Aggiornamento del corso nel db
 			coursesMap.replace(courseName, c);
-			
-			for (Entry<String,Course> newCourse : coursesMap.entrySet()) {
-				System.out.println(newCourse.getValue().toString() + "\n");
-			}
+			// NON è necessario l'aggiornamento nella lista dei corsi del dipartimento
 			
 			db.commit();
 			coursesMap.close();
@@ -344,6 +336,7 @@ public class UniDB {
 		return "COURSE DOES NOT EXISTS IN DB";
 	}
 	
+	// Elimina un corso dalla collezione dei corsi e dalla lista dei corsi del dipartimento
 	public static String deleteCourse(String depName, String courseName) {
 		
 		if ((checkDepartmentName(depName)) && (checkCourseName(courseName))) {
@@ -374,6 +367,7 @@ public class UniDB {
 		}
 	}
 	
+	// Ritorna la lista dei corsi 
 	public static String viewCoursesList(String departmentName) {
 		String ret = "";
 		DB db = getUniDB();
@@ -400,28 +394,52 @@ public class UniDB {
 	
 	}
 	
+	// Ritorna le informazioni di un corso (il nome del corso deve essere passato come parametro in input)
+	public static String viewCourseInfo(String nomeCorso) {	
+		String ret = "";
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		
+		if ((!coursesMap.isEmpty()) && (checkCourseName(nomeCorso))) {
+			Course c = coursesMap.get(nomeCorso);
+			ret += c.toString();
+		} else {
+			ret += "Corso selezionato inesistente.";
+		}
+	
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return ret;
+	}
+	
 	public static String addExamToCourse(String nomeCorso, Date dataEsame, String orarioEsame, 
 			String durezzaEsame, String nomeAula) {
-		if (!checkExam(nomeCorso)) {
+		
+		if (!checkExam(nomeCorso)) { // Verifico che l'esame non sia già stato inserito per quel corso
 			DB db = getUniDB();
 			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 			
 			Course newCourse = coursesMap.get(nomeCorso);
+			// Inserisco i dati dell'esame per lo specifico corso
 			newCourse.examSetting(dataEsame);
 			newCourse.getExam().setOrario(orarioEsame);
 			newCourse.getExam().setLivelloDurezza(durezzaEsame);
 			newCourse.getExam().setNomeAula(nomeAula);
 		
+			// Aggiornamento del corso (con relativo esame) nel DB
 			coursesMap.replace(nomeCorso, newCourse);
 			
 			db.commit();
 			coursesMap.close();
 			db.close();
-			return "ADDED OR CHANGED EXAM IN \"" + nomeCorso + "\" COURSE.";
+			return "ADDED EXAM IN \"" + nomeCorso + "\" COURSE.";
 		}
 		
 		return "EXAM ALREADY SETTED UP IN \"" + nomeCorso + "\" COURSE.";
 	}
+	
+	//TODO: modifica corso
 	
 	/*
 	 * METODI AUSILIARI
@@ -512,7 +530,7 @@ public class UniDB {
 						&& (c.getExam().getExamName().equalsIgnoreCase("Esame del corso di " + courseName))) {
 					check = true;
 					break;
-				}
+				} // else: check --> rimane false
 			} 	
 		}
 		db.commit();
