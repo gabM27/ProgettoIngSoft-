@@ -8,6 +8,8 @@ public class User implements Serializable{
 	private String username; // Username di un generico utente
 	private String password; // Password di un generico utente
 	
+	private static final long serialVersionUID = 1L;
+	
 	// Costruttore
 	public User(String email, String password) {
 		this.email = email;

@@ -3,7 +3,6 @@ package it.unibo.ingsoft.gwt.server;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import it.unibo.ingsoft.gwt.client.settings.GreetingService;
@@ -97,4 +96,29 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		return UniDB.addExamToCourse(nomeCorso, dataEsame, orarioEsame, durezza, nomeAula);
 	}
 	
+	@Override 
+	public String updateExamInfo(String courseName, Date dataEsame, String orarioEsame, String durezzaEsame,
+			String aulaSvolgimento) {
+		return UniDB.changeExamInfo(courseName, dataEsame, orarioEsame, durezzaEsame, aulaSvolgimento);
+	}
+	
+	@Override
+	public String deleteExamFromDB(String courseName) {
+		return UniDB.deleteExam(courseName);
+	}
+
+	@Override
+	public String signUpStudentToACourse(String courseName, String studentEmail) {
+		return UniDB.signUpStudentToCourse(courseName, studentEmail);
+	}
+	
+	@Override
+	public String deleteStudentCourseRegistration(String courseName, String studentEmail) {
+		return UniDB.deleteStudentCourseRegistrationFromDB(courseName, studentEmail);
+	}
+	
+	@Override
+	public String viewStudentRegisteredCourses(String studentEmail) {
+		return UniDB.viewStudentRegisteredCourseList(studentEmail);
+	}
 }

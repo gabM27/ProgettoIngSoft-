@@ -55,6 +55,11 @@ public class Course implements Serializable{
 		this.exam = new Exam(this.name, examDate);
 	}
 	
+	// Cancellazione dell'esame --> null value
+	public void examDeleting() {
+		this.exam = null;
+	}
+	
 	public void setStartDate(Date start) {
 		this.start = start;
 	}
@@ -62,7 +67,6 @@ public class Course implements Serializable{
 	public void setEndDate(Date end) {
 		this.end = end;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -78,7 +82,16 @@ public class Course implements Serializable{
 	
 	// Aggiunge un iscritto (ed un voto) al corso
 	public void addStudent(String s) {
-		this.students.add(s);
+		if (!isStudentThere(s)) {
+			this.students.add(s);
+		}
+	}
+	
+	// Elimina uno studente dalla lista
+	public void deleteStudent(String stu) {
+		if (isStudentThere(stu)) {
+			this.students.remove(stu);
+		}
 	}
 	
 	@Override
@@ -105,7 +118,7 @@ public class Course implements Serializable{
 	}
 	
 	// Metodo che controlla se c'e' gia' uno studente all'interno della lista studenti
-	public boolean is(String s) {
+	public boolean isStudentThere(String s) {
 		boolean isThere = false;
 		for (int i = 0; i < this.students.size(); i++) {
 			if (s.equalsIgnoreCase(this.students.get(i))) {

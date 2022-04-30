@@ -8,6 +8,7 @@ public class Professor extends User implements Serializable{
 	private String name;
 	private String surname;
 	private Date birthday;
+	private static final long serialVersionUID = 1L;
 	
 	// Costruttore
 	public Professor(String email, String password) {

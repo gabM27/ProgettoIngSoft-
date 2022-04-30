@@ -43,4 +43,14 @@ public interface GreetingServiceAsync {
 
 	void printCourseInfo(String courseName, AsyncCallback<String> callback);
 
+	void updateExamInfo(String courseName, Date dataEsame, String orarioEsame, String durezzaEsame,
+			String aulaSvolgimento, AsyncCallback<String> callback);
+
+	void deleteExamFromDB(String courseName, AsyncCallback<String> callback);
+
+	void signUpStudentToACourse(String courseName, String studentEmail, AsyncCallback<String> callback);
+
+	void deleteStudentCourseRegistration(String courseName, String studentEmail, AsyncCallback<String> callback);
+	
+	void viewStudentRegisteredCourses(String studentEmail, AsyncCallback callback);
 }

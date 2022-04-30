@@ -41,7 +41,7 @@ public class Department implements Serializable {
 	}
 	
 	// Metodo che controlla se c'e' gia' un corso all'interno della lista
-	public boolean isCourseThere(String c) {
+	private boolean isCourseThere(String c) {
 		boolean isThere = false;
 		for (int i = 0; i < this.courses.size(); i++) {
 			if (c.equalsIgnoreCase(this.courses.get(i))) {

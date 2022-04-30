@@ -8,7 +8,6 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 
-import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
 import it.unibo.ingsoft.gwt.shared.domain.Course;
 import it.unibo.ingsoft.gwt.shared.domain.Department;
@@ -439,7 +438,157 @@ public class UniDB {
 		return "EXAM ALREADY SETTED UP IN \"" + nomeCorso + "\" COURSE.";
 	}
 	
-	//TODO: modifica corso
+	// Modifica informazioni di un esame in un corso (nome corso passato come parametro in input)
+	public static String changeExamInfo(String nomeCorso, Date dataEsame, String orarioEsame,
+			String durezzaEsame, String nomeAula) {
+		if (checkExam(nomeCorso)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			
+			Course course = coursesMap.get(nomeCorso);
+			// Inserisco i dati dell'esame per lo specifico corso 
+			course.examSetting(dataEsame);
+			course.getExam().setOrario(orarioEsame);
+			course.getExam().setLivelloDurezza(durezzaEsame);
+			course.getExam().setNomeAula(nomeAula);
+		
+			// Aggiornamento del corso (con relativo esame AGGIORNATO) nel DB
+			coursesMap.replace(nomeCorso, course);
+			
+			db.commit();
+			coursesMap.close();
+			db.close();
+			
+			return "CHANGED EXAM'S INFO in \"" + nomeCorso + "\" COURSE.";
+		} // else : esame mai inserito (null) --> error.
+		
+		return "EXAM DOESN'T EXISTS: impossible updating exam's info.\nTry adding new exam.";
+	}
+	
+	// Cancellazione di un esame dal corso --> rende l'esame null
+	public static String deleteExam(String nomeCorso) {
+		if (checkExam(nomeCorso)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			
+			Course course = coursesMap.get(nomeCorso);
+			// Elimino l'esame tramite la funzione dell'oggetto corso
+			course.examDeleting();
+		
+			// Aggiornamento del corso (con relativo esame AGGIORNATO a NULL) nel DB
+			coursesMap.replace(nomeCorso, course);
+			
+			db.commit();
+			coursesMap.close();
+			db.close();
+			
+			return "DELETED EXAM in \"" + nomeCorso + "\" COURSE.";
+		} // else : esame mai inserito (già == null) --> error.
+		
+		return "EXAM DOESN'T EXISTS: impossible deleting exam.";
+	}
+	
+	
+	// Iscrizione di uno studente a un corso
+	public static String signUpStudentToCourse(String courseName, String studentEmail) {
+		String ret = "";
+		
+		if (checkCourseName(courseName) && checkEmail(studentEmail)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			
+			if (usersMap.get(studentEmail) instanceof Student) {
+				Student stu = (Student) usersMap.get(studentEmail);
+				Course course = coursesMap.get(courseName);
+				
+				// Inserimento del nome del corso all'interno dell'istanza dello studente
+				stu.addCourse(courseName);
+				// Inserimento dell'email dello studente all'interno dell'istanza del corso
+				course.addStudent(studentEmail);
+				
+				// Aggiornamento dei valori nel DB
+				usersMap.replace(studentEmail, stu);
+				coursesMap.replace(courseName, course);
+				
+				ret += "Studento iscritto correttamente al corso.";
+			} else {
+				ret += "Utente presente nel DB con un ruolo diverso da studente.";
+			}
+			
+			db.commit();
+			coursesMap.close();
+			usersMap.close();
+			db.close();
+			
+		} else {
+			ret += "Corso o studente non presente nel DB.";
+		}
+		return ret; 
+	}
+	
+	// Cancellazione iscrizione di uno studente a un corso
+	public static String deleteStudentCourseRegistrationFromDB(String courseName, String studentEmail) {
+		String ret = "";
+		
+		if (checkCourseName(courseName) && checkEmail(studentEmail)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			
+			if (usersMap.get(studentEmail) instanceof Student) {
+				Student stu = (Student) usersMap.get(studentEmail);
+				Course course = coursesMap.get(courseName);
+				
+				// Cancellazione del nome del corso dalla lista all'interno dell'istanza dello studente
+				stu.deleteCourse(courseName);
+				// Cancellazione dell'email dello studente dalla lista all'interno dell'istanza del corso
+				course.deleteStudent(studentEmail);
+				
+				// Aggiornamento dei valori nel DB
+				usersMap.replace(studentEmail, stu);
+				coursesMap.replace(courseName, course);
+				
+				ret += "Studento cancellato correttamente dal corso.";
+			} else {
+				ret += "Utente presente nel DB con un ruolo diverso da studente.";
+			}
+			
+			db.commit();
+			coursesMap.close();
+			usersMap.close();
+			db.close();
+			
+		} else {
+			ret += "Corso o studente non presente nel DB.";
+		}
+		return ret; 
+	}
+
+	// Ritorna la lista dei corsi a cui è iscritto uno studente
+	public static String viewStudentRegisteredCourseList(String studentEmail) {
+		String ret = "";
+		if (checkEmail(studentEmail)) {
+			DB db = getUniDB();
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			
+			if (usersMap.get(studentEmail) instanceof Student) {
+				Student stu = (Student) usersMap.get(studentEmail);
+				if (stu.getCourses().size() != 0) {
+					for (String courseName : stu.getCourses()) {
+						ret += courseName + "_";
+					}
+				} else {
+					ret += "Lo studente non e' registrato a nessun corso.";
+				}
+			} else {
+				ret += "Email presente nel DB ma con un ruolo9 diverso da studente.";
+			}
+			
+		}
+		
+		return ret;
+	}
 	
 	/*
 	 * METODI AUSILIARI
@@ -573,7 +722,6 @@ public class UniDB {
 		db.close();
 		return check;
 	}
-	
 	
 }
 

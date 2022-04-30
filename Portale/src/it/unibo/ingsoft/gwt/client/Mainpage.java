@@ -1,9 +1,7 @@
 package it.unibo.ingsoft.gwt.client;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -12,19 +10,22 @@ import it.unibo.ingsoft.gwt.client.dashboards.AdminDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.ProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.SecretaryDashboard;
 import it.unibo.ingsoft.gwt.client.dashboards.StudentDashboard;
-import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddAccountFormPage;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddDepartmentFormDashboard;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.adminSettings.AddPersonalInfoFormStudentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateCourseFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateExamFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeCourseInfoProfessorDashboard;
-import it.unibo.ingsoft.gwt.client.settings.professorSettings.CreateChangeExamFormProfessorDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeExamFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveExamDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
-import it.unibo.ingsoft.gwt.server.UniDB;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.CourseEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.DeleteCourseEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.DeleteExamEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.ExamEnrollmentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse4Info;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
@@ -123,9 +124,14 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(new ChangeCourseInfoProfessorDashboard(this));
 	}
 	
-	public void openCreateChangeExamFormProfessorDashboard() {
+	public void openChangeExamFormProfessorDashboard() {
 		this.mainPanel.clear();
-		this.mainPanel.add(new CreateChangeExamFormProfessorDashboard(this));
+		this.mainPanel.add(new ChangeExamFormProfessorDashboard(this));
+	}
+	
+	public void openCreateExamFormProfessorDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new CreateExamFormProfessorDashboard(this));
 	}
 	
 	public void openAddDepartmentFormDashboard() {
@@ -179,4 +185,25 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(optionalPanel);
 	}
 
+	public void openCourseEnrollment() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new CourseEnrollmentDashboard(this));
+	}
+
+	public void openExamEnrollment() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new ExamEnrollmentDashboard(this));
+	}
+
+	public void openDeleteCourseEnrollment() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new DeleteCourseEnrollmentDashboard(this));
+	}
+
+	public void openDeleteExamEnrollment() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new DeleteExamEnrollmentDashboard(this));
+	}
+	
+	
 }

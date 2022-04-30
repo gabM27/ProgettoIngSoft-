@@ -1,5 +1,11 @@
 package it.unibo.ingsoft.gwt.shared.usersfacade;
 
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
+import it.unibo.ingsoft.gwt.client.settings.Singleton;
+
 /*
  * Classe facciata utilizzata da uno studente 
  * per interagire con le operazioni
@@ -21,30 +27,50 @@ package it.unibo.ingsoft.gwt.shared.usersfacade;
  */
 
 public class StudentFacade {
-	
-	// Costruttore
-	public StudentFacade() {
+	// Variabili istanza
+	private static StudentFacade generalUserFacade;
+
+	public static synchronized StudentFacade getStudentFacade() {
+		if (generalUserFacade == null) {
+			generalUserFacade = new StudentFacade();
+		}
+		return generalUserFacade;
 	}
 	
-	/*
-	 * Stampa le informazioni di tutti i corsi (per ogni dipartimento dell'universit�).
-	 * */
-//	protected String printAllCourses() {
-//		String s = "";
-//		for (Department d : Portale.uni.getUniDB().getDepartmentsMap()) {
-//			for (Course c : d.getCoursesList()) {
-//				s += c.toString();
-//			}
-//		}
-//		return s;
-//	}
+	public void courseRegistration(String courseName) {
+		Singleton.getGreetingService().signUpStudentToACourse(courseName,
+				ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR signing-up to the course: "+ caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED signing-up to the course.\nResult: " + result);
+					}
+			
+		});
+	}
 	
-	/*
-	 * Registra uno studente al corso che si passa in input.
-	 * Il corso viene verificato da un metodo nella classe University.
-	 */
-	protected void courseRegistration(String courseName) {
-		// check course name in university tramite apposito metodo.
+	public void deleteCourseRegistration(String courseName) {
+		Singleton.getGreetingService().deleteStudentCourseRegistration(courseName,
+				ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR deleting registration from the course: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED deleting course registration from the course.\nResult: " + result);
+					}
+			
+		});
 	}
 	
 }

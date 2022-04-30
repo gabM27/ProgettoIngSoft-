@@ -7,7 +7,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -16,7 +15,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
-import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class ProfessorDashboard extends Composite {
@@ -40,13 +38,14 @@ public class ProfessorDashboard extends Composite {
 		actionList.addItem("Creazione di un corso");
 		actionList.addItem("Modifica informazioni di un corso");
 		actionList.addItem("Cancellazione di un corso");
-		actionList.addItem("Creazione / Modifica di un esame");
+		actionList.addItem("Creazione di un esame");
+		actionList.addItem("Modifica informazioni di un esame");
 		actionList.addItem("Cancellazione di un esame");
 		actionList.addItem("Visualizzare le proprie informazioni personali");
 		actionList.addItem("Visualizzazione corsi disponibili");
 		actionList.addItem("Visualizzazione informazioni di un corso");
 		actionList.addItem("Invia i voti degli esami alla segreteria");
-		actionList.setVisibleItemCount(9);
+		actionList.setVisibleItemCount(10);
 		
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -86,31 +85,34 @@ public class ProfessorDashboard extends Composite {
 		@Override
 		public void onDoubleClick(DoubleClickEvent event) {
 			switch(index) {
-			case 0:	// Creazione / Modifica un corso
+			case 0:	// Creazione di un corso
 				mainpage.openCreateCourseFormProfessorDashboard();
 				break;
-			case 1:
+			case 1: // Modifica informazioni di un corso
 				mainpage.openChangeCourseInfoProfessorDashboard();
 				break;
 			case 2: // Cancellazione di un corso
 				mainpage.openRemoveCourseDashboard();
 				break;
-			case 3:	// Creazione / Modifica  un esame
-				mainpage.openCreateChangeExamFormProfessorDashboard();
+			case 3:	// Creazione di un esame
+				mainpage.openCreateExamFormProfessorDashboard();
 				break;
-			case 4: // Cancellazione di un esame
+			case 4: // Modifica informazioni di un esame
+				mainpage.openChangeExamFormProfessorDashboard();
+				break;
+			case 5: // Cancellazione di un esame
 				mainpage.openRemoveExamDashboard();
 				break;
-			case 5: // Visualizzazione informazioni personali
+			case 6: // Visualizzazione informazioni personali
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
-			case 6: // Visualizzazione lista corsi
+			case 7: // Visualizzazione lista corsi
 				mainpage.openSearchCourse(); 
 				break;
-			case 7: // Visualizzazione informazioni di un corso
+			case 8: // Visualizzazione informazioni di un corso
 				mainpage.openSearchCourse4Info();
 				break;
-			case 8: // Invia i voti degli esami alla segreteria ccx  
+			case 9: // Invia i voti degli esami alla segreteria ccx  
 				// TODO:
 				break;
 			default: // Default operation: error

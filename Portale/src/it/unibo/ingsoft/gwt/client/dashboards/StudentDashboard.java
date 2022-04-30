@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -35,11 +36,14 @@ public class StudentDashboard extends Composite {
 		ListBox actionList = new ListBox();
 		
 		actionList.addItem("Visualizzazione lista dei corsi disponibili");
+		actionList.addItem("Visualizzazoine informazioni di un corso");
 		actionList.addItem("Iscrizione a un corso");
+		actionList.addItem("Cancellazione iscrizione a un corso");
 		actionList.addItem("Iscrizione ad un esame");
+		actionList.addItem("Cancellazione iscrizione a un esame");
 		actionList.addItem("Visualizzazione informazioni personali");
 		actionList.addItem("Visualizzazione voti degli esami svolti");
-		actionList.setVisibleItemCount(5);
+		actionList.setVisibleItemCount(8);
 		actionList.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
@@ -77,23 +81,32 @@ public class StudentDashboard extends Composite {
 		@Override
 		public void onDoubleClick(DoubleClickEvent event) {
 			switch(index) {
-			case 0:	// Visualizza i corsi disponibili
+			case 0:	// Visualizzazione dei corsi disponibili
 				mainpage.openSearchCourse();
 				break;
-			case 1:	// Iscriviti a un corso 
-				
+			case 1: // Visualizzazione informazione di un corso
+				mainpage.openSearchCourse4Info();
 				break;
-			case 2: // Registrati all'esame relativo a un corso 
-				
+			case 2:	// Iscrizione a un corso 
+				mainpage.openCourseEnrollment(); // TODO: completare
 				break;
-			case 3: // Visualizza info personali degli studenti iscritti 
+			case 3: // Cancellazione iscrizione da un corso
+				mainpage.openDeleteCourseEnrollment(); // TODO: completare
+				break;
+			case 4: // Registrazione all'esame relativo a un corso 
+				mainpage.openExamEnrollment(); // TODO: completare
+				break;
+			case 5: // Cancellazione registrazione all'esame relativo a un corso
+				mainpage.openDeleteExamEnrollment(); // TODO: completare
+				break;
+			case 6: // Visualizza info personali degli studenti iscritti 
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
-			case 4:	// Visualizza voti degli esami svolti 
-			
+			case 7:	// Visualizza voti degli esami svolti 
+				//TODO:
 				break;
 			default: // Default operation: error
-				//Window.alert("ERROR: DEFAULT OPERATION");
+				Window.alert("ERROR: DEFAULT OPERATION");
 				break;
 			}
 		}

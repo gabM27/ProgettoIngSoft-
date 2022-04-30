@@ -86,5 +86,40 @@ public class ProfessorFacade {
 			}
 		});
 	}
+
+	public void updateExamInfo(String courseName, Date dataEsame, String orarioEsame, String durezzaEsame,
+			String aulaSvolgimento) {
+		Singleton.getGreetingService().updateExamInfo(courseName, dataEsame, orarioEsame, durezzaEsame,
+				aulaSvolgimento, new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR UPDATING EXAM'S INFO: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED UPDATING EXAM'S INFO: " + result);
+					}
+			
+		});
+		
+	}
+
+	public void deleteExam(String courseName) {
+		Singleton.getGreetingService().deleteExamFromDB(courseName, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR DELETING EXAM: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED DELETING EXAM.\nResult: " + result);
+			}
+			
+		});
+	}
 	
 }

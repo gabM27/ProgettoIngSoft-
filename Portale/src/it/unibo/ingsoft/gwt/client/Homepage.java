@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
-import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class Homepage extends Composite {
 	// Variabili istanza
@@ -45,7 +44,7 @@ public class Homepage extends Composite {
 		HorizontalPanel informationPanel = new HorizontalPanel();
 		Label informationLabel = new Label();
 		
-		informationLabel.setText("Numero di telefono: " + Portale.uni.getNumber() + ""
+		informationLabel.setText("Numero di telefono: " + Portale.uni.getTelephoneNumber() + ""
 				+ " - Indirizzo: " +  Portale.uni.getAddress() + ""
 				+ " - Citta': " + Portale.uni.getCity() + ".");
 		
