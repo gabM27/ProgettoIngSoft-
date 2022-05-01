@@ -30,8 +30,7 @@ public class DeleteCourseEnrollmentDashboard extends Composite {
 		this.mainpage = main;
 		initWidget(mainPanel);
 		VerticalPanel panel = new VerticalPanel();
-			
-				
+					
 		Label descriptionLabel = new Label("Seleziona il corso dal quale cancellare l'iscrizione:");
 		courseNameBox = new ListBox();
 		

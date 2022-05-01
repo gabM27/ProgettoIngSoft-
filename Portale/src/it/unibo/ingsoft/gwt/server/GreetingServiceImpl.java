@@ -121,4 +121,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public String viewStudentRegisteredCourses(String studentEmail) {
 		return UniDB.viewStudentRegisteredCourseList(studentEmail);
 	}
+	
+	@Override
+	public String viewStudentRegisteredCoursesExamSettedUp(String studentEmail) {
+		return UniDB.viewStudentRegisteredCoursesExamSettedUpList(studentEmail);
+	}
+	
+	@Override
+	public String signUpStudentToAnExam(String courseName, String studentEmail) {
+		return UniDB.signUpStudentToACourseExam(courseName, studentEmail);
+	}
 }

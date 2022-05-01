@@ -52,5 +52,9 @@ public interface GreetingServiceAsync {
 
 	void deleteStudentCourseRegistration(String courseName, String studentEmail, AsyncCallback<String> callback);
 	
-	void viewStudentRegisteredCourses(String studentEmail, AsyncCallback callback);
+	void viewStudentRegisteredCourses(String studentEmail, AsyncCallback<String> callback);
+	
+	void viewStudentRegisteredCoursesExamSettedUp(String studentEmail, AsyncCallback<String> callback);
+
+	void signUpStudentToAnExam(String courseName, String studentEmail, AsyncCallback<String> callback);
 }

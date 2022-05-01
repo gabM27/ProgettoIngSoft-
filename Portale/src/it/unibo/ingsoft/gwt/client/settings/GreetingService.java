@@ -55,4 +55,8 @@ public interface GreetingService extends RemoteService {
 	String deleteStudentCourseRegistration(String courseName, String studentEmail);
 	
 	String viewStudentRegisteredCourses(String studentEmail);
+	
+	String viewStudentRegisteredCoursesExamSettedUp(String studentEmail);
+	
+	String signUpStudentToAnExam(String courseName, String studentEmail);
 }

@@ -36,7 +36,7 @@ public class StudentDashboard extends Composite {
 		ListBox actionList = new ListBox();
 		
 		actionList.addItem("Visualizzazione lista dei corsi disponibili");
-		actionList.addItem("Visualizzazoine informazioni di un corso");
+		actionList.addItem("Visualizzazione informazioni di un corso");
 		actionList.addItem("Iscrizione a un corso");
 		actionList.addItem("Cancellazione iscrizione a un corso");
 		actionList.addItem("Iscrizione ad un esame");

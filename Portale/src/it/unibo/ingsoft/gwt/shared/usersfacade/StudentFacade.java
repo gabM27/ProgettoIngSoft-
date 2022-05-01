@@ -72,5 +72,23 @@ public class StudentFacade {
 			
 		});
 	}
+
+	public void examRegistration(String courseName) {
+		Singleton.getGreetingService().signUpStudentToAnExam(courseName, 
+				ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR SIGNING UP TO THE COURSE EXAM: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED signing up to the course exam.\nResult:_" + result);
+					}
+			
+		});
+	}
 	
 }

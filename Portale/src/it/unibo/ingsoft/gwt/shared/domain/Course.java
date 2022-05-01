@@ -3,6 +3,8 @@ package it.unibo.ingsoft.gwt.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Course implements Serializable{
 	// Variabili istanza
@@ -16,14 +18,14 @@ public class Course implements Serializable{
 	private String prof;
 	private String secondProf = "";
 	
-	private ArrayList<String> students; // iscritti al corso --> sostengono esame; se non lo sostengono voto esame = NC (-1)
-	private ArrayList<Integer> marks; // iscritti e voti hanno lo stesso indice per collegare uno studente al relativo voto
+	private ArrayList<String> students; // iscritti al corso
+	private ArrayList<Integer> examStudents; // iscritti all'esame del corso con relativo voto --> value non sostenuto -1; esame superato 18-31 (31 == 30L) 
 	
 	// Costruttore
 	public Course(String name) {
 		this.name = name;
 		this.students = new ArrayList<String>(100); 
-		this.marks = new ArrayList<Integer>(100); 
+		this.examStudents = new ArrayList<Integer>();
 	}
 	
 	// Getters 
@@ -31,7 +33,7 @@ public class Course implements Serializable{
 	
 	public ArrayList<String> getStudentsList() { return this.students; } // ritorna la lista degli iscritti
 	
-	public ArrayList<Integer> getMarks() { return this.marks; } // ritorna la lista intera di voti
+	public ArrayList<Integer> getExamStudentsMap() { return this.examStudents; } // ritorna la map che associa studenti iscritti all'esame ai relativi voti
 	
 	public Date getStartDate() { return this.start; } // ritorna la data di inizio del corso
 	
@@ -80,18 +82,26 @@ public class Course implements Serializable{
 		this.secondProf = newSecondProf;
 	}
 	
-	// Aggiunge un iscritto (ed un voto) al corso
+	// Aggiunge un iscritto al corso
 	public void addStudent(String s) {
 		if (!isStudentThere(s)) {
 			this.students.add(s);
+			this.examStudents.add(-1); // valore default --> corrisponde a non sostenuto
 		}
 	}
 	
-	// Elimina uno studente dalla lista
+	// Elimina uno studente dalla lista degli iscritti al corso e dalla lista degli iscritti all'esame (se presente)
 	public void deleteStudent(String stu) {
 		if (isStudentThere(stu)) {
+			this.examStudents.remove(this.students.indexOf(stu));
 			this.students.remove(stu);
 		}
+	}
+
+	// Modifica il voto relativo all'esame di uno studente
+	public void setMark(String stu, Integer mark) {
+		int index = this.students.indexOf(stu);
+		this.examStudents.set(index, mark);
 	}
 	
 	@Override
@@ -117,7 +127,7 @@ public class Course implements Serializable{
 		}
 	}
 	
-	// Metodo che controlla se c'e' gia' uno studente all'interno della lista studenti
+	// Metodo che controlla se c'e' gia' uno studente all'interno della lista studenti iscritti al corso
 	public boolean isStudentThere(String s) {
 		boolean isThere = false;
 		for (int i = 0; i < this.students.size(); i++) {

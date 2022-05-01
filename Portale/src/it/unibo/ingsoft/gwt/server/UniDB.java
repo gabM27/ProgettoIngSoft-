@@ -590,6 +590,69 @@ public class UniDB {
 		return ret;
 	}
 	
+	
+	// Ritorna la lista dei corsi a cui uno studente (email in input) è iscritto && con esame impostato (course.getExam() != null).
+	public static String viewStudentRegisteredCoursesExamSettedUpList(String studentEmail) {
+		String ret = "";
+		if (checkEmail(studentEmail)) {
+			DB db = getUniDB();
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			
+			if (usersMap.get(studentEmail) instanceof Student) {
+				HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+				for (Entry<String, Course> newCourse : coursesMap.entrySet()) {
+					if ((newCourse.getValue().isStudentThere(studentEmail)) && (newCourse.getValue().getExam() != null)) {
+						ret += newCourse.getKey();
+					}
+				}
+				
+			} else {
+				ret += "Email presente nel DB, ma con un ruolo diverso da studente.";
+			}
+		} else {
+			ret += "Email non presente nel DB.";
+		}
+		
+		return ret;
+	}
+	
+	// Registra uno studente (email in input) a un corso (nome corso in input)
+	public static String signUpStudentToACourseExam(String courseName, String studentEmail) {
+		String ret = "";
+	
+		if (checkCourseName(courseName) && checkEmail(studentEmail)) {
+			DB db = getUniDB();
+			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+			
+			if (usersMap.get(studentEmail) instanceof Student) {
+				Student stu = (Student) usersMap.get(studentEmail);
+				Course course = coursesMap.get(courseName);
+
+				// aggiunta esame nella lista degli esami dello studente
+				stu.addExam(course.getExam().getExamName());
+				// aggiunta studente nella lista degli studenti iscritti all'esame del corso già fatta al momento della creazione dell'account studente
+				
+				// Aggiornamento dei valori nel DB
+				usersMap.replace(studentEmail, stu);
+				
+				ret += "Studento iscritto correttamente all'esame.";
+			} else {
+				ret += "Utente presente nel DB con un ruolo diverso da studente.";
+			}
+			
+			db.commit();
+			coursesMap.close();
+			usersMap.close();
+			db.close();
+			
+		} else {
+			ret += "Corso o studente non presente nel DB.";
+		}
+		
+		return ret;
+	}
+	
 	/*
 	 * METODI AUSILIARI
 	 */
