@@ -25,9 +25,9 @@ public class ViewPersonalInfo extends Composite {
 		 */
 		VerticalPanel panel = new VerticalPanel();
 		/*
-		 * label che contiene le informazioni
+		 * TextArea che contiene le informazioni
 		 */
-		TextArea infoArea= new TextArea();
+		TextArea infoArea = new TextArea();
 		infoArea.setText(info);
 		infoArea.setPixelSize(600,200);
 		infoArea.setReadOnly(true);
@@ -40,7 +40,7 @@ public class ViewPersonalInfo extends Composite {
 		 * Buttons
 		 */
 		Button btnBack = new Button("BACK");
-		btnBack.addClickHandler(new ClickHandler() { // BACK TO SearchPersonalInfo page
+		btnBack.addClickHandler(new ClickHandler() { // BACK TO SearchPersonalInfo page or dashboard
 			@Override
 			public void onClick(ClickEvent event) {
 				mainPanel.clear();

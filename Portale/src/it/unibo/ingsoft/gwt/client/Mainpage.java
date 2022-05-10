@@ -21,12 +21,13 @@ import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeExamFormProf
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveExamDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.SendMarksDashboard;
+import it.unibo.ingsoft.gwt.client.settings.studentSettings.CourseEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.studentSettings.DeleteCourseEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.studentSettings.DeleteExamEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.studentSettings.ExamEnrollmentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
-import it.unibo.ingsoft.gwt.client.settings.userSettings.CourseEnrollmentDashboard;
-import it.unibo.ingsoft.gwt.client.settings.userSettings.DeleteCourseEnrollmentDashboard;
-import it.unibo.ingsoft.gwt.client.settings.userSettings.DeleteExamEnrollmentDashboard;
-import it.unibo.ingsoft.gwt.client.settings.userSettings.ExamEnrollmentDashboard;
+import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewAllStudentsPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchCourse4Info;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
@@ -209,6 +210,11 @@ public class Mainpage extends Composite{
 	public void openSendMarksDashboard() {
 		this.mainPanel.clear();
 		this.mainPanel.add(new SendMarksDashboard(this));
+	}
+
+	public void openViewStudentsPersonalInfo(String info) {
+		this.mainPanel.clear();
+		this.mainPanel.add(new ViewAllStudentsPersonalInfo(this, info));
 	}
 	
 }

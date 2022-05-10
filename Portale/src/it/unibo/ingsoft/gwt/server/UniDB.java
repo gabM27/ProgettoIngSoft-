@@ -623,7 +623,7 @@ public class UniDB {
 				HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 				for (Entry<String, Course> newCourse : coursesMap.entrySet()) {
 					if ((newCourse.getValue().isStudentThere(studentEmail)) && (newCourse.getValue().getExam() != null)) {
-						ret += newCourse.getKey();
+						ret += newCourse.getKey() + "_";
 					}
 				}
 
@@ -878,6 +878,33 @@ public class UniDB {
 		return ret;
 	}
 
+	/**
+	 * Metodo che ritorna le informazioni personali di tutti gli studenti.
+	 * 
+	 * @return info String
+	 */
+	public static String viewAllStudentsPersonalInfo() {
+		String info = "";
+
+		DB db = getUniDB();
+		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+
+		if (!usersMap.isEmpty()) {
+			for (Entry<String, User> newUser : usersMap.entrySet()) {
+				if (newUser.getValue() instanceof Student) {
+					info += newUser.getValue().toString() + "\n\n";
+				}
+			}
+		} else {
+			info += "NESSUNO STUDENTE NEL DB";
+		}
+
+		db.commit();
+		usersMap.close();
+		db.close();
+		return info;
+	}
+
 	/*
 	 * METODI AUSILIARI
 	 */
@@ -1010,6 +1037,8 @@ public class UniDB {
 		db.close();
 		return check;
 	}
+
+
 
 
 

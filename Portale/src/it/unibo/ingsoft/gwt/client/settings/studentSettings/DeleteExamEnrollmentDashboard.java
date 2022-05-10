@@ -1,4 +1,4 @@
-package it.unibo.ingsoft.gwt.client.settings.userSettings;
+package it.unibo.ingsoft.gwt.client.settings.studentSettings;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

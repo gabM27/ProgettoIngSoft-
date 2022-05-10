@@ -55,7 +55,7 @@ public class GeneralUserFacade {
 			}
 		});
 	}
-	
+
 	/*
 	 * Visualizzazione informazioni personali
 	 */
@@ -72,10 +72,10 @@ public class GeneralUserFacade {
 			public void onSuccess(String result) {
 				mainpage.openViewPersonalInfo(result);
 			}
-			
+
 		});
 	}
-	
+
 	/*
 	 * Visualizzazione informazioni di un corso
 	 */
@@ -92,9 +92,28 @@ public class GeneralUserFacade {
 				Window.alert("Printing course's info...");
 				main.addCourseInfoTA(result);
 			}
-			
+
 		});
 	}
-	
-	
+
+
+	/*
+	 * Visualizzazione informazioni personali di tutti gli studenti
+	 */
+	public void printAllStudentsPersonalInfo(Mainpage main) {
+		Singleton.getGreetingService().viewAllStudentsPersonalInfo(new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR PRINTING ALL STUDENTS INFO: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("Printing students' info...");
+				main.openViewStudentsPersonalInfo(result);
+			}
+		});
+	}
+
 }

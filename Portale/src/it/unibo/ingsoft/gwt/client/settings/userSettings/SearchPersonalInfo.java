@@ -55,7 +55,7 @@ public class SearchPersonalInfo extends Composite {
 		btnView.addClickHandler(new ViewInfoHandler());
 		
 		Button btnBack = new Button("BACK");
-		btnBack.addClickHandler(new ClickHandler() { // BACK TO ADMIN DASHBOARD
+		btnBack.addClickHandler(new ClickHandler() { // BACK TO DASHBOARD
 			@Override
 			public void onClick(ClickEvent event) {
 				mainpage.openAccountDashboard(ActualSession.getActualSession().getActualStatus());

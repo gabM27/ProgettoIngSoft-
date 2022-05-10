@@ -89,16 +89,16 @@ public class AdminDashboard extends Composite {
 			case 2: // Inserisci informazioni personali utente - DOCENTE
 				mainpage.openAddPersonalInfoFormProfessorDashboard();
 				break;
-			case 3:
+			case 3:  // Cerca informazioni personali di un determinato utente
 				mainpage.openSearchPersonalInfo();
 				break;
-			case 4: 
+			case 4: // Aggiunta dipartimento
 				mainpage.openAddDepartmentFormDashboard();
 				break;
-			case 5:
+			case 5: // Visualizzazione lista dipartimenti
 				GeneralUserFacade.getGeneralUserFacade().printDepartmentsList(mainpage);
 				break;
-			case 6:
+			case 6: // Ricerca corso
 				mainpage.openSearchCourse();
 				break;
 			case 7: // Pulizia DB

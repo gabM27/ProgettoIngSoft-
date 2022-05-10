@@ -70,4 +70,6 @@ public interface GreetingService extends RemoteService {
 	String viewRegisteredStudentFromCourse(String courseName);
 	
 	String addMarkToStudentExam(String studentEmail, String  courseName, Integer mark);
+	
+	String viewAllStudentsPersonalInfo();
 }
