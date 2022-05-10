@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
+import it.unibo.ingsoft.gwt.shared.usersfacade.ProfessorFacade;
 
 public class ProfessorDashboard extends Composite {
 	// Variabili istanza
@@ -112,8 +113,8 @@ public class ProfessorDashboard extends Composite {
 			case 8: // Visualizzazione informazioni di un corso
 				mainpage.openSearchCourse4Info();
 				break;
-			case 9: // Invia i voti degli esami alla segreteria ccx  
-				// TODO:
+			case 9: // Invia i voti degli esami alla segreteria --> inserisce i voti nella lista del corso (non visibili agli studenti).
+				mainpage.openSendMarksDashboard();
 				break;
 			default: // Default operation: error
 				Window.alert("DEFAULT OPERATION");

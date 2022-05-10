@@ -85,7 +85,25 @@ public class StudentFacade {
 
 					@Override
 					public void onSuccess(String result) {
-						Window.alert("TRYED signing up to the course exam.\nResult:_" + result);
+						Window.alert("TRYED signing up to the course exam.\nResult: " + result);
+					}
+			
+		});
+	}
+
+	public void deleteExamRegitration(String examName) {
+		Singleton.getGreetingService().deleteStudentExamRegistration(examName,
+				ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR deleting registration from the exam: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED deleting exam registration from the exam.\nResult: " + result);
 					}
 			
 		});

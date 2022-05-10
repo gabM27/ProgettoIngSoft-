@@ -10,16 +10,23 @@ public class Course implements Serializable{
 	// Variabili istanza
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
+	private String name = "";
 	private Date start;
 	private Date end;
-	private String description;
+	private String description = "";
 	private Exam exam; // VINCOLO: e' possibile avere un UNICO esame per corso
-	private String prof;
+	private String prof = "";
 	private String secondProf = "";
 	
+	private boolean areGradesVisibleToStudents = false; // booleano che, se true, permette agli studenti di visualizzare i voti, no altrimenti. Viene modificato dalla segreteria
 	private ArrayList<String> students; // iscritti al corso
-	private ArrayList<Integer> examStudents; // iscritti all'esame del corso con relativo voto --> value non sostenuto -1; esame superato 18-31 (31 == 30L) 
+	private ArrayList<Integer> examStudents; // iscritti all'esame del corso con relativo voto --> value default non sostenuto -1; esame superato 18-31 (31 == 30L) 
+	/* 
+	 * Le due liste presentano gli studenti inseriti nel medesimo metodo
+	 * in modo da avere lo stesso indice per poter recuperare 
+	 * i voti degli esami a partire dall'indice del relativo studente nell'altra lista.
+	 */
+	
 	
 	// Costruttore
 	public Course(String name) {
@@ -33,7 +40,7 @@ public class Course implements Serializable{
 	
 	public ArrayList<String> getStudentsList() { return this.students; } // ritorna la lista degli iscritti
 	
-	public ArrayList<Integer> getExamStudentsMap() { return this.examStudents; } // ritorna la map che associa studenti iscritti all'esame ai relativi voti
+	public ArrayList<Integer> getExamStudentsMarks() { return this.examStudents; } // ritorna la la lista dei voti degli studenti iscritti all'esame 
 	
 	public Date getStartDate() { return this.start; } // ritorna la data di inizio del corso
 	
@@ -46,6 +53,8 @@ public class Course implements Serializable{
 	public String getProf() { return this.prof; } // ritorna il docente del corso
 	
 	public String getSecondProf() { return this.secondProf; } // ritorna il co-docente del corso (se esiste), senn� ritorna stringa vuota
+	
+	public boolean getAreGradesVisibleToStudents() { return this.areGradesVisibleToStudents; }
 	
 	// Setters
 	public void setNome(String newName) { // modifica il nome del corso
@@ -102,6 +111,10 @@ public class Course implements Serializable{
 	public void setMark(String stu, Integer mark) {
 		int index = this.students.indexOf(stu);
 		this.examStudents.set(index, mark);
+	}
+	
+	public void setAreGradesVisibleToStudents(boolean newVisibility) { // modifica la visibilità dei voti agli studenti. Può essere utilizzato solo da un account di tipo segreteria.
+		this.areGradesVisibleToStudents = newVisibility;
 	}
 	
 	@Override

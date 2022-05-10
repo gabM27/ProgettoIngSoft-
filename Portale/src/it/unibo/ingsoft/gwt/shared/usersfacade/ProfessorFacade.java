@@ -121,5 +121,23 @@ public class ProfessorFacade {
 			
 		});
 	}
+
+	public void sendMark(String studentEmail, String courseName, Integer mark) {
+		Singleton.getGreetingService().addMarkToStudentExam(studentEmail, courseName, mark, 
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR ADDING MARK TO STUDENT EXAM: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						Window.alert("TRYED ADDING MARK TO STUDENT EXAM.\nResult: " + result);
+					}
+			
+		});
+		
+	}
 	
 }

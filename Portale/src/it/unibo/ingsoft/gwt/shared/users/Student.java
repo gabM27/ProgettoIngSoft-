@@ -70,6 +70,7 @@ public class Student extends User implements Serializable{
 	public void deleteCourse(String c) {
 		if (isCourseThere(c)) {
 			this.courses.remove(c);
+			this.exams.remove("Esame del corso di " + c);
 		}
 	}
 	
@@ -81,7 +82,7 @@ public class Student extends User implements Serializable{
 	}
 	
 	// Metodo che controlla se c'e' gia' un corso all'interno della lista
-	private boolean isCourseThere(String c) {
+	public boolean isCourseThere(String c) {
 		boolean isThere = false;
 		for (int i = 0; i < this.courses.size(); i++) {
 			if (c.equalsIgnoreCase(this.courses.get(i))) {
@@ -93,7 +94,7 @@ public class Student extends User implements Serializable{
 	}
 	
 	// Metodo che controlla se c'e' gia' un esame all'interno della lista
-	private boolean isExamThere(String e) {
+	public boolean isExamThere(String e) {
 		boolean isThere = false;
 		for (int i = 0; i < this.exams.size(); i++) {
 			if (e.equalsIgnoreCase(this.exams.get(i))) {

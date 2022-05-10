@@ -2,6 +2,7 @@ package it.unibo.ingsoft.gwt.client.settings;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -59,4 +60,14 @@ public interface GreetingService extends RemoteService {
 	String viewStudentRegisteredCoursesExamSettedUp(String studentEmail);
 	
 	String signUpStudentToAnExam(String courseName, String studentEmail);
+
+	String viewStudentRegisteredExams(String studentEmail);
+
+	String deleteStudentExamRegistration(String examName, String studentEmail);
+
+	String viewProfCourses(String profEmail);
+	
+	String viewRegisteredStudentFromCourse(String courseName);
+	
+	String addMarkToStudentExam(String studentEmail, String  courseName, Integer mark);
 }

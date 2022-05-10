@@ -20,6 +20,7 @@ import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeCourseInfoPr
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeExamFormProfessorDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveExamDashboard;
+import it.unibo.ingsoft.gwt.client.settings.professorSettings.SendMarksDashboard;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewDepartmentsList;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.CourseEnrollmentDashboard;
@@ -205,5 +206,9 @@ public class Mainpage extends Composite{
 		this.mainPanel.add(new DeleteExamEnrollmentDashboard(this));
 	}
 	
+	public void openSendMarksDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new SendMarksDashboard(this));
+	}
 	
 }
