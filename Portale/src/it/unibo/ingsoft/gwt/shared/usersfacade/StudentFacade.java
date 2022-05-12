@@ -3,6 +3,7 @@ package it.unibo.ingsoft.gwt.shared.usersfacade;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 
@@ -36,40 +37,40 @@ public class StudentFacade {
 		}
 		return generalUserFacade;
 	}
-	
+
 	public void courseRegistration(String courseName) {
 		Singleton.getGreetingService().signUpStudentToACourse(courseName,
 				ActualSession.getActualSession().getEmail(),
 				new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("ERROR signing-up to the course: "+ caught.getMessage());
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR signing-up to the course: "+ caught.getMessage());
+			}
 
-					@Override
-					public void onSuccess(String result) {
-						Window.alert("TRYED signing-up to the course.\nResult: " + result);
-					}
-			
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED signing-up to the course.\nResult: " + result);
+			}
+
 		});
 	}
-	
+
 	public void deleteCourseRegistration(String courseName) {
 		Singleton.getGreetingService().deleteStudentCourseRegistration(courseName,
 				ActualSession.getActualSession().getEmail(),
 				new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("ERROR deleting registration from the course: " + caught.getMessage());
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR deleting registration from the course: " + caught.getMessage());
+			}
 
-					@Override
-					public void onSuccess(String result) {
-						Window.alert("TRYED deleting course registration from the course.\nResult: " + result);
-					}
-			
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED deleting course registration from the course.\nResult: " + result);
+			}
+
 		});
 	}
 
@@ -78,16 +79,16 @@ public class StudentFacade {
 				ActualSession.getActualSession().getEmail(),
 				new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("ERROR SIGNING UP TO THE COURSE EXAM: " + caught.getMessage());
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR SIGNING UP TO THE COURSE EXAM: " + caught.getMessage());
+			}
 
-					@Override
-					public void onSuccess(String result) {
-						Window.alert("TRYED signing up to the course exam.\nResult: " + result);
-					}
-			
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED signing up to the course exam.\nResult: " + result);
+			}
+
 		});
 	}
 
@@ -96,17 +97,38 @@ public class StudentFacade {
 				ActualSession.getActualSession().getEmail(),
 				new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("ERROR deleting registration from the exam: " + caught.getMessage());
-					}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR deleting registration from the exam: " + caught.getMessage());
+			}
 
-					@Override
-					public void onSuccess(String result) {
-						Window.alert("TRYED deleting exam registration from the exam.\nResult: " + result);
-					}
-			
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("TRYED deleting exam registration from the exam.\nResult: " + result);
+			}
+
 		});
 	}
-	
+
+	public void viewExamsMarksInfo(Mainpage main) {
+		Singleton.getGreetingService().viewExamsMarks(ActualSession.getActualSession().getEmail(),
+				new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("ERROR PRINTING EXAMS' MARKS INFO: " + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("Printing exams' marks info...");
+				if (result.equals("")) {
+					main.openViewExamMarksDashboard("NESSUN VOTO DISPONIBILE.");
+				} else {
+					main.openViewExamMarksDashboard(result);	
+				}
+			}
+		});
+	}
+
 }

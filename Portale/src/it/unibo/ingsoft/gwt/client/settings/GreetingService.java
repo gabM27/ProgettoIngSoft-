@@ -76,4 +76,6 @@ public interface GreetingService extends RemoteService {
 	String setExamsMarksVisibilityVisible(String examName);
 	
 	String viewExamsSecList(String secEmail);
+
+	String viewExamsMarks(String studentEmail);
 }

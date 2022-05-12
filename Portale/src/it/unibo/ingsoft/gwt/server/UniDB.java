@@ -682,7 +682,6 @@ public class UniDB {
 					 * al momento della creazione dell'account studente.
 					 */
 
-
 					// Aggiornamento dei valori nel DB
 					usersMap.replace(studentEmail, stu);
 
@@ -945,6 +944,8 @@ public class UniDB {
 		Course c = coursesMap.get(examName);
 
 		c.setAreGradesVisibleToStudents(true);
+
+		coursesMap.replace(c.getName(), c);
 		
 		db.commit();
 		coursesMap.close();
@@ -980,6 +981,30 @@ public class UniDB {
 		db.close();
 		return info;
 	}
+
+	public static String viewExamsMarksInfo(String studentEmail) {
+		String ret = "";
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+
+		if (checkEmail(studentEmail)) {
+			for (Entry<String, Course> newCourse : coursesMap.entrySet()) {
+				if (newCourse.getValue().isStudentThere(studentEmail)) {
+					if (newCourse.getValue().getAreGradesVisibleToStudents()) {
+						ret += "Corso di " + newCourse.getValue().getName() + ".\nVoto: " +
+								newCourse.getValue().getExamStudentsMarks().get(newCourse.getValue().getStudentsList().indexOf(studentEmail)) + ""
+										+ ".\n\n";
+					}
+				}
+			}
+		}
+
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return ret;
+	}
+
 
 	/*
 	 * METODI AUSILIARI
@@ -1113,6 +1138,8 @@ public class UniDB {
 		db.close();
 		return check;
 	}
+
+
 
 
 

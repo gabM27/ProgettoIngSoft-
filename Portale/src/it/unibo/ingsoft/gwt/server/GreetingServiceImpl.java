@@ -173,4 +173,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		 return UniDB.viewSecretaryExamsList(secEmail);
 	 }
 	 
+	 @Override
+	 public String viewExamsMarks(String studentEmail) {
+		 return UniDB.viewExamsMarksInfo(studentEmail);
+	 }
 }

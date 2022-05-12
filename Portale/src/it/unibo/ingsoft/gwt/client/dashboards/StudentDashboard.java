@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
+import it.unibo.ingsoft.gwt.shared.usersfacade.StudentFacade;
 
 public class StudentDashboard extends Composite {
 	// Variabili istanza
@@ -103,7 +104,7 @@ public class StudentDashboard extends Composite {
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
 			case 7:	// Visualizza voti degli esami svolti 
-				//TODO:
+				StudentFacade.getStudentFacade().viewExamsMarksInfo(mainpage);
 				break;
 			default: // Default operation: error
 				Window.alert("ERROR: DEFAULT OPERATION");

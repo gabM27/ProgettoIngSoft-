@@ -73,4 +73,6 @@ public interface GreetingServiceAsync {
 	void setExamsMarksVisibilityVisible(String examName, AsyncCallback<String> callback);
 
 	void viewExamsSecList(String secEmail, AsyncCallback<String> callback);
+
+	void viewExamsMarks(String studentEmail, AsyncCallback<String> callback);
 }
