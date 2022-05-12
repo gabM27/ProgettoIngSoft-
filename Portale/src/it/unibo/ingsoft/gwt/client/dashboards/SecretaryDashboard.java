@@ -78,6 +78,7 @@ public class SecretaryDashboard extends Composite {
 				GeneralUserFacade.getGeneralUserFacade().printAllStudentsPersonalInfo(mainpage);
 				break;
 			case 1:	// Inserisci i voti dell'esame 
+				mainpage.openMakeStudentsGradesVisibleDashboard();
 				break;
 			default: // Default operation: error
 				Window.alert("ERROR: DEFAULT OPERATION");

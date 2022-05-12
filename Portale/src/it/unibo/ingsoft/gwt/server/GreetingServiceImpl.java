@@ -163,4 +163,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		 return UniDB.viewAllStudentsPersonalInfo();
 	 }
 	
+	 @Override
+	 public String setExamsMarksVisibilityVisible(String examName) {
+		 return UniDB.setExamsCourseVisibility(examName);
+	 }
+	 
+	 @Override
+	 public String viewExamsSecList(String secEmail) {
+		 return UniDB.viewSecretaryExamsList(secEmail);
+	 }
+	 
 }

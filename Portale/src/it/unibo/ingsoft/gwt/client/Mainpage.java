@@ -21,6 +21,7 @@ import it.unibo.ingsoft.gwt.client.settings.professorSettings.ChangeExamFormProf
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveCourseDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.RemoveExamDashboard;
 import it.unibo.ingsoft.gwt.client.settings.professorSettings.SendMarksDashboard;
+import it.unibo.ingsoft.gwt.client.settings.secretarySettings.MakeStudentsGradesVisible;
 import it.unibo.ingsoft.gwt.client.settings.studentSettings.CourseEnrollmentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.studentSettings.DeleteCourseEnrollmentDashboard;
 import it.unibo.ingsoft.gwt.client.settings.studentSettings.DeleteExamEnrollmentDashboard;
@@ -215,6 +216,11 @@ public class Mainpage extends Composite{
 	public void openViewStudentsPersonalInfo(String info) {
 		this.mainPanel.clear();
 		this.mainPanel.add(new ViewAllStudentsPersonalInfo(this, info));
+	}
+
+	public void openMakeStudentsGradesVisibleDashboard() {
+		this.mainPanel.clear();
+		this.mainPanel.add(new MakeStudentsGradesVisible(this));
 	}
 	
 }

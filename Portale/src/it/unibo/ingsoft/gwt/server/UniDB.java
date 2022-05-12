@@ -427,6 +427,7 @@ public class UniDB {
 		if (!checkExam(nomeCorso)) { // Verifico che l'esame non sia già stato inserito per quel corso
 			DB db = getUniDB();
 			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 
 			Course newCourse = coursesMap.get(nomeCorso);
 			// Inserisco i dati dell'esame per lo specifico corso
@@ -438,8 +439,19 @@ public class UniDB {
 			// Aggiornamento del corso (con relativo esame) nel DB
 			coursesMap.replace(nomeCorso, newCourse);
 
+			for (Entry<String, User> newUser : usersMap.entrySet()) {
+				if (newUser.getValue() instanceof Secretary) {
+					Secretary sec = (Secretary) newUser.getValue();
+					// Inserisco l'esame nella lista esami della segreteria
+					sec.addExam(nomeCorso);
+					// Aggiornamento della segreteria nel DB
+					usersMap.replace(newUser.getKey(), sec);
+				}
+			}
+
 			db.commit();
 			coursesMap.close();
+			usersMap.close();
 			db.close();
 			return "ADDED EXAM IN \"" + nomeCorso + "\" COURSE.";
 		}
@@ -479,6 +491,7 @@ public class UniDB {
 		if (checkExam(nomeCorso)) {
 			DB db = getUniDB();
 			HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+			HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
 
 			Course course = coursesMap.get(nomeCorso);
 			// Elimino l'esame tramite la funzione dell'oggetto corso
@@ -486,6 +499,16 @@ public class UniDB {
 
 			// Aggiornamento del corso (con relativo esame AGGIORNATO a NULL) nel DB
 			coursesMap.replace(nomeCorso, course);
+
+			for (Entry<String, User> newUser : usersMap.entrySet()) {
+				if (newUser.getValue() instanceof Secretary) {
+					Secretary sec = (Secretary) newUser.getValue();
+					// Cancella l'esame nella lista esami della segreteria
+					sec.deleteExam(nomeCorso);
+					// Aggiornamento della segreteria nel DB
+					usersMap.replace(newUser.getKey(), sec);
+				}
+			}
 
 			db.commit();
 			coursesMap.close();
@@ -879,8 +902,61 @@ public class UniDB {
 	}
 
 	/**
-	 * Metodo che ritorna le informazioni personali di tutti gli studenti.
+	 * Metodo che ritorna la lista degli esami all'interno di una istanza di un utente di tipo segreteria.
 	 * 
+	 * @param secEmail String
+	 * @return ret String
+	 */
+	public static String viewSecretaryExamsList(String secEmail) {
+		String ret = "";
+
+		DB db = getUniDB();
+		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+
+		if (!usersMap.isEmpty()) {
+			if (usersMap.get(secEmail) instanceof Secretary) {
+				Secretary sec = (Secretary) usersMap.get(secEmail);
+				for (String exam : sec.getExamsList()) {
+					ret += exam + "_";
+				}
+			} else {
+				ret += "Email passata in input associata a un utente di tipo diverso da Segreteria";
+			}
+		} else {
+			ret += "NESSUN ACCOUNT NEL DB";
+		}
+
+		db.commit();
+		usersMap.close();
+		db.close();
+		return ret;
+	}
+
+	/**
+	 * Metodo che modifica la visibilità degli esami (un valore booleano nell'oggeto Course)
+	 * 
+	 * @param examName String
+	 * @return String
+	 */
+	public static String setExamsCourseVisibility(String examName) {
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+
+		Course c = coursesMap.get(examName);
+
+		c.setAreGradesVisibleToStudents(true);
+		
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return "Visibilità modificata";
+	}
+
+
+	/**
+	 * Metodo che ritorna la lista degli esami presenti in un'istanza di utente di tipo segreteria
+	 *  
+	 *  @param 
 	 * @return info String
 	 */
 	public static String viewAllStudentsPersonalInfo() {

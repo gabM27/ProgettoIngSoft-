@@ -72,4 +72,8 @@ public interface GreetingService extends RemoteService {
 	String addMarkToStudentExam(String studentEmail, String  courseName, Integer mark);
 	
 	String viewAllStudentsPersonalInfo();
+	
+	String setExamsMarksVisibilityVisible(String examName);
+	
+	String viewExamsSecList(String secEmail);
 }

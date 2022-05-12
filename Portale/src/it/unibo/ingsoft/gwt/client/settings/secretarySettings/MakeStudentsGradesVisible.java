@@ -1,4 +1,4 @@
-package it.unibo.ingsoft.gwt.client.settings.studentSettings;
+package it.unibo.ingsoft.gwt.client.settings.secretarySettings;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -17,25 +17,26 @@ import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.usersfacade.StudentFacade;
+import it.unibo.ingsoft.gwt.shared.usersfacade.SecretaryFacade;
 
-public class DeleteCourseEnrollmentDashboard extends Composite {
-	// Variabili istanza
+public class MakeStudentsGradesVisible extends Composite {
 	private Mainpage mainpage;
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private String courseName;
-	private ListBox courseNameBox;
-			
-	public DeleteCourseEnrollmentDashboard(Mainpage main) {
+	private ListBox examListBox;
+	private String examName = "";
+	
+	
+	public MakeStudentsGradesVisible(Mainpage main) {
 		this.mainpage = main;
 		initWidget(mainPanel);
 		
 		VerticalPanel panel = new VerticalPanel();
-					
-		Label descriptionLabel = new Label("Seleziona il corso dal quale cancellare l'iscrizione:");
-		courseNameBox = new ListBox();
 		
-		Singleton.getGreetingService().viewStudentRegisteredCourses(ActualSession.getActualSession().getEmail(), 
+		Label descriptionLabel = new Label("Seleziona l'esame del quale si vogliono pubblicare i voti:");
+		examListBox = new ListBox();
+		examListBox.addItem("Nessun esame.");
+		
+		Singleton.getGreetingService().viewExamsSecList(ActualSession.getActualSession().getEmail(), 
 				new AsyncCallback<String>() {
 			
 			@Override
@@ -45,20 +46,20 @@ public class DeleteCourseEnrollmentDashboard extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-				courseNameBox.clear();
+				examListBox.clear();
 				String[] coursesList = result.split("_");
 				for (int i = 0; i < coursesList.length; i++) {
-					courseNameBox.addItem(coursesList[i]);
+					examListBox.addItem(coursesList[i]);
 				}
 				// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
-				courseName = courseNameBox.getItemText(0);  
+				examName = examListBox.getItemText(0);  
 			}
 		});
 
-		courseNameBox.addChangeHandler(new ChangeHandler() {
+		examListBox.addChangeHandler(new ChangeHandler() {
 				@Override
 				public void onChange(ChangeEvent event) {
-					courseName = courseNameBox.getSelectedItemText();
+					examName = examListBox.getSelectedItemText();
 				}
 			});
 	
@@ -70,8 +71,8 @@ public class DeleteCourseEnrollmentDashboard extends Composite {
 		/*
 		 * Buttons
 		 */
-		Button btnSignUp = new Button("DELETE"); // Cancella l'iscrizione dello studente al corso selezionato 
-		btnSignUp.addClickHandler(new DeleteSignUpCourseHandler());
+		Button btnSignUp = new Button("PUBLISH"); // Pubblica i voti degli esami di un corso --> li rende visibili a un utente
+		btnSignUp.addClickHandler(new SetVisibiltyHandler());
 		
 		Button btnBack = new Button("BACK");
 		btnBack.addClickHandler(new ClickHandler() { // BACK TO DASHBOARD
@@ -102,21 +103,20 @@ public class DeleteCourseEnrollmentDashboard extends Composite {
 		 * ADDING ELEMENTS TO PANEL
 		 */
 		panel.add(descriptionLabel);
-		
-		panel.add(courseNameBox);
+		panel.add(examListBox);
 		panel.setSpacing(5);
 		
 		this.mainPanel.add(panel);
 		this.mainPanel.add(buttonsPanel);
 	}
-	
 
 	
-	private class DeleteSignUpCourseHandler implements ClickHandler{
+	
+	private class SetVisibiltyHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			StudentFacade.getStudentFacade().deleteCourseRegistration(courseName);
+			SecretaryFacade.getSecretaryFacade().setMarksVisibility(examName);
 		}
 		
 	}
