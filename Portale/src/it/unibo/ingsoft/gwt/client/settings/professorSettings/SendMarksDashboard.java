@@ -48,7 +48,7 @@ public class SendMarksDashboard extends Composite {
 		Label courseLbl = new Label("Seleziona il corso, tra quelli di tua competenza, per il quale vuoi inserire i voti: ");
 		Label studentLbl = new Label("Seleziona lo studente, tra quelli iscritti all'esame del corso, per il quale vuoi inserire il voto:");
 		Label markLbl = new Label("Scrivere il voto da aggiungere: inserire un valore tra 0 [non superato]; 18 -- 30 [superato]; 31 [30 e lode].");
-		
+
 		Singleton.getGreetingService().viewProfCourses(ActualSession.getActualSession().getEmail(), 
 				new AsyncCallback<String>() {
 
@@ -64,30 +64,32 @@ public class SendMarksDashboard extends Composite {
 					courseNameBox.addItem(coursesList[i]);
 				}
 				// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
-				courseName = courseNameBox.getItemText(0);  
+				courseName = courseNameBox.getItemText(0);
+				Singleton.getGreetingService().viewRegisteredStudentFromCourse(courseName, 
+						new AsyncCallback<String>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR viewing registered students form course: " + caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						registeredStudentsEmailBox.clear();
+						String[] registeredStudents = result.split("_");
+						for (int i = 0; i < registeredStudents.length; i++) {
+							registeredStudentsEmailBox.addItem(registeredStudents[i]);
+						}
+						// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
+						studentEmail = registeredStudentsEmailBox.getItemText(0); 
+					}
+
+				});
+
 			}
 		});
+
+
 		
-		Singleton.getGreetingService().viewRegisteredStudentFromCourse(courseName, 
-				new AsyncCallback<String>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR viewing registered students form course: " + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				registeredStudentsEmailBox.clear();
-				String[] registeredStudents = result.split("_");
-				for (int i = 0; i < registeredStudents.length; i++) {
-					registeredStudentsEmailBox.addItem(registeredStudents[i]);
-				}
-				// Gestione del caso in cui non si apre il menu a tendina e si lascia di default il primo valore
-				studentEmail = registeredStudentsEmailBox.getItemText(0); 
-			}
-
-		});
-
 		courseNameBox.addChangeHandler(new ViewRegisteredStudents4Course());
 
 		TextArea markTA = new TextArea();
@@ -99,14 +101,14 @@ public class SendMarksDashboard extends Composite {
 			}
 
 		});
-		
+
 		registeredStudentsEmailBox.addChangeHandler(new ChangeHandler() {
 
 			@Override
 			public void onChange(ChangeEvent event) {
 				studentEmail = registeredStudentsEmailBox.getSelectedItemText();
 			}
-			
+
 		});
 
 		/*
@@ -124,7 +126,7 @@ public class SendMarksDashboard extends Composite {
 		 */
 		Button btnSend = new Button("SEND"); // Invia il voto al DB
 		btnSend.addClickHandler(new SendMarksHandler());
-		
+
 		Button btnBack = new Button("BACK");
 		btnBack.addClickHandler(new ClickHandler() { // BACK TO DASHBOARD
 			@Override
@@ -132,7 +134,7 @@ public class SendMarksDashboard extends Composite {
 				mainpage.openAccountDashboard(ActualSession.getActualSession().getActualStatus());
 			}
 		});
-		
+
 		Button btnLogout = new Button("LOGOUT"); // BACK TO HOMEPAGE
 		btnLogout.addClickHandler(new ClickHandler() {
 			@Override
@@ -141,7 +143,7 @@ public class SendMarksDashboard extends Composite {
 				mainpage.openHomepage();
 			}
 		});
-		
+
 		/*
 		 * ADDING BUTTONS TO BUTTONS PANEL
 		 */
@@ -149,7 +151,7 @@ public class SendMarksDashboard extends Composite {
 		buttonsPanel.add(btnBack);
 		buttonsPanel.add(btnLogout);
 		buttonsPanel.setSpacing(5);
-		
+
 		panel.setSpacing(5);
 		buttonsPanel.setSpacing(5);	
 		this.mainPanel.add(panel);
@@ -157,11 +159,11 @@ public class SendMarksDashboard extends Composite {
 	}
 
 	private class ViewRegisteredStudents4Course implements ChangeHandler {		
-		
+
 		@Override
 		public void onChange(ChangeEvent event) {
 			courseName = courseNameBox.getSelectedItemText();
-			
+
 			Singleton.getGreetingService().viewRegisteredStudentFromCourse(courseName, 
 					new AsyncCallback<String>() {
 				@Override
@@ -184,7 +186,7 @@ public class SendMarksDashboard extends Composite {
 		}
 
 	}
-	
+
 	private class SendMarksHandler implements ClickHandler {
 
 		@Override
@@ -198,10 +200,10 @@ public class SendMarksDashboard extends Composite {
 						+ "[18-30] --> Esame superato.\n"
 						+ "[31] --> Esame superato con 30 e lode!");
 			}
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 }

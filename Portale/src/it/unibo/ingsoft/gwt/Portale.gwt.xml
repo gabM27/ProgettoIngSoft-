@@ -23,7 +23,7 @@
   <entry-point class='it.unibo.ingsoft.gwt.client.Portale'/>
 
   
-  <!----><source path='client'></source>
+  <source path='client'></source>
   <source path='shared'/>
   
   <!-- allow Super Dev Mode -->
