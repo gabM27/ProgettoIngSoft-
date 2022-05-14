@@ -3,6 +3,7 @@ package it.unibo.ingsoft.gwt.server;
 import java.io.File;
 import java.util.Date;
 import java.util.Map.Entry;
+import java.util.function.BooleanSupplier;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -11,6 +12,7 @@ import org.mapdb.HTreeMap;
 import it.unibo.ingsoft.gwt.shared.Status;
 import it.unibo.ingsoft.gwt.shared.domain.Course;
 import it.unibo.ingsoft.gwt.shared.domain.Department;
+import it.unibo.ingsoft.gwt.shared.domain.Exam;
 import it.unibo.ingsoft.gwt.shared.users.Admin;
 import it.unibo.ingsoft.gwt.shared.users.Professor;
 import it.unibo.ingsoft.gwt.shared.users.Secretary;
@@ -946,7 +948,7 @@ public class UniDB {
 		c.setAreGradesVisibleToStudents(true);
 
 		coursesMap.replace(c.getName(), c);
-		
+
 		db.commit();
 		coursesMap.close();
 		db.close();
@@ -956,8 +958,7 @@ public class UniDB {
 
 	/**
 	 * Metodo che ritorna la lista degli esami presenti in un'istanza di utente di tipo segreteria
-	 *  
-	 *  @param 
+	 *   
 	 * @return info String
 	 */
 	public static String viewAllStudentsPersonalInfo() {
@@ -993,7 +994,7 @@ public class UniDB {
 					if (newCourse.getValue().getAreGradesVisibleToStudents()) {
 						ret += "Corso di " + newCourse.getValue().getName() + ".\nVoto: " +
 								newCourse.getValue().getExamStudentsMarks().get(newCourse.getValue().getStudentsList().indexOf(studentEmail)) + ""
-										+ ".\n\n";
+								+ ".\n\n";
 					}
 				}
 			}
@@ -1107,9 +1108,11 @@ public class UniDB {
 	/*
 	 * METODI PER I TEST
 	 */
+
 	// Verifica se esiste l'utente nel DB
 	public static boolean checkUserExists(String email) { return checkEmail(email); }
 
+	// Verifica che le info personali siano diverse da null
 	public static boolean checkPersonalInfoNotNull(String email) {
 		boolean check = false;
 
@@ -1139,19 +1142,112 @@ public class UniDB {
 		return check;
 	}
 
+	// Verifica che esista il dipartimento
+	public static boolean checkDepartmentExists(String dep) { return checkDepartmentName(dep); } 
 
+	// Verifica che esista il corso
+	public static boolean checkCourseExists(String course) { return checkCourseName(course); }
 
+	// Verifica che descrizione e codocente di un corso siano uguali a quelle passate in input
+	public static boolean checkInfoCourse(String courseName, String description, String secondProf) {
+		boolean ret = false;
 
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
 
+		Course c = coursesMap.get(courseName);
 
+		if (c.getDescription().equals(description) && c.getSecondProf().equals(secondProf)) {
+			ret = true;
+		}
 
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return ret;
+	}
 
+	// Verifica che esista un esame
+	public static boolean checkExamExists(String course) { return checkExam(course); }
 
+	// Verifica che orario, durezza e aula di un esame siano uguali a quelle passate in input
+	public static boolean checkInfoExam(String corso, String orario, String durezza, String aula) {
+		boolean ret = false;
+
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+
+		Course c = coursesMap.get(corso);
+		Exam e = c.getExam();
+
+		if (e.getOrario().equals(orario) && e.getLivelloDurezza().equals(durezza) && e.getNomeAula().equals(aula)) {
+			ret = true;
+		}
+
+		db.commit();
+		coursesMap.close();
+		db.close();
+		return ret;
+	}
+
+	// Verifica che in un corso ci sia uno studente e viceversa
+	public static boolean checkStudentInCourse(String courseName, String studentEmail) {
+		boolean ret = false;
+
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+
+		Course c = coursesMap.get(courseName);
+		Student s = (Student) usersMap.get(studentEmail);
+
+		if (c.isStudentThere(studentEmail) && s.isCourseThere(courseName)) {
+			ret = true;
+		}
+		
+		db.commit();
+		coursesMap.close();
+		usersMap.close();
+		db.close();
+		return ret;
+	}
+	
+	// Verifica che sia presente un esame nella lista di esami di uno studente 
+	public static boolean checkExamInStudent(String studentEmail, String examName) {
+		boolean ret = false;
+
+		DB db = getUniDB();
+		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
+
+		Student s = (Student) usersMap.get(studentEmail);
+
+		if (s.isExamThere(examName)) {
+			ret = true;
+		}
+		
+		db.commit();
+		usersMap.close();
+		db.close();
+		return ret;
+	}
+	
+	// Verifica che la visibilità dei voti per uno studente in un corso sia settata a true
+	public static boolean checkMarksVisibilityInCourse(String courseName) {
+		boolean ret = false;
+		
+		DB db = getUniDB();
+		HTreeMap<String, Course> coursesMap = db.getHashMap("coursesMap");
+		
+		Course c = coursesMap.get(courseName);
+		
+		ret = c.getAreGradesVisibleToStudents();
+		
+		db.commit();
+		coursesMap.close();
+		db.close();
+		
+		return ret;
+	}
+	
 }
-
-
-
-
-
-
 
