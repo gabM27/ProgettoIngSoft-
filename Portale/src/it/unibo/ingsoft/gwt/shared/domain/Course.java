@@ -93,7 +93,8 @@ public class Course implements Serializable{
 	public void addStudent(String s) {
 		if (!isStudentThere(s)) {
 			this.students.add(s);
-			this.examStudents.add(-1); // valore default --> corrisponde a non sostenuto
+			int tmpIndex = this.students.indexOf(s);
+			this.examStudents.add(tmpIndex, -1); // valore default --> corrisponde a non sostenuto
 		}
 	}
 	

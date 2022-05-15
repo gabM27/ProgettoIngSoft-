@@ -104,7 +104,7 @@ public class StudentDashboard extends Composite {
 				GeneralUserFacade.getGeneralUserFacade().printPersonalInfo(mainpage);
 				break;
 			case 7:	// Visualizza voti degli esami svolti 
-				StudentFacade.getStudentFacade().viewExamsMarksInfo(mainpage);
+				StudentFacade.getStudentFacade().viewExamsMarksInfo(mainpage, ActualSession.getActualSession().getEmail());
 				break;
 			default: // Default operation: error
 				Window.alert("ERROR: DEFAULT OPERATION");
