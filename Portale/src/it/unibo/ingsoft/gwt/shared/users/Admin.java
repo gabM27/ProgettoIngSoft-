@@ -8,9 +8,7 @@ public class Admin extends User {
 	// Costruttore
 	public Admin() {
 		super("admin", "admin");
+		super.setUsername(ADMIN_USERNAME);
 	}
 	
-	// Ritorna l'username
-	public static String getAdminUsername() { return ADMIN_USERNAME; }
-
 }

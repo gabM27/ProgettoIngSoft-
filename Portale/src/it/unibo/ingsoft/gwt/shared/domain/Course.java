@@ -3,8 +3,6 @@ package it.unibo.ingsoft.gwt.shared.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 public class Course implements Serializable{
 	// Variabili istanza

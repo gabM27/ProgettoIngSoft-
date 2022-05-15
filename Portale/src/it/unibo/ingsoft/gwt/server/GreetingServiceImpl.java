@@ -3,7 +3,6 @@ package it.unibo.ingsoft.gwt.server;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import it.unibo.ingsoft.gwt.client.settings.GreetingService;

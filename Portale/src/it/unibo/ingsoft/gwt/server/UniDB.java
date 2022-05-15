@@ -3,7 +3,6 @@ package it.unibo.ingsoft.gwt.server;
 import java.io.File;
 import java.util.Date;
 import java.util.Map.Entry;
-import java.util.function.BooleanSupplier;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -19,7 +18,6 @@ import it.unibo.ingsoft.gwt.shared.users.Secretary;
 import it.unibo.ingsoft.gwt.shared.users.Student;
 import it.unibo.ingsoft.gwt.shared.users.User;
 
-
 public class UniDB {
 
 	private static DB getUniDB() {
@@ -27,7 +25,10 @@ public class UniDB {
 		return uniDB;
 	}
 
-	// Inizializza la usersMap con il primo utente (admin)
+	/**
+	 * Inizializza la usersMap con il primo utente (admin)
+	 * @return boolean
+	 */
 	public static boolean adminUserInitialize() {
 		User admin = new Admin();
 		DB db = getUniDB();
@@ -40,7 +41,10 @@ public class UniDB {
 		return true;
 	}
 
-	// Pulisce il db
+	/**
+	 * Pulisce il Database.
+	 * @return boolean
+	 */
 	public static boolean clearUniDB() {
 		DB db = getUniDB();
 		HTreeMap<String, User> usersMap = db.getHashMap("usersMap");
@@ -59,7 +63,13 @@ public class UniDB {
 		return true;
 	}
 
-	// Aggiunge un oggetto User alla usersMap nel db uniDB
+	/**
+	 * Aggiunge un oggetto User alla usersMap nel db uniDB.
+	 * @param emailInput String
+	 * @param passwordInput String
+	 * @param accountType String
+	 * @return String
+	 */
 	public static String addUsers(String emailInput, String passwordInput, String accountType) {
 
 		if (!checkEmail(emailInput)) {
@@ -86,14 +96,23 @@ public class UniDB {
 			usersMap.close();
 			db.close();
 
-			return "Added new " + accountType + " with email: " + user.getEmail() + "\nClasse: " + user.getClass();
+			return "Added new " + accountType + " with email: " + user.getEmail();
 
 		} else {
 			return "Error: entered email already exist";
 		}
 	}
-
-	// Aggiunge le informazioni personali agli utenti di tipo STUDENTE
+	
+	/**
+	 *  Aggiunge le informazioni personali agli utenti di tipo STUDENTE
+	 * @param email String
+	 * @param iD String
+	 * @param username String
+	 * @param name String
+	 * @param surname String
+	 * @param birthday Date
+	 * @return String
+	 */
 	public static String addPersonalInfoToStudent(String email,String iD, String username, String name,
 			String surname, Date birthday) {
 		boolean changed = false;
@@ -127,7 +146,15 @@ public class UniDB {
 
 	}
 
-	// Aggiunge le informazioni personali agli utenti di tipo DOCENTE
+	/**
+	 *  Aggiunge le informazioni personali agli utenti di tipo DOCENTE
+	 * @param email String
+	 * @param username String
+	 * @param name String
+	 * @param surname String
+	 * @param birthday Date
+	 * @return String
+	 */
 	public static String addPersonalInfoToProfessor(String email, String username, String name, 
 			String surname, Date birthday) {
 		boolean changed = false;
@@ -159,6 +186,11 @@ public class UniDB {
 		}
 	}
 
+	/**
+	 * Ritorna le informazioni personali di un account docente o studente
+	 * @param email String
+	 * @return String
+	 */
 	public static String viewPersonalInfo(String email) {
 
 		if (checkEmail(email)) { // l'email e' presente nel DB
@@ -182,8 +214,12 @@ public class UniDB {
 
 	}
 
-
-	// Gestisce la richiesta di login impostando lo stato corretto
+	/**
+	 * Gestisce la richiesta di login impostando lo stato corretto
+	 * @param email String
+	 * @param password String
+	 * @return Status 
+	 */
 	public static Status loginRequest(String email, String password) {
 		Status returnStatus = null;
 
@@ -218,7 +254,11 @@ public class UniDB {
 	}
 
 
-	// Aggiunge un oggetto dipartimento alla departmentsMap nel db uniDB
+	/**
+	 * Aggiunge un oggetto dipartimento alla departmentsMap nel db uniDB
+	 * @param nomeDipartimento String
+	 * @return String 
+	 */
 	public static String addDepartment(String nomeDipartimento) {
 
 		if (!checkDepartmentName(nomeDipartimento)) {
@@ -238,7 +278,10 @@ public class UniDB {
 		}
 	}
 
-	// Ritorna la lista dei dipartimenti presenti nel DB in una stringa con delimitatore '_'
+	/**
+	 * Ritorna la lista dei dipartimenti presenti nel DB in una stringa con delimitatore '_'
+	 * @return String 
+	 */
 	public static String viewDepartmentsList() {
 		String ret = "";
 		DB db = getUniDB();
@@ -259,9 +302,19 @@ public class UniDB {
 		return ret;
 	}
 
-	// Aggiunge un oggetto Course alla coursesMap
-	// e aggiunge il nome del corso all'oggetto dipartimento passato in input.
-	// Se il corso e' gia' presente nella lista corsi di quel dipartimento, non verra' aggiunto.
+	/**
+	 * Aggiunge un oggetto Course alla coursesMap
+	 * e aggiunge il nome del corso all'oggetto dipartimento passato in input.
+	 * Se il corso e' gia' presente nella lista corsi di quel dipartimento, non verra' aggiunto.
+	 * @param departmentName String
+	 * @param courseName String
+	 * @param profEmail String
+	 * @param startCourse Date
+	 * @param endCourse Date
+	 * @param description String
+	 * @param secondProfEmail String
+	 * @return String 
+	 */
 	public static String addCourse(String departmentName, String courseName, String profEmail,
 			Date startCourse, Date endCourse, String description, String secondProfEmail) {
 
@@ -314,7 +367,15 @@ public class UniDB {
 		return "ADDED COURSE \"" + c.getName() + "\" IN DEPARTMENT " + departmentName + ".\n" + valSecondProf;
 	}
 
-	// Modifica le informazioni di un corso (nome del corso passato come parametro in input)
+	/**
+	 * Modifica le informazioni di un corso (nome del corso passato come parametro in input)
+	 * @param courseName String
+	 * @param startCourse Date
+	 * @param endCourse Date
+	 * @param description String
+	 * @param secondProfEmail String
+	 * @return String 
+	 */
 	public static String changeCourseInfo(String courseName, Date startCourse, 
 			Date endCourse, String description, String secondProfEmail) {
 
@@ -346,7 +407,12 @@ public class UniDB {
 		return "COURSE DOES NOT EXISTS IN DB";
 	}
 
-	// Elimina un corso dalla collezione dei corsi e dalla lista dei corsi del dipartimento
+	/**
+	 * Elimina un corso dalla collezione dei corsi e dalla lista dei corsi del dipartimento
+	 * @param depName String
+	 * @param courseName String
+	 * @return String 
+	 */
 	public static String deleteCourse(String depName, String courseName) {
 
 		if ((checkDepartmentName(depName)) && (checkCourseName(courseName))) {
@@ -377,7 +443,11 @@ public class UniDB {
 		}
 	}
 
-	// Ritorna la lista dei corsi 
+	/**
+	 * Ritorna la lista dei corsi 
+	 * @param departmentName String
+	 * @return String 
+	 */
 	public static String viewCoursesList(String departmentName) {
 		String ret = "";
 		DB db = getUniDB();
@@ -404,7 +474,11 @@ public class UniDB {
 
 	}
 
-	// Ritorna le informazioni di un corso (il nome del corso deve essere passato come parametro in input)
+	/**
+	 * Ritorna le informazioni di un corso (il nome del corso deve essere passato come parametro in input) 
+	 * @param nomeCorso String
+	 * @return String 
+	 */
 	public static String viewCourseInfo(String nomeCorso) {	
 		String ret = "";
 		DB db = getUniDB();
@@ -423,6 +497,15 @@ public class UniDB {
 		return ret;
 	}
 
+	/**
+	 * Crea e aggiunge un esame al corso passato in input
+	 * @param nomeCorso String
+	 * @param dataEsame Date
+	 * @param orarioEsame String
+	 * @param durezzaEsame String
+	 * @param nomeAula String
+	 * @return String 
+	 */
 	public static String addExamToCourse(String nomeCorso, Date dataEsame, String orarioEsame, 
 			String durezzaEsame, String nomeAula) {
 
@@ -461,7 +544,15 @@ public class UniDB {
 		return "EXAM ALREADY SETTED UP IN \"" + nomeCorso + "\" COURSE.";
 	}
 
-	// Modifica informazioni di un esame in un corso (nome corso passato come parametro in input)
+	/**
+	 * Modifica informazioni di un esame in un corso (nome corso passato come parametro in input)
+	 * @param nomeCorso String
+	 * @param dataEsame Date
+	 * @param orarioEsame String
+	 * @param durezzaEsame String
+	 * @param nomeAula String
+	 * @return String 
+	 */
 	public static String changeExamInfo(String nomeCorso, Date dataEsame, String orarioEsame,
 			String durezzaEsame, String nomeAula) {
 		if (checkExam(nomeCorso)) {
@@ -488,7 +579,11 @@ public class UniDB {
 		return "EXAM DOESN'T EXISTS: impossible updating exam's info.\nTry adding new exam.";
 	}
 
-	// Cancellazione di un esame dal corso --> rende l'esame null
+	/**
+	 * Cancellazione di un esame dal corso --> rende l'esame null
+	 * @param nomeCorso String
+	 * @return String 
+	 */
 	public static String deleteExam(String nomeCorso) {
 		if (checkExam(nomeCorso)) {
 			DB db = getUniDB();
@@ -522,8 +617,12 @@ public class UniDB {
 		return "EXAM DOESN'T EXISTS: impossible deleting exam.";
 	}
 
-
-	// Iscrizione di uno studente a un corso
+	/**
+	 * Iscrizione di uno studente a un corso
+	 * @param courseName String
+	 * @param studentEmail String
+	 * @return String 
+	 */
 	public static String signUpStudentToCourse(String courseName, String studentEmail) {
 		String ret = "";
 
@@ -568,7 +667,12 @@ public class UniDB {
 		return ret; 
 	}
 
-	// Cancellazione iscrizione di uno studente a un corso
+	/**
+	 * Cancellazione iscrizione di uno studente a un corso
+	 * @param courseName String
+	 * @param studentEmail String
+	 * @return String 
+	 */
 	public static String deleteStudentCourseRegistrationFromDB(String courseName, String studentEmail) {
 		String ret = "";
 
@@ -611,7 +715,11 @@ public class UniDB {
 		return ret; 
 	}
 
-	// Ritorna la lista dei corsi a cui è iscritto uno studente
+	/**
+	 * Ritorna la lista dei corsi a cui è iscritto uno studente
+	 * @param studentEmail String
+	 * @return String 
+	 */
 	public static String viewStudentRegisteredCourseList(String studentEmail) {
 		String ret = "";
 		if (checkEmail(studentEmail)) {
@@ -636,8 +744,12 @@ public class UniDB {
 		return ret;
 	}
 
-
-	// Ritorna la lista dei corsi a cui uno studente (email in input) è iscritto && con esame impostato (course.getExam() != null).
+	/**
+	 * Ritorna la lista dei corsi a cui uno studente (email in input) è iscritto 
+	 * && con esame impostato (course.getExam() != null).
+	 * @param studentEmail String
+	 * @return String 
+	 */
 	public static String viewStudentRegisteredCoursesExamSettedUpList(String studentEmail) {
 		String ret = "";
 		if (checkEmail(studentEmail)) {
@@ -662,7 +774,12 @@ public class UniDB {
 		return ret;
 	}
 
-	// Registra uno studente (email in input) a un corso (nome corso in input)
+	/**
+	 * Registra uno studente (email in input) a un corso (nome corso in input)
+	 * @param courseName String
+	 * @param studentEmail String
+	 * @return String 
+	 */
 	public static String signUpStudentToACourseExam(String courseName, String studentEmail) {
 		String ret = "";
 
@@ -711,11 +828,9 @@ public class UniDB {
 	/**
 	 * Metodo che ritorna la lista di esami a cui è iscritto lo studente
 	 * con email passata in input.
-	 * 
 	 * @param studentEmail String
 	 * @return ret String
 	 */
-	// Ritorna la lista dei corsi a cui è iscritto uno studente
 	public static String viewStudentRegisteredExamList(String studentEmail) {
 		String ret = "";
 		if (checkEmail(studentEmail)) {
@@ -744,7 +859,6 @@ public class UniDB {
 	/**
 	 * Cancella l'iscrizione a un esame passato in input per lo studente,
 	 * la cui email viene passata in input.
-	 * 
 	 * @param examName String 
 	 * @param studentEmail String
 	 * @return ret String
@@ -809,7 +923,6 @@ public class UniDB {
 	/**
 	 * Metodo che ritorna la lista dei corsi di cui un docente (email passata in input)
 	 * è titolare del corso
-	 * 
 	 * @param profEmail
 	 * @return coursesList String
 	 */
@@ -840,7 +953,6 @@ public class UniDB {
 
 	/**
 	 * Metodo che ritorna la lista di studenti iscritti a un corso dalla lista degli studenti nell'istanza Corso.
-	 * 
 	 * @param courseName String
 	 * @return studentsList String
 	 */
@@ -872,6 +984,13 @@ public class UniDB {
 		return ret;
 	}
 
+	/**
+	 * Aggiunge il voto all'esame di uno studente
+	 * @param studentEmail String
+	 * @param courseName String
+	 * @param mark Integer
+	 * @return String 
+	 */
 	public static String addMarkToStudentExamInDB(String studentEmail, String courseName, Integer mark) {
 		String ret = "";
 		DB db = getUniDB();
@@ -904,7 +1023,6 @@ public class UniDB {
 
 	/**
 	 * Metodo che ritorna la lista degli esami all'interno di una istanza di un utente di tipo segreteria.
-	 * 
 	 * @param secEmail String
 	 * @return ret String
 	 */
@@ -935,7 +1053,6 @@ public class UniDB {
 
 	/**
 	 * Metodo che modifica la visibilità degli esami (un valore booleano nell'oggeto Course)
-	 * 
 	 * @param examName String
 	 * @return String
 	 */
@@ -957,8 +1074,7 @@ public class UniDB {
 
 
 	/**
-	 * Metodo che ritorna la lista degli esami presenti in un'istanza di utente di tipo segreteria
-	 *   
+	 * Metodo che ritorna la lista degli esami presenti in un'istanza di utente di tipo segreteria 
 	 * @return info String
 	 */
 	public static String viewAllStudentsPersonalInfo() {
@@ -983,6 +1099,11 @@ public class UniDB {
 		return info;
 	}
 
+	/**
+	 * Metodo che ritorna la lista dei voti degli esami di uno studente
+	 * @param studentEmail String
+	 * @return String
+	 */
 	public static String viewExamsMarksInfo(String studentEmail) {
 		String ret = "";
 		DB db = getUniDB();
@@ -1011,8 +1132,10 @@ public class UniDB {
 	 * METODI AUSILIARI
 	 */
 
-	/*
+	/**
 	 * Ritorna true se esiste gia' un utente con l'email passata in input 
+	 * @param email String
+	 * @return boolean
 	 */
 	private static boolean checkEmail(String email) {
 		boolean check = false;
@@ -1032,9 +1155,11 @@ public class UniDB {
 		return check;
 	}
 
-	/*
+	/**
 	 * Ritorna true se gia' esiste un dipartimento con il nome passato in input
 	 * Ritorna false se non e' memorizzato nel DB nessun dipartimento con quel nome
+	 * @param nomeDipartimento String
+	 * @return boolean
 	 */
 	private static boolean checkDepartmentName(String nomeDipartimento) {
 		boolean check = false;
@@ -1055,9 +1180,11 @@ public class UniDB {
 		return check;
 	}
 
-	/*
+	/**
 	 * Ritorna true se gia' esiste un corso con il nome passato in input
 	 * Ritorna false se non e' memorizzato nel DB nessun corso con quel nome
+	 * @param courseName String
+	 * @return boolean
 	 */
 	private static boolean checkCourseName(String courseName) {
 		boolean check = false;
@@ -1078,9 +1205,11 @@ public class UniDB {
 		return check;
 	}
 
-	/*
+	/**
 	 * Ritorna true se gia' esiste un corso con il nome passato in input && tale corso presenta già un esame instanziato.
 	 * Ritorna false se non e' memorizzato nel DB nessun corso con quel nome e con un esame gia' instanziato.
+	 * @param courseName String
+	 * @return boolean
 	 */
 	private static boolean checkExam(String courseName) {
 		boolean check = false;
@@ -1109,10 +1238,18 @@ public class UniDB {
 	 * METODI PER I TEST
 	 */
 
-	// Verifica se esiste l'utente nel DB
+	/**
+	 * Verifica se esiste l'utente nel DB
+	 * @param email String
+	 * @return boolean
+	 */
 	public static boolean checkUserExists(String email) { return checkEmail(email); }
 
-	// Verifica che le info personali siano diverse da null
+	/**
+	 * Verifica che le info personali siano diverse da null
+	 * @param email String
+	 * @return boolean
+	 */
 	public static boolean checkPersonalInfoNotNull(String email) {
 		boolean check = false;
 
@@ -1142,13 +1279,27 @@ public class UniDB {
 		return check;
 	}
 
-	// Verifica che esista il dipartimento
+	/**
+	 * Verifica che esista il dipartimento
+	 * @param dep String
+	 * @return boolean
+	 */
 	public static boolean checkDepartmentExists(String dep) { return checkDepartmentName(dep); } 
 
-	// Verifica che esista il corso
+	/**
+	 * Verifica che esista il corso
+	 * @param course String
+	 * @return boolean
+	 */
 	public static boolean checkCourseExists(String course) { return checkCourseName(course); }
 
-	// Verifica che descrizione e codocente di un corso siano uguali a quelle passate in input
+	/**
+	 * Verifica che descrizione e codocente di un corso siano uguali a quelle passate in input
+	 * @param courseName String
+	 * @param description String
+	 * @param secondProf String
+	 * @return boolean
+	 */
 	public static boolean checkInfoCourse(String courseName, String description, String secondProf) {
 		boolean ret = false;
 
@@ -1167,10 +1318,21 @@ public class UniDB {
 		return ret;
 	}
 
-	// Verifica che esista un esame
+	/**
+	 * Verifica che esista un esame
+	 * @param course String
+	 * @return boolean
+	 */
 	public static boolean checkExamExists(String course) { return checkExam(course); }
 
-	// Verifica che orario, durezza e aula di un esame siano uguali a quelle passate in input
+	/**
+	 * Verifica che orario, durezza e aula di un esame siano uguali a quelle passate in input
+	 * @param corso String
+	 * @param orario String
+	 * @param durezza String
+	 * @param aula String
+	 * @return boolean
+	 */
 	public static boolean checkInfoExam(String corso, String orario, String durezza, String aula) {
 		boolean ret = false;
 
@@ -1190,7 +1352,12 @@ public class UniDB {
 		return ret;
 	}
 
-	// Verifica che in un corso ci sia uno studente e viceversa
+	/**
+	 * Verifica che in un corso ci sia uno studente e viceversa
+	 * @param courseName String
+	 * @param studentEmail String
+	 * @return boolean
+	 */
 	public static boolean checkStudentInCourse(String courseName, String studentEmail) {
 		boolean ret = false;
 
@@ -1212,7 +1379,12 @@ public class UniDB {
 		return ret;
 	}
 	
-	// Verifica che sia presente un esame nella lista di esami di uno studente 
+	/**
+	 * Verifica che sia presente un esame nella lista di esami di uno studente
+	 * @param studentEmail String
+	 * @param examName String
+	 * @return boolean
+	 */ 
 	public static boolean checkExamInStudent(String studentEmail, String examName) {
 		boolean ret = false;
 
@@ -1231,7 +1403,11 @@ public class UniDB {
 		return ret;
 	}
 	
-	// Verifica che la visibilità dei voti per uno studente in un corso sia settata a true
+	/**
+	 * Verifica che la visibilità dei voti per uno studente in un corso sia settata a true
+	 * @param courseName String
+	 * @return boolean
+	 */
 	public static boolean checkMarksVisibilityInCourse(String courseName) {
 		boolean ret = false;
 		

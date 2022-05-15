@@ -1,22 +1,19 @@
 package it.unibo.ingsoft.gwt.shared.domain;
 
-import it.unibo.ingsoft.gwt.shared.users.Secretary;
-
 public class University {
 	// Variabili istanza
 	private String athenaeumName; // Nome dell'ateneo
 	private String city;// Nome della citta' in cui si trova l'ateneo
 	private String telephonNumber; // Numero di telefono 
-	private String address; // Indirizzo 
-	private Secretary secretary; // Segreteria dell'universita'
+	private String address; // Indirizzo
 	
 	// Costruttore
 	public University(String athenaeumName, String city,String number,String address) {
 		this.athenaeumName = athenaeumName;
 		this.city = city;
-		this.telephonNumber=number;
-		this.address=address;
-		}
+		this.telephonNumber = number;
+		this.address = address;
+		} 
 	
 	// Getters
 	public String getAthenaeumName() { return this.athenaeumName; } // ritorna il nome dell'ateneo

@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
-import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
 
 public class ViewAllStudentsPersonalInfo extends Composite {
 	private VerticalPanel mainPanel = new VerticalPanel();

@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import it.unibo.ingsoft.gwt.client.Mainpage;
 import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.usersfacade.GeneralUserFacade;
-import it.unibo.ingsoft.gwt.shared.usersfacade.ProfessorFacade;
 
 public class ProfessorDashboard extends Composite {
 	// Variabili istanza
