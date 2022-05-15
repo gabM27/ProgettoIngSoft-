@@ -12,4 +12,5 @@ Email:
 - stefano.monti13@studio.unibo.it
 
 Link Trello: https://trello.com/invite/b/DCJZTzsN/9748736bb57b9914307cf3f7446aff55/product-backlog
+
 Link Jira: https://gab-m.atlassian.net/jira/software/projects/INGSOFT/boards/1
