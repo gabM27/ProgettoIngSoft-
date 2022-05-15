@@ -36,7 +36,7 @@ import it.unibo.ingsoft.gwt.client.settings.userSettings.SearchPersonalInfo;
 import it.unibo.ingsoft.gwt.client.settings.userSettings.ViewCoursesList;
 import it.unibo.ingsoft.gwt.shared.Status;
 
-public class Mainpage extends Composite{
+public class Mainpage extends Composite {
 	// Variabili istanza
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private VerticalPanel optionalPanel = new VerticalPanel(); // Attualmente serve solo per stampare le informazioni di un corso

@@ -2,7 +2,7 @@ package it.unibo.ingsoft.gwt.shared;
 
 import java.io.Serializable;
 
-public enum Status implements Serializable{
+public enum Status implements Serializable {
 	ADMIN,
 	PROFESSOR,
 	STUDENT,
