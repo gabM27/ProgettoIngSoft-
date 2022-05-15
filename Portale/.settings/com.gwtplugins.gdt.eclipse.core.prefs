@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=C\:/Users/Gabriele/Downloads/mapdb-0.9.7.jar|C\:/Users/Gabriele/git/ProgettoIngSoft-/Portale/war/WEB-INF/lib/junit-jupiter-5.7.0.jar
+warSrcDir=war
+warSrcDirIsOutput=true
