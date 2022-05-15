@@ -5,6 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.client.settings.Singleton;
 
 
@@ -38,7 +39,7 @@ public class ProfessorFacade {
 	
 	public void changeCourseInfo(String nomeCorso, Date dataInizio, Date dataFine,
 			String descrizioneCorso, String codocente) {
-		Singleton.getGreetingService().changeCourseFromDB(nomeCorso, dataInizio, dataFine, 
+		Singleton.getGreetingService().changeCourseFromDB(nomeCorso,ActualSession.getActualSession().getEmail(), dataInizio, dataFine, 
 				descrizioneCorso, codocente, new AsyncCallback<String>() {
 
 					@Override

@@ -110,8 +110,8 @@ public class StudentFacade {
 		});
 	}
 
-	public void viewExamsMarksInfo(Mainpage main) {
-		Singleton.getGreetingService().viewExamsMarks(ActualSession.getActualSession().getEmail(),
+	public void viewExamsMarksInfo(Mainpage main, String studentEmail) {
+		Singleton.getGreetingService().viewExamsMarks(studentEmail,
 				new AsyncCallback<String>() {
 
 			@Override

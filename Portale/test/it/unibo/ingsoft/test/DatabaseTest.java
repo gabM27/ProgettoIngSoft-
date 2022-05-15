@@ -146,7 +146,7 @@ public class DatabaseTest {
 	public void changeCourseTest() throws Exception {
 
 		server.addCourseToDepartment("DIPARTIMENTO_PROVA", "corsoProva", "prof", null, null, "descrizione", "");
-		server.changeCourseFromDB("corsoProva", null, null, "nuovaDescrizione", "nuovoSecondoProf");
+		server.changeCourseFromDB("corsoProva","prof", null, null, "nuovaDescrizione", "nuovoSecondoProf");
 
 		Assertions.assertTrue(UniDB.checkCourseExists("corsoProva"));
 		Assertions.assertTrue(UniDB.checkInfoCourse("corsoProva", "nuovaDescrizione", "nuovoSecondoProf"));

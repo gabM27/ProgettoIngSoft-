@@ -8,6 +8,7 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 
+import it.unibo.ingsoft.gwt.client.settings.ActualSession;
 import it.unibo.ingsoft.gwt.shared.Status;
 import it.unibo.ingsoft.gwt.shared.domain.Course;
 import it.unibo.ingsoft.gwt.shared.domain.Department;
@@ -376,7 +377,7 @@ public class UniDB {
 	 * @param secondProfEmail String
 	 * @return String 
 	 */
-	public static String changeCourseInfo(String courseName, Date startCourse, 
+	public static String changeCourseInfo(String courseName,String profEmail, Date startCourse, 
 			Date endCourse, String description, String secondProfEmail) {
 
 		if (checkCourseName(courseName)) {
@@ -387,7 +388,7 @@ public class UniDB {
 
 			// Modifica del corso
 			Course c = new Course(courseName);
-
+			c.setProf(profEmail);
 			c.setStartDate(startCourse);
 			c.setEndDate(endCourse);
 			c.setDescription(description);
@@ -1003,7 +1004,7 @@ public class UniDB {
 					// Setting del voto dell'esame dello studente
 					c.setMark(studentEmail, mark);
 					// Aggiornamento del valore del corso nel DB
-					coursesMap.replace(c.getName(), c);
+					coursesMap.replace(courseName, c);
 					ret += "Voto inserito correttamente.";
 				} else {
 					ret += "Errore: studente non iscritto al corso.";
@@ -1113,8 +1114,9 @@ public class UniDB {
 			for (Entry<String, Course> newCourse : coursesMap.entrySet()) {
 				if (newCourse.getValue().isStudentThere(studentEmail)) {
 					if (newCourse.getValue().getAreGradesVisibleToStudents()) {
+						int index = newCourse.getValue().getStudentsList().indexOf(studentEmail);
 						ret += "Corso di " + newCourse.getValue().getName() + ".\nVoto: " +
-								newCourse.getValue().getExamStudentsMarks().get(newCourse.getValue().getStudentsList().indexOf(studentEmail)) + ""
+								newCourse.getValue().getExamStudentsMarks().get(index) + ""
 								+ ".\n\n";
 					}
 				}

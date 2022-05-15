@@ -97,7 +97,7 @@ public class SendMarksDashboard extends Composite {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				mark = Integer.parseInt(markTA.getText());
+				mark = Integer.valueOf(Integer.parseInt(markTA.getText()));
 			}
 
 		});

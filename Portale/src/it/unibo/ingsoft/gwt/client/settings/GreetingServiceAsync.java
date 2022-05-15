@@ -35,7 +35,7 @@ public interface GreetingServiceAsync {
 
 	void deleteCourseFromDB(String departmentName, String courseName, AsyncCallback<String> callabck);
 
-	void changeCourseFromDB(String nomeCorso, Date dataInizio, Date dataFine,
+	void changeCourseFromDB(String nomeCorso, String profEmail, Date dataInizio, Date dataFine,
 			String descrizioneCorso, String codocente, AsyncCallback<String> callback);
 	
 	void addExam(String nomeCorso, Date dataEsame, String orarioEsame, String durezza, String nomeAula,
